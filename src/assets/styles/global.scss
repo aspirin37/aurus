@@ -1,0 +1,130 @@
+:root {
+  --white: #fff;
+  --platinum: #c8c9c7;
+  --aurum: #ad7c59;
+  --black: #2c2a29;
+  --ruby: #8a2a2b;
+  --sapphirus: #003865;
+  --margaritas: #b7a99a;
+  --topaz: #54585a;
+  --amber: #b15533;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f1eeeb;
+}
+
+.input-block {
+  display: grid;
+  row-gap: 7px;
+}
+
+.input-block__label {
+  color: var(--platinum);
+  display: block;
+  line-height: initial;
+  margin-bottom: 0;
+}
+
+.input-block__input {
+  border-radius: 3px;
+  border: 1px solid var(--platinum);
+  background-color: #333333;
+  color: #fff;
+  width: 100%;
+  padding: 10px 6px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.input-block__input:hover {
+  border-color: var(--margaritas);
+}
+
+.input-block__input:focus {
+  outline: none;
+  border-color: var(--aurum);
+}
+
+.input-block__label_error {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-block__input_error {
+  border-color: var(--amber);
+}
+
+.aurus-custom-control .custom-control-label {
+  color: var(--margaritas);
+}
+
+
+.aurus-custom-control .custom-control-label::before,
+.aurus-custom-control .custom-control-label::after {
+  width: 17px;
+  height: 17px;
+}
+
+.aurus-custom-control .custom-control-label::before {
+  border-color: var(--margaritas);
+}
+
+.aurus-custom-control .custom-control-input:not(:disabled):active~.custom-control-label::before {
+  color: #fff;
+  background-color: var(--margaritas);
+  border-color: var(--margaritas);
+}
+
+.aurus-custom-control .custom-control-input:focus:not(:checked)~.custom-control-label::before {
+  border-color: var(--margaritas);
+  box-shadow: none;
+}
+
+.aurus-custom-control .custom-control-input:focus~.custom-control-label::before {
+  box-shadow: none;
+}
+
+.aurus-custom-control .custom-control-input:checked~.custom-control-label::before {
+  color: #fff;
+  border-color: var(--aurum);
+  background-color: var(--aurum);
+}
+
+.aurus-button {
+  font-weight: 500;
+  width: fit-content;
+  justify-self: center;
+  text-transform: uppercase;
+  padding: 15px 45px;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.aurus-button:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.aurus-button_line {
+  border-color: var(--aurum);
+  color: var(--black);
+}
+
+.aurus-button_line:hover {
+  color: var(--aurum);
+}
+
+.aurus-button_line:focus {
+  border-color: #9d6d4c;
+  color: #9d6d4c;
+  box-shadow: none;
+}
+
+.aurus-button_filled_white-color {
+  color: #fff;
+}
+
+.error-text {
+  color: var(--amber);
+}
