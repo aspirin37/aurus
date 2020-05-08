@@ -2,15 +2,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { parse } = require('dotenv');
 const fs = require('fs');
 
+const isProd = (process.env.NODE_ENV === 'production');
+const isDev = (process.env.NODE_ENV === 'development');
+
 module.exports = {
-  // eslint-disable-next-line consistent-return
-  configureWebpack: () => {
-    if (process.env.NODE_ENV === 'production') {
-      return ({
-        plugins: [
-          new HtmlWebpackPlugin({
-            template: 'public/index.html',
-            envConfig: '{ "JS_BUNDLE_RUNTIME_CONFIG": false }',
+  pages: {
+    index: {
+      entry: 'src/main.js',
+      template: 'public/index.html',
+      ...(isProd && {
+	envConfig: '{ "JS_BUNDLE_RUNTIME_CONFIG": false }',
             minify: {
               removeComments: true,
               collapseWhitespace: true,
@@ -18,21 +19,12 @@ module.exports = {
               collapseBooleanAttributes: true,
               removeScriptTypeAttributes: true,
             },
-          }),
-        ],
-      });
-    }
-    if (process.env.NODE_ENV === 'development') {
-      return ({
-        plugins: [
-          new HtmlWebpackPlugin({
-            template: 'public/index.html',
+      }),
+      ...(isDev && {
             filename: 'index.html',
             inject: true,
             envConfig: JSON.stringify(parse(fs.readFileSync('.env'))),
-          }),
-        ],
-      });
+      })
     }
-  },
+  }
 };
