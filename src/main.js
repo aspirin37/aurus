@@ -5,6 +5,9 @@ import store from './store';
 
 import '@/assets/styles/index.scss';
 
+import config from './utils/config';
+
+Vue.prototype.$config = config;
 Vue.config.productionTip = false;
 
 new Vue({

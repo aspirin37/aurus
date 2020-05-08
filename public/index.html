@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" xml:lang="ru" xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Dealer point</title>
+    <script type="application/json" id="js-bundle-runtime-config"><%= htmlWebpackPlugin.options.envConfig %></script>
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        if (window.navigator.userAgent.indexOf('MSIE') > 0 || !!navigator.userAgent.match(/Trident.*rv:11\./)) {
+          document.querySelector('#ie-warning').setAttribute('style', 'display: block');
+        }
+      });
+    </script>
   </head>
   <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
+
+    <div id="ie-warning" class="container py-3" style="display: none">
+      <div class="alert alert-warning">
+        К сожалению, Ваш браузер не поддерживается. Пожалуйста, используйте Chrome.
+      </div>
+    </div>
   </body>
 </html>
