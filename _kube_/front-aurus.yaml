@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: front-users
+  name: front-aurus
 spec:
   selector:
     matchLabels:
