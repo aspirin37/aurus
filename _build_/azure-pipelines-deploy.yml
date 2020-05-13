@@ -1,6 +1,6 @@
 # Node.js with Vue
 # Build a Node.js project that uses Vue.
-# Add steps that analyze code, save build artifacts, deploy, and more:
+# Add steps that analyze code, save _build_ artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 steps:
@@ -8,11 +8,6 @@ steps:
     inputs:
       artifactName: 'bundle'
       targetPath: 'dist/app'
-
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'static'
-      targetPath: 'dist/app/static'
 
   - task: Docker@2
     condition: and(succeeded(), or(eq(variables['IS_BUILD_DEVELOP'], true), eq(variables['IS_BUILD_RELEASE'], true)))
@@ -25,7 +20,7 @@ steps:
     condition: and(succeeded(), or(eq(variables['IS_BUILD_DEVELOP'], true), eq(variables['IS_BUILD_RELEASE'], true)))
     displayName: Build image with version tag
     inputs:
-      command: build
+      command: _build_
       tag:
       dockerfile: "Dockerfile"
       repository: "$(dockerRepository)/$(System.TeamProject)/$(Build.DefinitionName)"
