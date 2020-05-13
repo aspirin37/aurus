@@ -1,0 +1,34 @@
+steps:
+- task: Bash@3
+  displayName: 'Set git credentials for commit'
+  inputs:
+    targetType: inline
+    script: |
+      git config --global user.email "devopsfs@build.pipeline"
+      git config --global user.name "Devopsfs Build Pipeline"
+
+- task: Npm@1
+  condition: and(succeeded(), eq(variables['IS_BUILD_DEVELOP'], true))
+  displayName: 'Npm version patch'
+  inputs:
+    command: 'custom'
+    customCommand: 'version patch -m "Bump version to %s [skip ci]" --force'
+
+- task: Bash@3
+  condition: and(succeeded(), eq(variables['IS_BUILD_DEVELOP'], true))
+  displayName: 'Push version to repo if not PullRequest'
+  inputs:
+    targetType: inline
+    script: |
+      BUILD_PACKAGE_VERSION=$(grep 'version' package.json | cut -d '"' -f4)
+      echo '##vso[task.setvariable variable=PACKAGE_VERSION]v$(BUILD_PACKAGE_VERSION)'
+
+      git push origin HEAD:$BUILD_SOURCEBRANCH
+
+- task: Bash@3
+  displayName: 'Set version variable'
+  inputs:
+    targetType: inline
+    script: |
+      BUILD_PACKAGE_VERSION=$(grep 'version' package.json | cut -d '"' -f4)
+      echo "##vso[task.setvariable variable=PACKAGE_VERSION]v$BUILD_PACKAGE_VERSION"

@@ -1,0 +1,42 @@
+stages:
+  - stage: DeployDP100
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables['IS_BUILD_DEVELOP'], true))
+    jobs:
+      # track deployments on the environment
+      - deployment: DeployDP100
+        pool: $(pool)
+        # creates an environment if it doesn’t exist
+        environment: dp100
+        strategy:
+          # default deployment strategy
+          runOnce:
+            deploy:
+              steps:
+                - task: Bash@3
+                  displayName: 'Debug Env variables'
+                  inputs:
+                    targetType: inline
+                    script: env | sort
+
+                - template: azure-deploy-k8s.yaml
+                  parameters:
+                    k8ns: dp100
+
+  - stage: DeployDP200
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables['IS_BUILD_RELEASE'], true))
+    jobs:
+      - deployment: DeployDP200
+        pool: $(pool)
+
+        # creates an environment if it doesn’t exist
+        environment: dp200
+        strategy:
+          # default deployment strategy
+          runOnce:
+            deploy:
+              steps:
+                - template: azure-deploy-k8s.yaml
+                  parameters:
+                    k8ns: dp200
