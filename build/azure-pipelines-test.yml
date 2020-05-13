@@ -1,0 +1,36 @@
+# Node.js with Vue
+# Build a Node.js project that uses Vue.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+steps:
+  - script: npm run ctest
+    displayName: 'Run unit tests by Jest'
+
+  - script: npm run clint
+    displayName: 'Analyze possible errors by ESLint'
+
+  - task: PublishCodeCoverageResults@1
+    condition: succeededOrFailed()
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '_test-reports_/cobertura-coverage.xml'
+
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFiles: '_test-reports_/test-eslint.xml'
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      testRunTitle: 'ESlint Syntax Validation'
+
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFiles: '_test-reports_/test-jest-junit.xml'
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      testRunTitle: 'Jest Tests Results'
+
+  - script: npm run check-audit
+    displayName: 'Run audit package dependencies for security vulnerabilities'

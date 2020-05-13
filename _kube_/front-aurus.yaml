@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-aurus
+spec:
+  selector:
+    matchLabels:
+      app: front-aurus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: front-aurus
+    spec:
+      containers:
+      - name: front-aurus
+        image: cr.yandex/crp290jam3jn8k6rka0n/aurus-supplierportal/front-aurus:dev
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+           name: common-env
+        env:
+        - name: WEBSITE_SITE_NAME
+          value: "front-aurus"
+      imagePullSecrets:
+      - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-aurus
+spec:
+  selector:
+    app: front-aurus
+  ports:
+    - name: front-aurus
+      protocol: TCP
+      port: 10000
+      targetPort: 80
+  type: ClusterIP
+
