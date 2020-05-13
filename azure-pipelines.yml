@@ -1,6 +1,6 @@
 # Node.js with Vue
 # Build a Node.js project that uses Vue.
-# Add steps that analyze code, save build artifacts, deploy, and more:
+# Add steps that analyze code, save _build_ artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
@@ -9,7 +9,7 @@ trigger:
   - master
 
 variables:
-  - group: front-build-pool
+  - group: front-_build_-pool
   - group: yandex-100-vars
 
   - name: IS_CI
@@ -31,6 +31,6 @@ variables:
     value: $[ and( eq(variables.IS_CI_MANUAL, 'True'), eq(variables.IS_BRANCH_RELEASE, 'True')) ]
 
 stages:
-  - template: build/azure-ci.yaml
+  - template: _build_/azure-ci.yaml
 
-  - template: build/azure-cd.yaml
+  - template: _build_/azure-cd.yaml
