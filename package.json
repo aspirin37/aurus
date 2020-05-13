@@ -5,7 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve --port 8082",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "check-audit": "node node_modules/npm-audit-resolver/check.js",
+    "setup-lint": "npm i --g eslint babel-eslint eslint-plugin-import eslint-config-airbnb-base eslint-plugin-vue eslint-plugin-jest",
+    "test": "jest --config test/jest.conf.js --verbose",
+    "clint": "eslint --format junit --ext .js,.vue src",
+    "ctest": "jest --ci --config test/jest-ct.conf.js"
   },
   "dependencies": {
     "bootstrap": "^4.4.1",
@@ -24,18 +29,27 @@
     "@vue/cli-plugin-vuex": "~4.3.0",
     "@vue/cli-service": "~4.3.0",
     "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/test-utils": "^1.0.2",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
+    "jest": "^26.0.1",
+    "jest-junit": "^10.0.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
+    "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "browser": true,
+      "jest": true
+    },
+    "globals": {
+      "process": "readonly"
     },
     "extends": [
       "plugin:vue/essential",
@@ -49,7 +63,10 @@
     "rules": {
       "vue/max-attributes-per-line": 1,
       "linebreak-style": "off"
-    }
+    },
+    "plugins": [
+      "vue"
+    ]
   },
   "browserslist": [
     "> 1%",

@@ -1,0 +1,36 @@
+# Node.js with Vue
+# Build a Node.js project that uses Vue.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  - develop
+  - release/*
+  - master
+
+variables:
+  - group: front-build-pool
+  - group: front-dev
+
+  - name: IS_CI
+    value: $[ eq(variables['Build.Reason'], 'IndividualCI') ]
+  - name: IS_MANUAL
+    value: $[ eq(variables['Build.Reason'], 'Manual') ]
+
+  - name: IS_CI_MANUAL
+    value: $[ or(eq(variables.IS_CI, 'True'), eq(variables.IS_MANUAL, 'True')) ]
+
+  - name: IS_BRANCH_DEVELOP
+    value: $[ eq(variables['Build.SourceBranchName'], 'develop') ]
+  - name: IS_BRANCH_RELEASE
+    value: $[ startsWith(variables['Build.SourceBranch'], 'refs/heads/release/') ]
+
+  - name: IS_BUILD_DEVELOP
+    value: $[ and( eq(variables.IS_CI_MANUAL, 'True'), eq(variables.IS_BRANCH_DEVELOP, 'True')) ]
+  - name: IS_BUILD_RELEASE
+    value: $[ and( eq(variables.IS_CI_MANUAL, 'True'), eq(variables.IS_BRANCH_RELEASE, 'True')) ]
+
+stages:
+  - template: build/azure-ci.yaml
+
+  - template: build/azure-cd.yaml

@@ -1,4 +1,3 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { parse } = require('dotenv');
 const fs = require('fs');
 
@@ -11,20 +10,20 @@ module.exports = {
       entry: 'src/main.js',
       template: 'public/index.html',
       ...(isProd && {
-	envConfig: '{ "JS_BUNDLE_RUNTIME_CONFIG": false }',
-            minify: {
-              removeComments: true,
-              collapseWhitespace: true,
-              removeAttributeQuotes: true,
-              collapseBooleanAttributes: true,
-              removeScriptTypeAttributes: true,
-            },
+        envConfig: '{ "JS_BUNDLE_RUNTIME_CONFIG": false }',
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeAttributeQuotes: true,
+          collapseBooleanAttributes: true,
+          removeScriptTypeAttributes: true,
+        },
       }),
       ...(isDev && {
-            filename: 'index.html',
-            inject: true,
-            envConfig: JSON.stringify(parse(fs.readFileSync('.env'))),
-      })
-    }
-  }
+        filename: 'index.html',
+        inject: true,
+        envConfig: JSON.stringify(parse(fs.readFileSync('.env'))),
+      }),
+    },
+  },
 };
