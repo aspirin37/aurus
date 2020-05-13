@@ -9,11 +9,6 @@ steps:
       artifactName: 'bundle'
       targetPath: 'dist/app'
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'static'
-      targetPath: 'dist/app/static'
-
   - task: Docker@2
     condition: and(succeeded(), or(eq(variables['IS_BUILD_DEVELOP'], true), eq(variables['IS_BUILD_RELEASE'], true)))
     displayName: Login to Yandex Docker Registry
