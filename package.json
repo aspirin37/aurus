@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --port 8082",
-    "build": "vue-cli-service _build_",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "check-audit": "npx check-audit",
     "setup-lint": "npm i --g eslint babel-eslint eslint-plugin-import eslint-config-airbnb-base eslint-plugin-vue eslint-plugin-jest",
