@@ -5,7 +5,7 @@ FROM nginx
 RUN apt-get update && apt-get install -y jq
 
 COPY dist/app /usr/share/nginx/html
-COPY _build_/nginx-vue.config /etc/nginx/conf.d/default.conf
+COPY build/nginx-vue.config /etc/nginx/conf.d/default.conf
 
 RUN chmod 755 /usr/share/nginx/html/dotenv.sh
 

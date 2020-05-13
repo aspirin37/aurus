@@ -31,6 +31,6 @@ variables:
     value: $[ and( eq(variables.IS_CI_MANUAL, 'True'), eq(variables.IS_BRANCH_RELEASE, 'True')) ]
 
 stages:
-  - template: _build_/azure-ci.yaml
+  - template: build/azure-ci.yaml
 
-  - template: _build_/azure-cd.yaml
+  - template: build/azure-cd.yaml
