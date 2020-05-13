@@ -9,7 +9,7 @@ trigger:
   - master
 
 variables:
-  - group: front-_build_-pool
+  - group: front-build-pool
   - group: yandex-100-vars
 
   - name: IS_CI
