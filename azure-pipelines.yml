@@ -10,7 +10,7 @@ trigger:
 
 variables:
   - group: front-build-pool
-  - group: front-dev
+  - group: yandex-100-vars
 
   - name: IS_CI
     value: $[ eq(variables['Build.Reason'], 'IndividualCI') ]
