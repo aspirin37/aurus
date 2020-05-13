@@ -1,0 +1,30 @@
+_tests_/
+_tests-reprots_/
+_other_/
+_other/
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Git files
+.git/
+.gitignore
+
+# Build pipelines
+_build_/
+azure-pipelines.yml
+
+# Eslint files
+.eslintignore
+.eslintrc.yaml
+
+# Jest files
+.jest.json
+
+# dotenv environment variables file
+.env.example
