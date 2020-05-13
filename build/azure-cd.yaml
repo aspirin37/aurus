@@ -1,13 +1,13 @@
 stages:
-  - stage: DeployDP100
+  - stage: DeploySP100
     dependsOn: Build
     condition: and(succeeded(), eq(variables['IS_BUILD_DEVELOP'], true))
     jobs:
       # track deployments on the environment
-      - deployment: DeployDP100
+      - deployment: DeploySP100
         pool: $(pool)
         # creates an environment if it doesn’t exist
-        environment: dp100
+        environment: sp100
         strategy:
           # default deployment strategy
           runOnce:
@@ -21,17 +21,17 @@ stages:
 
                 - template: azure-deploy-k8s.yaml
                   parameters:
-                    k8ns: dp100
+                    k8ns: sp100
 
-  - stage: DeployDP200
+  - stage: DeploySP200
     dependsOn: Build
     condition: and(succeeded(), eq(variables['IS_BUILD_RELEASE'], true))
     jobs:
-      - deployment: DeployDP200
+      - deployment: DeploySP200
         pool: $(pool)
 
         # creates an environment if it doesn’t exist
-        environment: dp200
+        environment: sp200
         strategy:
           # default deployment strategy
           runOnce:
@@ -39,4 +39,4 @@ stages:
               steps:
                 - template: azure-deploy-k8s.yaml
                   parameters:
-                    k8ns: dp200
+                    k8ns: sp200
