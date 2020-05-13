@@ -1,0 +1,49 @@
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        pool: $(pool)
+
+        workspace:
+          clean: all
+
+        timeoutInMinutes: 5
+
+        steps:
+        - checkout: self
+          persistCredentials: true
+
+        - task: Bash@3
+          displayName: 'Debug Env variables'
+          inputs:
+            targetType: inline
+            script: env | sort
+
+        - task: Bash@3
+          displayName: 'Set git credentials'
+          inputs:
+            targetType: inline
+            script: |
+              git config --global --add http.extraheader "AUTHORIZATION: bearer $(System.AccessToken)"
+
+        - template: bump-version.yaml
+        - template: azure-pipelines-build.yml
+        - template: azure-pipelines-test.yml
+        - template: azure-pipelines-deploy.yml
+
+        - task: Bash@3
+          displayName: 'Clear git credentials'
+          inputs:
+            targetType: inline
+            script: |
+              git config --global --unset-all http.extraheader
+
+        - task: Bash@3
+          displayName: 'Clean-up docker'
+          condition: always()
+          inputs:
+            targetType: inline
+            script: |
+              docker ps -a -q | xargs -r docker stop
+              docker ps -a -q -f status=exited | xargs -r docker container rm --volumes -f
+              docker image prune -f

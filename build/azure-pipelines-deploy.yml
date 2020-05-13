@@ -1,0 +1,55 @@
+# Node.js with Vue
+# Build a Node.js project that uses Vue.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+steps:
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'bundle'
+      targetPath: 'dist/app'
+
+  - task: Docker@2
+    condition: and(succeeded(), or(eq(variables['IS_BUILD_DEVELOP'], true), eq(variables['IS_BUILD_RELEASE'], true)))
+    displayName: Login to Yandex Docker Registry
+    inputs:
+      command: login
+      containerRegistry: $(dockerRegistry)
+
+  - task: Docker@2
+    condition: and(succeeded(), or(eq(variables['IS_BUILD_DEVELOP'], true), eq(variables['IS_BUILD_RELEASE'], true)))
+    displayName: Build image with version tag
+    inputs:
+      command: build
+      tag:
+      dockerfile: "Dockerfile"
+      repository: "$(dockerRepository)/$(System.TeamProject)/$(Build.DefinitionName)"
+      tags: |
+        $(PACKAGE_VERSION)
+        dev
+        latest
+
+  - task: Docker@2
+    condition: and(succeeded(), eq(variables['IS_BUILD_DEVELOP'], true))
+    displayName: Push an image to container registry
+    inputs:
+      command: push
+      tag:
+      repository: "$(dockerRepository)/$(System.TeamProject)/$(Build.DefinitionName)"
+      containerRegistry: $(dockerRegistry)
+      tags: |
+        $(PACKAGE_VERSION)
+        dev
+
+  - task: Docker@2
+    condition: and(succeeded(), eq(variables['IS_BUILD_RELEASE'], true))
+    displayName: Push an image to container registry
+    inputs:
+      command: push
+      tag:
+      repository: "$(dockerRepository)/$(System.TeamProject)/$(Build.DefinitionName)"
+      containerRegistry: $(dockerRegistry)
+      tags: |
+        $(PACKAGE_VERSION)
+        latest
+
