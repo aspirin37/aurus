@@ -10,8 +10,7 @@ const axiosInstance = axios.create({
 
 const jwtacc = localStorage.getItem('jwtacc');
 
-if (jwtacc) {
-  console.log(jwtacc);
+if (jwtacc && jwtacc !== 'undefined') {
   axiosInstance.defaults.headers.jwtacc = jwtacc;
 }
 

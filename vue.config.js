@@ -9,9 +9,6 @@ const isDev = (process.env.NODE_ENV === 'development');
 const outputDir = 'dist';
 const outputApp = `${outputDir}/app`;
 
-const isProd = (process.env.NODE_ENV === 'production');
-const isDev = (process.env.NODE_ENV === 'development');
-
 module.exports = {
   outputDir: outputApp,
   pages: {

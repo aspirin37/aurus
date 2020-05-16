@@ -5,11 +5,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: JSON.parse(localStorage.getItem('user')),
   },
   mutations: {
-  },
-  actions: {
-  },
-  modules: {
+    setUser: (state, payload) => {
+      state.user = payload;
+      localStorage.setItem('user', JSON.stringify(payload));
+    },
+    logOut: (state) => {
+      state.user = null;
+
+      localStorage.removeItem('jwtacc');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+    },
   },
 });
