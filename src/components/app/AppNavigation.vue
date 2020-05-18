@@ -1,0 +1,264 @@
+<template>
+  <div class="navigation">
+    <div
+      v-for="menu in menus"
+      :key="menu.id"
+      class="navigation__item"
+    >
+      <router-link
+        v-slot="{isActive}"
+        :to="menu.link"
+      >
+        <a
+          class="navigation__item__link"
+          :class="{'navigation__item__link_active': isActive }"
+          @click.prevent="setActiveMenuId(menu)"
+        >
+          <img
+            class="navigation__item__icon"
+            :src="require(`@/assets/images/${menu.icon}.svg`)"
+          >
+          <transition name="fade">
+            <span
+              v-if="sidebarIsOpen"
+              class="navigation__item__text"
+            >{{ menu.name }}</span>
+          </transition>
+        </a>
+      </router-link>
+      <div
+        v-if="(menu.deep.length !== 0) && (menu.id === activeMenuId) && sidebarIsOpen"
+        class="navigation__item__deep"
+      >
+        <router-link
+          v-for="deep in menu.deep"
+          :key="deep.id"
+          :to="menu.link+deep.link"
+          class="navigation__item__deep__link"
+          active-class="navigation__item__deep__link_active"
+        >
+          {{ deep.name }}
+        </router-link>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'AppNavigation',
+  props: {
+    sidebarIsOpen: {
+      type: Boolean,
+    },
+  },
+  data: () => ({
+    activeMenuId: null,
+    menus: [
+      {
+        id: 0,
+        name: 'Объявления',
+        link: '/adds',
+        icon: 'adds',
+        deep: [],
+      },
+      {
+        id: 1,
+        name: 'Пользователи',
+        link: '/users',
+        icon: 'users',
+        deep: [],
+      },
+      {
+        id: 2,
+        name: 'Заказы',
+        link: '/orders',
+        icon: 'orders',
+        deep: [
+          {
+            id: 0,
+            name: 'Список заказов по дням',
+            link: '/orders-day',
+          },
+          {
+            id: 1,
+            name: 'Список заказов по дням (поставщики)',
+            link: '/orders-day-provider',
+          },
+          {
+            id: 2,
+            name: 'Подтверждение заказа',
+            link: '/order-approve',
+          },
+          {
+            id: 3,
+            name: 'С ближайшей датой отгрузки',
+            link: '/orders-date-shipment',
+          },
+          {
+            id: 4,
+            name: 'По деталям с горизонтом 12 месяцев',
+            link: '/orders-details-12-month',
+          },
+          {
+            id: 5,
+            name: 'По детали с горизонтом  12 месяцев',
+            link: '/order-detail-12-month',
+          },
+          {
+            id: 6,
+            name:
+              'По детали по неделям с горизонтом на 14 недель с накопительным итогом',
+            link: '/orders-detail-14-weeks',
+          },
+          {
+            id: 7,
+            name:
+              'По детали по дням с горизонтом на 14 дней с накопительным итогом',
+            link: '/orders-detail-14-days',
+          },
+          {
+            id: 8,
+            name: 'Список корректировок по заказам',
+            link: '/adjustment',
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: 'Отчеты',
+        link: '/graphs',
+        icon: 'graphs',
+        deep: [
+          {
+            id: 0,
+            name: 'С ближайшей датой отгрузки',
+            link: '',
+          },
+          {
+            id: 1,
+            name: 'По деталям с горизонтом 12 месяцев',
+            link: '',
+          },
+          {
+            id: 2,
+            name: 'По детали с горизонтом  12 месяцев',
+            link: '',
+          },
+          {
+            id: 3,
+            name:
+              'По детали по дням с горизонтом на 14 дней с накопительным итогом',
+            link: '',
+          },
+          {
+            id: 4,
+            name:
+              'По детали по неделям с горизонтом на 14 недель с накопительным итогом',
+            link: '',
+          },
+          {
+            id: 5,
+            name: 'Список корректировок по заказам',
+            link: '',
+          },
+        ],
+      },
+      {
+        id: 4,
+        name: 'Файлы',
+        link: 'null',
+        icon: 'flies',
+        deep: [
+          {
+            id: 0,
+            name: 'С ближайшей датой отгрузки',
+            link: '',
+          },
+          {
+            id: 1,
+            name: 'По деталям с горизонтом 12 месяцев',
+            link: '',
+          },
+          {
+            id: 2,
+            name: 'По детали с горизонтом  12 месяцев',
+            link: '',
+          },
+          {
+            id: 3,
+            name:
+              'По детали по дням с горизонтом на 14 дней с накопительным итогом',
+            link: '',
+          },
+          {
+            id: 4,
+            name:
+              'По детали по неделям с горизонтом на 14 недель с накопительным итогом',
+            link: '',
+          },
+          {
+            id: 5,
+            name: 'Список корректировок по заказам',
+            link: '',
+          },
+        ],
+      },
+      {
+        id: 5,
+        name: 'Этикетки',
+        link: 'null',
+        icon: 'labels',
+        deep: [
+          {
+            id: 0,
+            name: 'С ближайшей датой отгрузки',
+            link: '',
+          },
+          {
+            id: 1,
+            name: 'По деталям с горизонтом 12 месяцев',
+            link: '',
+          },
+          {
+            id: 2,
+            name: 'По детали с горизонтом  12 месяцев',
+            link: '',
+          },
+          {
+            id: 3,
+            name:
+              'По детали по дням с горизонтом на 14 дней с накопительным итогом',
+            link: '',
+          },
+          {
+            id: 4,
+            name:
+              'По детали по неделям с горизонтом на 14 недель с накопительным итогом',
+            link: '',
+          },
+          {
+            id: 5,
+            name: 'Список корректировок по заказам',
+            link: '',
+          },
+        ],
+      },
+    ],
+  }),
+  methods: {
+    setActiveMenuId(menu) {
+      if (menu.deep.length === 0) {
+        if (this.$route.path !== menu.link) {
+          this.$router.push(menu.link);
+        }
+      } else if (this.sidebarIsOpen) {
+        this.activeMenuId = this.activeMenuId === menu.id ? null : menu.id;
+      } else {
+        this.$emit('open');
+        this.activeMenuId = menu.id;
+      }
+    },
+  },
+};
+</script>

@@ -5,6 +5,12 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: '/',
+    exact: true,
+    name: 'AppLayout',
+    component: () => import('@/components/app/AppLayout'),
+  },
+  {
     path: '/sign-in',
     name: 'SignIn',
     component: () => import('@/views/SignIn.vue'),
@@ -14,7 +20,7 @@ const routes = [
     component: () => import('@/views/ResetPassword.vue'),
   }, {
     path: '*',
-    redirect: '/sign-in',
+    redirect: '/',
   },
 ];
 

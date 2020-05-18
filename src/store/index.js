@@ -12,7 +12,7 @@ export default new Vuex.Store({
       state.user = payload;
       localStorage.setItem('user', JSON.stringify(payload));
     },
-    logOut: (state) => {
+    signOut: (state) => {
       state.user = null;
 
       localStorage.removeItem('jwtacc');
