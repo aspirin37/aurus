@@ -9,6 +9,11 @@ const routes = [
     exact: true,
     name: 'AppLayout',
     component: () => import('@/components/app/AppLayout'),
+    children: [{
+      path: 'users',
+      name: 'UserList',
+      component: () => import('@/views/UserList'),
+    }],
   },
   {
     path: '/sign-in',

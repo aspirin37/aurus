@@ -1,133 +1,155 @@
 <template>
-  <auth-wrapper>
-    <form
-      class="auth"
-      @submit.prevent="signIn"
+  <div class="users-page">
+    <div class="users-page__top">
+      <page-title text="Пользователи - администрирование" />
+      <div class="users-page__top__wrapper">
+      <!-- <button
+          v-b-modal.add-new-user
+          class="btn aurus-button aurus-button_line aurus-button_lowercase users-page__top__button"
+        >
+          + добавить
+        </button> -->
+      <!-- <filter-component
+          filter-class="users-page__top__button"
+          :open-filter="openFilter"
+          :change-filter-state="changeFilterState"
+        /> -->
+      </div>
+    </div>
+    <main class="users-page__main">
+    <!-- <table-component
+      table-type="users-administration"
+      :list="tableData.list"
+      :headers="tableData.th"
+      :new-line-id="tableData.newLineId"
+      :change-new-line-id="changeNewLineId"
+      :open-filter="openFilter"
+    /> -->
+    </main>
+    <!-- модальное окно -->
+    <!-- <b-modal
+      id="add-new-user"
+      title="Добавление нового пользователя"
+      modal-class="aurus-modal"
+      hide-header-close
+      centered
     >
-      <div class="auth-block__data">
-        <div class="input-block">
+      <div class="aurus-modal__body">
+        <div class="input-block input-block_white">
           <label
             class="input-block__label"
-            :class="{'input-block__label_error': !!login.error}"
-            for="login"
-          >
-            Логин
-            <span
-              v-if="!!login.error"
-              class="error-text"
-            >
-              {{ login.error }}
-            </span>
-          </label>
+            for="e-mail"
+          >E-mail</label>
           <input
-            id="login"
-            v-model="login"
-            class="input-block__input"
-            :class="{'input-block__input_error': !!login.error}"
+            id="e-mail"
+            v-model="newUser.email"
+            class="input-block__input input-block__input_white"
             type="text"
           >
         </div>
-        <div class="input-block">
+        <div class="input-block input-block_white">
           <label
             class="input-block__label"
-            :class="{'input-block__label_error': !!password.error}"
-            for="password"
-          >
-            Пароль
-            <span
-              v-if="!!login.error"
-              class="error-text"
-            >
-              {{ password.error }}
-            </span>
-          </label>
+            for="login"
+          >Логин</label>
           <input
-            id="password"
-            v-model="password"
-            class="input-block__input"
-            :class="{'input-block__input_error': !!password.error}"
-            type="password"
+            id="login"
+            v-model="newUser.login"
+            class="input-block__input input-block__input_white"
+            type="text"
           >
         </div>
-        <!-- eslint-disable-next-line max-len -->
-        <div class="custom-control custom-checkbox mt-2 d-flex justify-content-center aurus-custom-control">
-          <input
-            id="remember-me"
-            v-model="rememberMe"
-            class="custom-control-input"
-            type="checkbox"
-          >
+        <div class="input-block input-block_white">
           <label
-            class="custom-control-label"
-            for="remember-me"
+            class="input-block__label"
+            for="time-password"
+          >Временный пароль</label>
+          <input
+            id="time-password"
+            v-model="newUser.timePassword"
+            class="input-block__input input-block__input_white"
+            type="text"
           >
-            Запомнить меня
-          </label>
         </div>
       </div>
-      <div class="actions-block">
+      <template v-slot:modal-footer>
         <button
-          :disabled="false"
-          class="btn aurus-button aurus-button_line aurus-button_filled_white-color"
-          type="submit"
+          class="btn aurus-button aurus-button_grayline aurus-button_lowercase w-100"
+          @click="$bvModal.hide('add-new-user')"
         >
-          Войти
+          отмена
         </button>
-      </div>
-      <div class="forget">
-        <router-link
-          class="forget__text"
-          :to="{name: 'ResetPassword'}"
-          tag="span"
+        <button
+          class="btn aurus-button aurus-button_line aurus-button_lowercase w-100"
+          @click="() => {addNewUser(); $bvModal.hide('add-new-user')}"
         >
-          Забыли пароль и хотите его восстановить?
-        </router-link>
-      </div>
-    </form>
-  </auth-wrapper>
+          + добавить
+        </button>
+      </template>
+    </b-modal> -->
+    <!-- !модальное окно -->
+  </div>
 </template>
 
 <script>
-import AuthWrapper from '@/components/auth/AuthWrapper.vue';
+import PageTitle from '@/components/common/PageTitle.vue';
 
 export default {
-  name: 'SignIn',
+  name: 'UserList',
   components: {
-    AuthWrapper,
+    PageTitle,
   },
   data: () => ({
-    login: '',
-    password: '',
-    rememberMe: false,
+    userList: [],
+    tableData: {
+      // id - добавленной новой записи
+      newLineId: null,
+      // th таблицы
+      th: [
+        {
+          id: 0,
+          name: 'E-mail',
+          isFilter: true,
+        },
+        {
+          id: 1,
+          name: 'Поставщик',
+          isFilter: true,
+        },
+        {
+          id: 2,
+          name: 'Пароль',
+          isFilter: false,
+        },
+      ],
+      // tr таблицы
+      list: Array(105)
+        .fill(0)
+        .map((_, index) => ({
+          /* eslint-disable */
+          id: `f${(~~(Math.random() * 1e9)).toString(16)}`,
+          fields: [
+            {
+              name: `email@email.email ${index}`,
+            },
+            {
+              name: `GSDB1 ${index + Math.ceil(Math.random() * 100)}`,
+            },
+            {
+              name: '********',
+            },
+          ],
+        })),
+    },
   }),
   methods: {
-    async signIn() {
-      await this.$http.post('main/login', {
-        email: this.login,
-        password: this.password,
-      });
-      this.$router.push('/');
+    async getUsers() {
+      await this.$http.get('users');
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  .forget {
-    display: flex;
-    justify-content: center;
 
-    &__text {
-      color: var(--margaritas);
-      cursor: pointer;
-      border-bottom: 1px solid var(--margaritas);
-      transition: 0.3s ease-in-out;
-      transition-property: color, border-bottom-color;
-
-      &:hover {
-        color: var(--aurum);
-        border-bottom-color: var(--aurum);
-      }
-    }
-  }
 </style>
