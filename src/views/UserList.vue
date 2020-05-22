@@ -1,155 +1,153 @@
 <template>
-  <div class="users-page">
-    <div class="users-page__top">
-      <page-title text="Пользователи - администрирование" />
-      <div class="users-page__top__wrapper">
-      <!-- <button
-          v-b-modal.add-new-user
-          class="btn aurus-button aurus-button_line aurus-button_lowercase users-page__top__button"
+  <div>
+    <div class="d-flex mb-3">
+      <h1 class="display-1 primary--text">
+        Пользователи - администрирование
+      </h1>
+      <div class="ml-auto">
+        <v-btn
+          class="mr-4"
+          color="primary"
+          outlined
+          large
+          @click="showUserModal('add')"
         >
-          + добавить
-        </button> -->
-      <!-- <filter-component
-          filter-class="users-page__top__button"
-          :open-filter="openFilter"
-          :change-filter-state="changeFilterState"
-        /> -->
+          <v-icon left>
+            mdi-plus
+          </v-icon>
+          Добавить
+        </v-btn>
+        <v-btn
+          outlined
+          large
+        >
+          <v-icon left>
+            mdi-filter-variant
+          </v-icon>
+          Фильтр
+        </v-btn>
       </div>
     </div>
-    <main class="users-page__main">
-    <!-- <table-component
-      table-type="users-administration"
-      :list="tableData.list"
-      :headers="tableData.th"
-      :new-line-id="tableData.newLineId"
-      :change-new-line-id="changeNewLineId"
-      :open-filter="openFilter"
-    /> -->
-    </main>
-    <!-- модальное окно -->
-    <!-- <b-modal
-      id="add-new-user"
-      title="Добавление нового пользователя"
-      modal-class="aurus-modal"
-      hide-header-close
-      centered
+    <v-data-table
+      fixed-header
+      :headers="headers"
+      :items="items"
+      :options.sync="options"
+      :server-items-length="total"
+      :loading="loading"
+      loading-text="Данные загружаются..."
     >
-      <div class="aurus-modal__body">
-        <div class="input-block input-block_white">
-          <label
-            class="input-block__label"
-            for="e-mail"
-          >E-mail</label>
-          <input
-            id="e-mail"
-            v-model="newUser.email"
-            class="input-block__input input-block__input_white"
-            type="text"
+      <template v-slot:item.actions="{ item }">
+        <v-hover v-slot="{hover}">
+          <v-icon
+            class="mr-4"
+            :class="hover ? '' : 'text--disabled'"
+            color="primary"
+            size="20"
           >
-        </div>
-        <div class="input-block input-block_white">
-          <label
-            class="input-block__label"
-            for="login"
-          >Логин</label>
-          <input
-            id="login"
-            v-model="newUser.login"
-            class="input-block__input input-block__input_white"
-            type="text"
+            mdi-book-open-variant
+          </v-icon>
+        </v-hover>
+        <v-hover v-slot="{hover}">
+          <v-icon
+            class="mr-4"
+            :class="hover ? '' : 'text--disabled'"
+            color="primary"
+            size="20"
           >
-        </div>
-        <div class="input-block input-block_white">
-          <label
-            class="input-block__label"
-            for="time-password"
-          >Временный пароль</label>
-          <input
-            id="time-password"
-            v-model="newUser.timePassword"
-            class="input-block__input input-block__input_white"
-            type="text"
+            mdi-email-outline
+          </v-icon>
+        </v-hover>
+        <v-hover v-slot="{hover}">
+          <v-icon
+            v-b-modal.user-modal
+            :class="hover ? '' : 'text--disabled'"
+            color="primary"
+            size="20"
+            @click="showUserModal('edit', item)"
           >
-        </div>
-      </div>
-      <template v-slot:modal-footer>
-        <button
-          class="btn aurus-button aurus-button_grayline aurus-button_lowercase w-100"
-          @click="$bvModal.hide('add-new-user')"
-        >
-          отмена
-        </button>
-        <button
-          class="btn aurus-button aurus-button_line aurus-button_lowercase w-100"
-          @click="() => {addNewUser(); $bvModal.hide('add-new-user')}"
-        >
-          + добавить
-        </button>
+            mdi-pencil
+          </v-icon>
+        </v-hover>
       </template>
-    </b-modal> -->
-    <!-- !модальное окно -->
+    </v-data-table>
+    <user-modal
+      v-model="userModal"
+      :user-selected="userSelected"
+      :type="modalType"
+      @submit="getItems"
+    />
   </div>
 </template>
 
 <script>
-import PageTitle from '@/components/common/PageTitle.vue';
+import UserModal from '@/components/users/UserModal.vue';
 
 export default {
-  name: 'UserList',
   components: {
-    PageTitle,
+    UserModal,
   },
-  data: () => ({
-    userList: [],
-    tableData: {
-      // id - добавленной новой записи
-      newLineId: null,
-      // th таблицы
-      th: [
+  data() {
+    return {
+      userModal: false,
+      userSelected: null,
+      modalType: 'add',
+      total: 0,
+      items: [],
+      loading: false,
+      options: {},
+      headers: [
+        { text: 'Имя', value: 'name' },
+        { text: 'E-mail', value: 'email' },
+        { text: 'Роль', value: 'role' },
+        { text: 'GSDB', value: 'gsdb' },
         {
-          id: 0,
-          name: 'E-mail',
-          isFilter: true,
-        },
-        {
-          id: 1,
-          name: 'Поставщик',
-          isFilter: true,
-        },
-        {
-          id: 2,
-          name: 'Пароль',
-          isFilter: false,
+          text: 'Действия', value: 'actions', sortable: false, width: 150, align: 'center',
         },
       ],
-      // tr таблицы
-      list: Array(105)
-        .fill(0)
-        .map((_, index) => ({
-          /* eslint-disable */
-          id: `f${(~~(Math.random() * 1e9)).toString(16)}`,
-          fields: [
-            {
-              name: `email@email.email ${index}`,
-            },
-            {
-              name: `GSDB1 ${index + Math.ceil(Math.random() * 100)}`,
-            },
-            {
-              name: '********',
-            },
-          ],
-        })),
+    };
+  },
+  watch: {
+    options: {
+      handler() {
+        this.getItems();
+      },
+      deep: true,
     },
-  }),
+  },
+  mounted() {
+    this.getItems();
+  },
   methods: {
-    async getUsers() {
-      await this.$http.get('users');
+    showUserModal(type, user) {
+      this.userSelected = user;
+      this.modalType = type;
+      this.userModal = true;
+    },
+    async getItems() {
+      this.loading = true;
+      const {
+        sortBy, sortDesc, page, itemsPerPage,
+      } = this.options;
+
+      const params = {};
+
+      if (itemsPerPage !== -1) {
+        params.pageSize = itemsPerPage;
+        params.page = page;
+      }
+
+      if (sortBy.length) {
+        params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
+      }
+
+      const { data } = await this.$http.get('users', { params }).finally(() => {
+        this.loading = false;
+      });
+
+      this.items = data.rows.map((it) => ({ ...it, role: it.role.join(', ') }));
+      this.total = data.total;
     },
   },
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>

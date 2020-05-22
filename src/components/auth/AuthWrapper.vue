@@ -6,6 +6,8 @@
           <img
             class="auth-block__logo__image"
             :src="require('@/assets/images/logo.svg')"
+            width="121"
+            height="93"
           >
           <span class="auth-block__logo__title">SUPPLIER-PORTAL</span>
         </div>

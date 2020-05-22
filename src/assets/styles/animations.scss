@@ -10,3 +10,12 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+.layout-fade-enter-active {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.layout-fade-enter,
+.layout-fade-leave-to {
+  opacity: 0;
+}

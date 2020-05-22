@@ -24,7 +24,8 @@
             v-model="login"
             class="input-block__input"
             :class="{'input-block__input_error': !!login.error}"
-            type="text"
+            autocomplete="username"
+            type="email"
           >
         </div>
         <div class="input-block">
@@ -46,6 +47,7 @@
             v-model="password"
             class="input-block__input"
             :class="{'input-block__input_error': !!password.error}"
+            autocomplete="current-password"
             type="password"
           >
         </div>
@@ -106,7 +108,7 @@ export default {
         email: this.login,
         password: this.password,
       });
-      this.$router.push('/');
+      this.$router.push('/users');
     },
   },
 };

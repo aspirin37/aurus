@@ -10,6 +10,7 @@ const outputDir = 'dist';
 const outputApp = `${outputDir}/app`;
 
 module.exports = {
+  lintOnSave: true,
   outputDir: outputApp,
   pages: {
     index: {
@@ -50,4 +51,7 @@ module.exports = {
       }),
     ],
   },
+  transpileDependencies: [
+    'vuetify',
+  ],
 };

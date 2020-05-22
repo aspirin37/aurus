@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axiosInstance from '../api';
 
 Vue.use(Vuex);
 
@@ -18,6 +19,8 @@ export default new Vuex.Store({
       localStorage.removeItem('jwtacc');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
+
+      delete axiosInstance.defaults.headers.jwtacc;
     },
   },
 });

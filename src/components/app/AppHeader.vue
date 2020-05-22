@@ -20,14 +20,14 @@
             >
               Мой профиль
             </router-link>
-            <!-- eslint-disable max-len -->
-            <button
-              class="btn aurus-button aurus-button_lowercase aurus-button_danger header__user__modal__exit"
+
+            <v-btn
+              color="primary"
+              outlined
               @click="signOut"
             >
               Выйти
-            </button>
-            <!-- eslint-enable max-len -->
+            </v-btn>
           </div>
         </div>
       </div>

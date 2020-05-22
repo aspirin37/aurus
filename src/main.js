@@ -9,6 +9,7 @@ import http from './api';
 import '@/assets/styles/index.scss';
 
 import config from './utils/config';
+import vuetify from './plugins/vuetify';
 
 Vue.use(BootstrapVue);
 
@@ -20,6 +21,7 @@ const app = new Vue({
   el: '#app',
   store,
   router,
+  vuetify,
   render: (h) => h(App),
 });
 

@@ -9,8 +9,7 @@ const axiosInstance = axios.create({
 });
 
 const jwtacc = localStorage.getItem('jwtacc');
-
-if (jwtacc && jwtacc !== 'undefined') {
+if (jwtacc) {
   axiosInstance.defaults.headers.jwtacc = jwtacc;
 }
 
@@ -39,16 +38,12 @@ axiosInstance.interceptors.response.use(
         localStorage.setItem('refreshToken', response.data.refreshToken);
       }
 
-      const user = await axiosInstance.get('main/getself');
-      store.commit('setUser', user);
+      const { data } = await axiosInstance.get('main/getself');
+      store.commit('setUser', data);
     }
-    return response.data;
+    return response;
   },
   async (error) => {
-    if (!error.response) {
-      return Promise.reject(error);
-    }
-
     // редиректы на страницу авторизации
     if (
       error.response.status === 401
@@ -64,12 +59,14 @@ axiosInstance.interceptors.response.use(
       //   return null;
       // }
       app.$router.push('/sign-in');
+      store.commit('signOut');
+      return error;
     }
 
     // всплывашка с ошибками
     if (error.response.status !== 401) {
-      const message = error.response.data && error.response.data.error
-        ? error.response.data.error.message
+      const message = error.response.data && error.response.data.message
+        ? error.response.data.message
         : error.message;
 
       app.$bvToast.toast(message, {

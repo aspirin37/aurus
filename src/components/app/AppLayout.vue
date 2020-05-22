@@ -5,7 +5,12 @@
     <div class="deafult-layout__wrapper">
       <app-header />
       <div class="default-layout__content">
-        <router-view />
+        <transition
+          name="layout-fade"
+          mode="out-in"
+        >
+          <router-view />
+        </transition>
       </div>
     </div>
   </div>
