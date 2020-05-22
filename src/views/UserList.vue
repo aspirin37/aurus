@@ -37,7 +37,7 @@
       :loading="loading"
       loading-text="Данные загружаются..."
     >
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.actions="{ }">
         <v-hover v-slot="{hover}">
           <v-icon
             class="mr-4"

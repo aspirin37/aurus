@@ -25,7 +25,7 @@
       :loading="loading"
       loading-text="Данные загружаются..."
     >
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.actions="{ }">
         <v-icon
           class="mr-4"
           small
