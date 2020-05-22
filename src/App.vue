@@ -1,20 +1,14 @@
 <template>
   <div id="app">
-    <router-view />
+    <v-app>
+      <router-view />
+    </v-app>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'App',
-  computed: {
-    isAuthPage() {
-      return this.$route.matched.some(({ name }) => name === 'Auth');
-    },
-  },
 };
 </script>
-
-<style>
-
-</style>

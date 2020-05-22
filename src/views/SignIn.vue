@@ -2,7 +2,7 @@
   <auth-wrapper>
     <form
       class="auth"
-      @submit.prevent="submit"
+      @submit.prevent="signIn"
     >
       <div class="auth-block__data">
         <div class="input-block">
@@ -21,10 +21,11 @@
           </label>
           <input
             id="login"
-            v-model="login.value"
+            v-model="login"
             class="input-block__input"
             :class="{'input-block__input_error': !!login.error}"
-            type="text"
+            autocomplete="username"
+            type="email"
           >
         </div>
         <div class="input-block">
@@ -43,9 +44,10 @@
           </label>
           <input
             id="password"
-            v-model="password.value"
+            v-model="password"
             class="input-block__input"
             :class="{'input-block__input_error': !!password.error}"
+            autocomplete="current-password"
             type="password"
           >
         </div>
@@ -96,19 +98,17 @@ export default {
     AuthWrapper,
   },
   data: () => ({
-    login: {
-      value: '',
-      error: 'Пользователя с таким логином не существует',
-    },
-    password: {
-      value: '',
-      error: '',
-    },
+    login: '',
+    password: '',
     rememberMe: false,
   }),
   methods: {
-    submit() {
-
+    async signIn() {
+      await this.$http.post('main/login', {
+        email: this.login,
+        password: this.password,
+      });
+      this.$router.push('/users');
     },
   },
 };

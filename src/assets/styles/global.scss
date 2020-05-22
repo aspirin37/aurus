@@ -15,7 +15,12 @@ body {
   background-color: #f1eeeb;
 }
 
-.input-block {
+img {
+  max-width: 100%;
+}
+
+.input-block,
+.select-block {
   display: grid;
   row-gap: 7px;
 }
@@ -27,6 +32,10 @@ body {
   margin-bottom: 0;
 }
 
+.input-block_white label {
+  color: var(--topaz);
+}
+
 .input-block__input {
   border-radius: 3px;
   border: 1px solid var(--platinum);
@@ -35,6 +44,20 @@ body {
   width: 100%;
   padding: 10px 6px;
   transition: border-color 0.3s ease-in-out;
+}
+
+.input-block__input_white {
+  border-color: #dddddd;
+  background-color: #fff;
+  color: var(--topaz);
+}
+
+.input-block__input_white::placeholder {
+  color: var(--platinum);
+}
+
+.input-block__input_table {
+  padding: 5px 6px;
 }
 
 .input-block__input:hover {
@@ -55,10 +78,74 @@ body {
   border-color: var(--amber);
 }
 
+.select-block__label,
+.switch-block__label {
+  color: var(--topaz);
+  display: block;
+  line-height: initial;
+  margin-bottom: 0;
+  user-select: none;
+}
+
+.select-block__select:focus {
+  box-shadow: none;
+  border-color: var(--aurum);
+}
+
+.switch-block {
+  align-items: center;
+}
+
+.switch-block__input {
+  display: none;
+}
+
+.switch-block__label {
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.switch-block .switch-block__label::before,
+.switch-block .switch-block__label::after {
+  top: initial;
+}
+
+.switch-block .switch-block__label::after {
+  width: 12px;
+  height: 12px;
+  left: -1.95rem;
+}
+
+.switch-block .switch-block__label::before {
+  width: 35px;
+  height: 20px;
+  border-radius: 25px;
+}
+
+.switch-block .switch-block__input:checked~.switch-block__label::after {
+  background-color: #fff;
+  transform: translateX(calc(100% + 3px));
+}
+
+.switch-block .switch-block__input:not(:disabled):active~.switch-block__label::after {
+  background-color: #fff;
+  opacity: 0.7;
+}
+
+.switch-block .switch-block__input:not(:disabled):active~.switch-block__label::before {
+  background-color: var(--platinum);
+  border-color: var(--platinum);
+}
+
+.switch-block .switch-block__input:checked~.switch-block__label::before {
+  border-color: var(--aurum);
+  background-color: var(--aurum);
+}
+
 .aurus-custom-control .custom-control-label {
   color: var(--margaritas);
 }
-
 
 .aurus-custom-control .custom-control-label::before,
 .aurus-custom-control .custom-control-label::after {
@@ -68,6 +155,14 @@ body {
 
 .aurus-custom-control .custom-control-label::before {
   border-color: var(--margaritas);
+}
+
+.aurus-custom-control_platinum .custom-control-label::before {
+  border-color: var(--platinum);
+}
+
+.aurus-custom-control_platinum:hover .custom-control-label::before {
+  border-color: var(--aurum);
 }
 
 .aurus-custom-control .custom-control-input:not(:disabled):active~.custom-control-label::before {
@@ -101,6 +196,14 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
+.aurus-button:focus {
+  box-shadow: none
+}
+
+.aurus-button_lowercase {
+  text-transform: initial;
+}
+
 .aurus-button:disabled {
   cursor: default;
   pointer-events: none;
@@ -111,11 +214,34 @@ body {
   color: var(--black);
 }
 
+.aurus-button_event:hover {
+  background-color: var(--margaritas);
+  color: #fff;
+}
+
+.aurus-button_event,
+.aurus-button_event:focus {
+  background-color: var(--aurum);
+  color: #fff;
+}
+
+.aurus-button_grayline {
+  color: var(--black);
+  border-color: var(--topaz);
+}
+
+.aurus-button_grayline:hover {
+  color: var(--aurum);
+  border-color: var(--aurum);
+}
+
+
 .aurus-button_line:hover {
   color: var(--aurum);
 }
 
-.aurus-button_line:focus {
+.aurus-button_line:focus,
+.aurus-button_grayline:focus {
   border-color: #9d6d4c;
   color: #9d6d4c;
   box-shadow: none;
@@ -125,6 +251,64 @@ body {
   color: #fff;
 }
 
+.aurus-button_danger {
+  border-color: var(--ruby);
+  color: var(--ruby);
+}
+
+.aurus-button_danger:hover {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
 .error-text {
   color: var(--amber);
+}
+
+.aurus-modal .modal-dialog {
+  max-width: fit-content !important;
+}
+
+.aurus-modal .modal-body {
+  padding: 0;
+}
+
+.aurus-modal .modal-content {
+  border-radius: 3px;
+  padding: 50px 125px;
+  border-top: 4px solid var(--amber);
+  box-shadow: 0 0 8px #00000059;
+}
+
+.aurus-modal .modal-header {
+  justify-content: center;
+  padding: 0;
+  border-bottom: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.aurus-modal .modal-title {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--aurum);
+}
+
+.aurus-modal .modal-footer {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  column-gap: 20px;
+  padding: 0;
+  border-top: none;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+
+.aurus-modal__body {
+  padding: 40px 0;
+  display: grid;
+  row-gap: 16px;
 }

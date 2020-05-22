@@ -1,0 +1,111 @@
+.header {
+  height: 80px;
+  background-color: var(--black);
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  column-gap: 130px;
+  align-items: center;
+  padding: 0 25px;
+
+  &__name {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 32px;
+    color: #9b9b9b;
+  }
+
+  &__notification {
+    position: relative;
+    cursor: pointer;
+
+    &__count {
+      top: -12px;
+      right: -14px;
+      position: absolute;
+      background-color: var(--aurum);
+      color: #fff;
+      border-radius: 50%;
+      min-width: 23px;
+      border: 2px solid var(--black);
+      height: 23px;
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &__user {
+    position: relative;
+
+    $user: &;
+
+    &__login {
+      position: relative;
+      cursor: pointer;
+      padding-right: 25px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 300;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: calc(50% - 2px);
+        right: 0;
+        border: 8px solid transparent;
+        border-top: 8px solid #fff;
+      }
+    }
+
+    &__modal {
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      width: 100%;
+      z-index: 1;
+      min-width: 200px;
+      padding: 15px 0 0 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-in-out;
+
+      &__content {
+        display: grid;
+        row-gap: 25px;
+        justify-content: center;
+        background-color: #f8f6f5;
+        padding: 20px 15px;
+        box-shadow: 0 0 5px 5px #0000001c;
+        transform: translateY(-10px);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      &__link {
+        font-size: 18px;
+        text-align: center;
+        color: var(--topaz);
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+          color: var(--aurum);
+          text-decoration: none;
+        }
+      }
+
+      &__exit {
+        padding: 5px 25px;
+      }
+    }
+
+    &:hover {
+      #{$user}__modal {
+        opacity: 1;
+        pointer-events: initial;
+      }
+
+      #{$user}__modal__content {
+        transform: translateY(0);
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ const outputDir = 'dist';
 const outputApp = `${outputDir}/app`;
 
 module.exports = {
+  lintOnSave: true,
   outputDir: outputApp,
   pages: {
     index: {
@@ -34,18 +35,23 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
-      new CopyWebpackPlugin([
-        {
-          from: path.resolve(__dirname, '.env.example'),
-          to: './',
-          toType: 'dir',
-        },
-        {
-          from: path.resolve(__dirname, 'build/dotenv.sh'),
-          to: './',
-          toType: 'dir',
-        },
-      ]),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, '.env.example'),
+            to: './',
+            toType: 'dir',
+          },
+          {
+            from: path.resolve(__dirname, 'build/dotenv.sh'),
+            to: './',
+            toType: 'dir',
+          },
+        ],
+      }),
     ],
   },
+  transpileDependencies: [
+    'vuetify',
+  ],
 };
