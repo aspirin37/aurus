@@ -18,7 +18,7 @@
               to="/profile/provider-profile"
               class="header__user__modal__link"
             >
-              Мой профиль
+              {{ $t('common.my_profile') }}
             </router-link>
 
             <v-btn
@@ -26,7 +26,7 @@
               outlined
               @click="signOut"
             >
-              Выйти
+              {{ $t('common.sign_out') }}
             </v-btn>
           </div>
         </div>

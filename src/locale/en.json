@@ -1,0 +1,49 @@
+{
+  "common": {
+    "login": "Login",
+    "password": "Password",
+    "add": "Add",
+    "filter": "Filter",
+    "loading_data": "Loading data...",
+    "name": "Name",
+    "role": "Role",
+    "actions": "Actions",
+    "send": "Send",
+    "cancel": "Cancel",
+    "select_role": "Select role",
+    "my_profile": "My profile",
+    "sign_out": "Sign out",
+    "password_placeholder": "Set a new password"
+  },
+  "views": {
+    "sign_in": {
+      "remember_me": "Remember me",
+      "sign_in": "Sign in",
+      "forgot_password": "Forgot password?"
+    },
+    "reset_password": {
+      "reset_letter_sent": "Reset letter was sent to the provided e-mail.",
+      "reset_letter_tip": "If you forgot password, please enter your e-mail and we'll send you a letter to reset it.",
+      "back_to_auth": "Back to authorization"
+    },
+    "email_list": {
+      "email_list": "E-mails",
+      "event": "Event",
+      "to": "To",
+      "cc": "cc",
+      "subject": "Subject"
+    },
+    "user_list": {
+      "adding_user": "Adding a new user",
+      "editing_user": "User editing",
+      "title": "Users - administration"
+    }
+  },
+  "navigation": {
+    "users": "Users",
+    "emails": "Emails"
+  },
+  "layout": {
+    "collapse": "Collapse menu"
+  }
+}

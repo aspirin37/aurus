@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex mb-3">
       <h1 class="display-1 primary--text">
-        Пользователи - администрирование
+        {{ $t('views.user_list.title') }}
       </h1>
       <div class="ml-auto">
         <v-btn
@@ -15,7 +15,7 @@
           <v-icon left>
             mdi-plus
           </v-icon>
-          Добавить
+          {{ $t('common.add') }}
         </v-btn>
         <v-btn
           outlined
@@ -24,7 +24,7 @@
           <v-icon left>
             mdi-filter-variant
           </v-icon>
-          Фильтр
+          {{ $t('common.filter') }}
         </v-btn>
       </div>
     </div>
@@ -35,7 +35,7 @@
       :options.sync="options"
       :server-items-length="total"
       :loading="loading"
-      loading-text="Данные загружаются..."
+      :loading-text="$t('common.loading_data')"
     >
       <template v-slot:item.actions="{ }">
         <v-hover v-slot="{hover}">
@@ -97,12 +97,12 @@ export default {
       loading: false,
       options: {},
       headers: [
-        { text: 'Имя', value: 'name' },
+        { text: this.$t('common.name'), value: 'name' },
         { text: 'E-mail', value: 'email' },
-        { text: 'Роль', value: 'role' },
+        { text: this.$t('common.role'), value: 'role' },
         { text: 'GSDB', value: 'gsdb' },
         {
-          text: 'Действия', value: 'actions', sortable: false, width: 150, align: 'center',
+          text: this.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
         },
       ],
     };

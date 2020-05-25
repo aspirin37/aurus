@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex mb-3">
       <h1 class="display-1 primary--text">
-        Список писем
+        {{ $t('views.email_list.email_list') }}
       </h1>
       <div class="ml-auto">
         <v-btn
@@ -12,7 +12,7 @@
           <v-icon left>
             mdi-filter-variant
           </v-icon>
-          Фильтр
+          {{ $t('common.filter') }}
         </v-btn>
       </div>
     </div>
@@ -23,7 +23,7 @@
       :options.sync="options"
       :server-items-length="total"
       :loading="loading"
-      loading-text="Данные загружаются..."
+      :loading-text="$t('common.loading_data')"
     >
       <template v-slot:item.actions="{ }">
         <v-icon
@@ -47,10 +47,10 @@ export default {
       loading: false,
       options: {},
       headers: [
-        { text: 'Событие', value: 'event' },
-        { text: 'Кому', value: 'to' },
-        { text: 'Копия', value: 'cc' },
-        { text: 'Тема', value: 'subject' },
+        { text: this.$t('views.email_list.event'), value: 'event' },
+        { text: this.$t('views.email_list.to'), value: 'to' },
+        { text: this.$t('views.email_list.cc'), value: 'cc' },
+        { text: this.$t('views.email_list.subject'), value: 'subject' },
       ],
     };
   },

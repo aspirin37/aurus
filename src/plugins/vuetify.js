@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 import ru from 'vuetify/es5/locale/ru';
+import en from 'vuetify/es5/locale/en';
+import i18n from './i18n';
 
 Vue.use(Vuetify);
 
@@ -32,7 +34,7 @@ export default new Vuetify({
     },
   },
   lang: {
-    locales: { ru },
-    current: 'ru',
+    locales: { ru, en },
+    current: i18n.locale,
   },
 });

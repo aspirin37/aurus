@@ -7,15 +7,14 @@
       <template v-if="isLetterSent">
         <div class="description">
           <div class="description__text">
-            Письмо с указаниями для сброса пароля было отправлено по указанному адресу.
+            {{ $t('views.reset_password.reset_letter_sent') }}
           </div>
         </div>
       </template>
       <template v-else>
         <div class="description">
           <div class="description__text">
-            Если вы забыли пароль, введите E-Mail, привязанный к вашей учетной записи.
-            Ссылка для сброса пароля будет выслана по указанному адресу.
+            {{ $t('views.reset_password.reset_letter_tip') }}
           </div>
         </div>
         <div class="auth-block__data">
@@ -50,7 +49,7 @@
             class="btn aurus-button aurus-button_line aurus-button_filled_white-color"
             type="submit"
           >
-            Отправить
+            {{ $t('common.send') }}
           </button>
         </template>
         <router-link
@@ -58,7 +57,7 @@
           :to="{name: 'SignIn'}"
           tag="span"
         >
-          Вернуться к авторизации
+          {{ $t('views.reset_password.back_to_auth') }}
         </router-link>
       </div>
     </form>

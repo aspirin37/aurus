@@ -1,4 +1,3 @@
-// враппер под все экраны, кроме экрана авторизации
 <template>
   <div class="default-layout">
     <app-sidebar />

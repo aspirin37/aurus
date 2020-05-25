@@ -7,6 +7,7 @@
       hide-header-close
       hide-footer
       centered
+      size="lg"
       @hide="$emit('input', false)"
     >
       <v-form @submit.prevent="submit">
@@ -34,7 +35,9 @@
             {{ user.email }}
           </div>
           <div class="input-block input-block_white">
-            <label class="input-block__label">Имя</label>
+            <label class="input-block__label">
+              {{ $t('common.name') }}
+            </label>
             <v-text-field
               v-model="user.name"
               hide-details
@@ -42,19 +45,23 @@
             />
           </div>
           <div class="input-block input-block_white">
-            <label class="input-block__label">Роль</label>
+            <label class="input-block__label">
+              {{ $t('common.role') }}
+            </label>
             <v-select
               v-model="user.role"
               :items="roles"
               item-text="name"
               hide-details
               elevation="0"
-              label="Выберите роль"
+              :label="$t('common.select_role')"
               solo
             />
           </div>
           <div class="input-block input-block_white">
-            <label class="input-block__label">GSDB</label>
+            <label class="input-block__label">
+              GSDB
+            </label>
             <v-text-field
               v-model="user.gsdb"
               hide-details
@@ -65,12 +72,14 @@
             v-if="isEditModal"
             class="input-block input-block_white"
           >
-            <label class="input-block__label">Пароль</label>
+            <label class="input-block__label">
+              {{ $t('common.password') }}
+            </label>
             <v-text-field
               v-model="user.password"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"
-              placeholder="Задать новый пароль"
+              :placeholder="$t('common.password_placeholder')"
               hide-details
               solo
               @click:append="showPassword = !showPassword"
@@ -90,7 +99,7 @@
             <v-icon left>
               mdi-plus
             </v-icon>
-            Добавить
+            {{ $t('common.add') }}
           </v-btn>
           <v-btn
             class="flex-grow-1"
@@ -98,7 +107,7 @@
             large
             @click="$refs.modal.hide()"
           >
-            Отменить
+            {{ $t('common.cancel') }}
           </v-btn>
         </div>
       </v-form>
@@ -136,7 +145,7 @@ export default {
   }),
   computed: {
     title() {
-      return this.isAddModal ? 'Добавление нового пользователя' : 'Редактирование пользователя';
+      return this.isAddModal ? this.$t('views.user_list.adding_user') : this.$t('views.user_list.editing_user');
     },
     submitDisabled() {
       return false;

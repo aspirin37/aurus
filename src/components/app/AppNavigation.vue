@@ -56,17 +56,17 @@ export default {
       type: Boolean,
     },
   },
-  data: () => ({
+  data: (vm) => ({
     activeMenuId: null,
     menus: [
       {
-        name: 'Пользователи',
+        name: vm.$t('navigation.users'),
         link: '/users',
         icon: 'mdi-account-multiple',
         deep: [],
       },
       {
-        name: 'Архив писем',
+        name: vm.$t('navigation.emails'),
         link: '/emails',
         icon: 'mdi-email-outline',
         deep: [],

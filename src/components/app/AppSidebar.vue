@@ -31,7 +31,7 @@
               v-if="sidebarIsOpen"
               class="sidebar__toggler__text"
             >
-              Свернуть меню
+              {{ $t('layout.collapse') }}
             </span>
           </transition>
         </button>
