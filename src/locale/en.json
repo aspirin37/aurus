@@ -13,7 +13,9 @@
     "select_role": "Select role",
     "my_profile": "My profile",
     "sign_out": "Sign out",
-    "password_placeholder": "Set a new password"
+    "password_placeholder": "Set a new password",
+    "edit": "Edit",
+    "save": "Save"
   },
   "views": {
     "sign_in": {
@@ -37,11 +39,20 @@
       "adding_user": "Adding a new user",
       "editing_user": "User editing",
       "title": "Users - administration"
+    },
+    "role_list": {
+      "role_list": "Roles",
+      "role_editing": "Role editing",
+      "role": "Role",
+      "availability": "Avalabililty",
+      "compatibility": "Compatibility",
+      "select_role": "Select a role"
     }
   },
   "navigation": {
     "users": "Users",
-    "emails": "Emails"
+    "emails": "Emails",
+    "roles": "Roles"
   },
   "layout": {
     "collapse": "Collapse menu"

@@ -1,118 +1,119 @@
 <template>
-  <div>
-    <b-modal
-      ref="modal"
-      :title="title"
-      modal-class="aurus-modal"
-      hide-header-close
-      hide-footer
-      centered
-      size="lg"
-      @hide="$emit('input', false)"
-    >
-      <v-form @submit.prevent="submit">
+  <b-modal
+    ref="modal"
+    :title="title"
+    modal-class="aurus-modal"
+    hide-header-close
+    hide-footer
+    centered
+    size="lg"
+    @hide="$emit('input', false)"
+  >
+    <v-form @submit.prevent="submit">
+      <div
+        class="v-application aurus-modal__body pt-0"
+        :class="{'pt-4': isAddModal}"
+      >
         <div
-          class="v-application aurus-modal__body pt-0"
-          :class="{'pt-4': isAddModal}"
+          v-if="isAddModal"
+          class="input-block input-block_white"
         >
-          <div
+          <label class="input-block__label">E-mail</label>
+          <v-text-field
+            v-model="user.email"
+            type="email"
+            hide-details
+            required
+            solo
+          />
+        </div>
+        <div
+          v-else
+          class="title primary--text"
+        >
+          {{ user.email }}
+        </div>
+        <div class="input-block input-block_white">
+          <label class="input-block__label">
+            {{ $t('common.name') }}
+          </label>
+          <v-text-field
+            v-model="user.name"
+            hide-details
+            solo
+          />
+        </div>
+        <div class="input-block input-block_white">
+          <label class="input-block__label">
+            {{ $t('common.role') }}
+          </label>
+          <v-select
+            v-model="user.role"
+            :items="roles"
+            item-text="name"
+            hide-details
+            elevation="0"
+            :label="$t('common.select_role')"
+            solo
+          />
+        </div>
+        <div class="input-block input-block_white">
+          <label class="input-block__label">
+            GSDB
+          </label>
+          <v-text-field
+            v-model="user.gsdb"
+            hide-details
+            solo
+          />
+        </div>
+        <div
+          v-if="isEditModal"
+          class="input-block input-block_white"
+        >
+          <label class="input-block__label">
+            {{ $t('common.password') }}
+          </label>
+          <v-text-field
+            v-model="user.password"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showPassword ? 'text' : 'password'"
+            :placeholder="$t('common.password_placeholder')"
+            hide-details
+            solo
+            @click:append="showPassword = !showPassword"
+          />
+        </div>
+      </div>
+      <div class="v-application d-flex">
+        <v-btn
+          color="primary"
+          class="mr-4 flex-grow-1"
+          :loading="loading"
+          outlined
+          large
+          type="submit"
+          :disabled="submitDisabled || loading"
+        >
+          <v-icon
             v-if="isAddModal"
-            class="input-block input-block_white"
+            left
           >
-            <label class="input-block__label">E-mail</label>
-            <v-text-field
-              v-model="user.email"
-              type="email"
-              hide-details
-              required
-              solo
-            />
-          </div>
-          <div
-            v-else
-            class="title primary--text"
-          >
-            {{ user.email }}
-          </div>
-          <div class="input-block input-block_white">
-            <label class="input-block__label">
-              {{ $t('common.name') }}
-            </label>
-            <v-text-field
-              v-model="user.name"
-              hide-details
-              solo
-            />
-          </div>
-          <div class="input-block input-block_white">
-            <label class="input-block__label">
-              {{ $t('common.role') }}
-            </label>
-            <v-select
-              v-model="user.role"
-              :items="roles"
-              item-text="name"
-              hide-details
-              elevation="0"
-              :label="$t('common.select_role')"
-              solo
-            />
-          </div>
-          <div class="input-block input-block_white">
-            <label class="input-block__label">
-              GSDB
-            </label>
-            <v-text-field
-              v-model="user.gsdb"
-              hide-details
-              solo
-            />
-          </div>
-          <div
-            v-if="isEditModal"
-            class="input-block input-block_white"
-          >
-            <label class="input-block__label">
-              {{ $t('common.password') }}
-            </label>
-            <v-text-field
-              v-model="user.password"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="showPassword ? 'text' : 'password'"
-              :placeholder="$t('common.password_placeholder')"
-              hide-details
-              solo
-              @click:append="showPassword = !showPassword"
-            />
-          </div>
-        </div>
-        <div class="v-application d-flex">
-          <v-btn
-            color="primary"
-            class="mr-4 flex-grow-1"
-            :loading="loading"
-            outlined
-            large
-            type="submit"
-            :disabled="submitDisabled || loading"
-          >
-            <v-icon left>
-              mdi-plus
-            </v-icon>
-            {{ $t('common.add') }}
-          </v-btn>
-          <v-btn
-            class="flex-grow-1"
-            outlined
-            large
-            @click="$refs.modal.hide()"
-          >
-            {{ $t('common.cancel') }}
-          </v-btn>
-        </div>
-      </v-form>
-    </b-modal>
-  </div>
+            mdi-plus
+          </v-icon>
+          {{ $t(isAddModal ? 'common.add' : 'common.save') }}
+        </v-btn>
+        <v-btn
+          class="flex-grow-1"
+          outlined
+          large
+          @click="$refs.modal.hide()"
+        >
+          {{ $t('common.cancel') }}
+        </v-btn>
+      </div>
+    </v-form>
+  </b-modal>
 </template>
 
 <script>

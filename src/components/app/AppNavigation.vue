@@ -66,6 +66,12 @@ export default {
         deep: [],
       },
       {
+        name: vm.$t('navigation.roles'),
+        link: '/roles',
+        icon: 'mdi-shield-account',
+        deep: [],
+      },
+      {
         name: vm.$t('navigation.emails'),
         link: '/emails',
         icon: 'mdi-email-outline',

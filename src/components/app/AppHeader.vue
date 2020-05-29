@@ -3,19 +3,18 @@
     <div class="header__wrapper">
       <span class="header__name">supplier-portal</span>
     </div>
-    <div class="header__wrapper">
-      <div class="header__notification">
-        <img :src="require('@/assets/images/notification.svg')">
-        <span class="header__notification__count">3</span>
-      </div>
-    </div>
+    <!-- <div class="d-flex">
+      <div>EN</div>
+      <div>&nbsp;|&nbsp;</div>
+      <div>RU</div>
+    </div> -->
     <div class="header__wrapper">
       <div class="header__user">
         <span class="header__user__login">{{ user.name }}</span>
         <div class="header__user__modal">
           <div class="header__user__modal__content">
             <router-link
-              to="/profile/provider-profile"
+              to="/"
               class="header__user__modal__link"
             >
               {{ $t('common.my_profile') }}

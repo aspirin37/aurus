@@ -13,7 +13,9 @@
     "select_role": "Выберите роль",
     "my_profile": "Мой профиль",
     "sign_out": "Выйти",
-    "password_placeholder": "Задайте новый пароль"
+    "password_placeholder": "Задайте новый пароль",
+    "edit": "Изменить",
+    "save": "Сохранить"
   },
   "views": {
     "sign_in": {
@@ -37,11 +39,20 @@
       "adding_user": "Добавление нового пользователя",
       "editing_user": "Редактирование пользователя",
       "title": "Пользователи - администрирование"
+    },
+    "role_list": {
+      "role_list": "Список ролей",
+      "role_editing": "Редактирование роли",
+      "role": "Роль",
+      "availability": "Доступность",
+      "compatibility": "Совместимость",
+      "select_role": "Выберите роль"
     }
   },
   "navigation": {
     "users": "Пользователи",
-    "emails": "Архив писем"
+    "emails": "Архив писем",
+    "roles": "Роли"
   },
   "layout": {
     "collapse": "Свернуть меню"

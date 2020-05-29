@@ -37,7 +37,7 @@
       :loading="loading"
       :loading-text="$t('common.loading_data')"
     >
-      <template v-slot:item.actions="{ }">
+      <template v-slot:item.actions="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
             class="mr-4"
@@ -60,7 +60,6 @@
         </v-hover>
         <v-hover v-slot="{hover}">
           <v-icon
-            v-b-modal.user-modal
             :class="hover ? '' : 'text--disabled'"
             color="primary"
             size="20"
@@ -84,6 +83,7 @@
 import UserModal from '@/components/users/UserModal.vue';
 
 export default {
+  name: 'UserList',
   components: {
     UserModal,
   },
