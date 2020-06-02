@@ -11,7 +11,7 @@
             :class="{'input-block__label_error': !!login.error}"
             for="login"
           >
-            Логин
+            {{ $t('common.login') }}
             <span
               v-if="!!login.error"
               class="error-text"
@@ -34,7 +34,7 @@
             :class="{'input-block__label_error': !!password.error}"
             for="password"
           >
-            Пароль
+            {{ $t('common.password') }}
             <span
               v-if="!!login.error"
               class="error-text"
@@ -63,7 +63,7 @@
             class="custom-control-label"
             for="remember-me"
           >
-            Запомнить меня
+            {{ $t('views.sign_in.remember_me') }}
           </label>
         </div>
       </div>
@@ -73,7 +73,7 @@
           class="btn aurus-button aurus-button_line aurus-button_filled_white-color"
           type="submit"
         >
-          Войти
+          {{ $t('views.sign_in.sign_in') }}
         </button>
       </div>
       <div class="forget">
@@ -82,7 +82,7 @@
           :to="{name: 'ResetPassword'}"
           tag="span"
         >
-          Забыли пароль и хотите его восстановить?
+          {{ $t('views.sign_in.forgot_password') }}
         </router-link>
       </div>
     </form>

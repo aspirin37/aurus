@@ -1,27 +1,15 @@
 <template>
   <div>
-    <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
-        {{ $t('views.email_list.email_list') }}
-      </h1>
-      <div class="ml-auto">
-        <v-btn
-          outlined
-          large
-        >
-          <v-icon left>
-            mdi-filter-variant
-          </v-icon>
-          {{ $t('common.filter') }}
-        </v-btn>
-      </div>
-    </div>
+    <h1 class="display-1 primary--text mb-3">
+      {{ $t('views.role_list.role_list') }}
+    </h1>
     <v-data-table
       fixed-header
+      disable-pagination
+      hide-default-footer
       :headers="headers"
       :items="items"
       :options.sync="options"
-      :server-items-length="total"
       :loading="loading"
       :loading-text="$t('common.loading_data')"
     >
@@ -32,31 +20,42 @@
             :class="hover ? '' : 'text--disabled'"
             color="primary"
             size="20"
-            @click="$router.push(`/emails/${item.id}`)"
+            @click="showRoleModal(item)"
           >
-            mdi-email-outline
+            mdi-pencil
           </v-icon>
         </v-hover>
       </template>
     </v-data-table>
+    <role-modal
+      v-model="roleModal"
+      :role-list="items"
+      :role-selected="roleSelected"
+      @submit="getItems"
+    />
   </div>
 </template>
 
 <script>
+import RoleModal from '@/components/roles/RoleModal.vue';
 
 export default {
-  name: 'EmailList',
+  name: 'RoleList',
+  components: {
+    RoleModal,
+  },
   data() {
     return {
+      roleModal: false,
+      roleSelected: null,
       total: 0,
       items: [],
       loading: false,
       options: {},
       headers: [
-        { text: this.$t('views.email_list.event'), value: 'event' },
-        { text: this.$t('views.email_list.to'), value: 'to' },
-        { text: this.$t('views.email_list.cc'), value: 'cc' },
-        { text: this.$t('views.email_list.subject'), value: 'subject' },
+        { text: this.$t('views.role_list.role'), value: 'name' },
+        { text: this.$t('views.role_list.availability'), value: 'availableFor' },
+        { text: this.$t('views.role_list.compatibility'), value: 'compatibleWith' },
         {
           text: this.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
         },
@@ -75,24 +74,23 @@ export default {
     this.getItems();
   },
   methods: {
+    showRoleModal(role) {
+      this.roleSelected = role;
+      this.roleModal = true;
+    },
     async getItems() {
       this.loading = true;
       const {
-        sortBy, sortDesc, page, itemsPerPage,
+        sortBy, sortDesc,
       } = this.options;
 
       const params = {};
-
-      if (itemsPerPage !== -1) {
-        params.pageSize = itemsPerPage;
-        params.page = page;
-      }
 
       if (sortBy.length) {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
 
-      const { data } = await this.$http.get('mails', { params }).finally(() => {
+      const { data } = await this.$http.get('roles', { params }).finally(() => {
         this.loading = false;
       });
 
