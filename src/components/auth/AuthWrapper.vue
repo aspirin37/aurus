@@ -12,6 +12,7 @@
           <span class="auth-block__logo__title">SUPPLIER PORTAL</span>
         </div>
         <slot />
+        <locale-switch class="mx-auto" />
       </div>
       <privacy />
     </div>
@@ -20,11 +21,13 @@
 
 <script>
 import Privacy from '@/components/auth/Privacy.vue';
+import LocaleSwitch from '@/components/common/LocaleSwitch.vue';
 
 export default {
   name: 'AuthWrapper',
   components: {
     Privacy,
+    LocaleSwitch,
   },
 };
 </script>

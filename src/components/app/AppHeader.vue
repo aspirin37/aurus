@@ -3,11 +3,9 @@
     <div class="header__wrapper">
       <span class="header__name">supplier-portal</span>
     </div>
-    <!-- <div class="d-flex">
-      <div>EN</div>
-      <div>&nbsp;|&nbsp;</div>
-      <div>RU</div>
-    </div> -->
+    <div class="header__wrapper">
+      <locale-switch />
+    </div>
     <div class="header__wrapper">
       <div class="header__user">
         <span class="header__user__login">{{ user.name }}</span>
@@ -36,9 +34,13 @@
 
 <script>
 import { mapState } from 'vuex';
+import LocaleSwitch from '@/components/common/LocaleSwitch.vue';
 
 export default {
   name: 'AppHeader',
+  components: {
+    LocaleSwitch,
+  },
   computed: {
     ...mapState(['user']),
   },
@@ -50,3 +52,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.header .locale-switch {
+  transform: translateY(-10px);
+}
+</style>
