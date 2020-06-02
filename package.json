@@ -13,6 +13,7 @@
     "test": "jest --config test/jest.conf.js --verbose"
   },
   "dependencies": {
+    "@kazupon/vue-i18n-loader": "^0.5.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.14.0",
