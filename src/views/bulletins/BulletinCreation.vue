@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">Новое объявление</h1>
+      <h1 class="display-1 primary--text">{{ $t('views.bulletin_creation.bulletin_creation') }}</h1>
       <div class="ml-auto d-flex">
         <router-link to="/bulletins/list" class="create-add-page__top__back-link my-auto">
           <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
@@ -10,14 +10,14 @@
               transform="translate(-4 -4)"
             />
           </svg>
-          назад к объявлениям
+          {{ $t('views.bulletin_creation.back_to_list') }}
         </router-link>
       </div>
     </div>
     <main class="create-add-page__main">
       <v-form @submit.prevent="create" class="create-add-form">
         <div class="input-block input-block_white">
-          <label class="input-block__label">Тема сообщения</label>
+          <label class="input-block__label">{{ $t('views.bulletin_creation.subject') }}</label>
           <v-text-field
             v-model="bulletin.subject"
             hide-details
@@ -27,7 +27,7 @@
 
         <div class="create-add-form__item create-add-form__item_three">
           <div class="input-block input-block_white">
-            <label class="input-block__label">Дата сообщения</label>
+            <label class="input-block__label">{{ $t('views.bulletin_creation.start_date') }}</label>
             <v-menu
               v-model="isStartDatePickerShown"
               :close-on-content-click="false"
@@ -54,7 +54,7 @@
           </div>
 
           <div class="input-block input-block_white">
-            <label class="input-block__label">Время сообщения</label>
+            <label class="input-block__label">{{ $t('views.bulletin_creation.start_time') }}</label>
             <v-menu
               ref="startTime"
               v-model="isStartTimePickerShown"
@@ -85,7 +85,7 @@
           </div>
 
           <div class="input-block input-block_white">
-            <label class="input-block__label">Дата окончания действия сообщения</label>
+            <label class="input-block__label">{{ $t('views.bulletin_creation.end_date') }}</label>
             <v-menu
               v-model="isEndDatePickerShown"
               :close-on-content-click="false"
@@ -114,7 +114,7 @@
 
         <div class="create-add-form__item">
           <div class="textarea-block textarea-block_white">
-            <label class="textarea-block__label">Текст сообщения</label>
+            <label class="textarea-block__label">{{ $t('views.bulletin_creation.text') }}</label>
             <textarea
               v-model="bulletin.text"
               rows="5"
@@ -126,14 +126,14 @@
         <div class="create-add-form__item create-add-form__item_two">
           <div class="create-add-form__item__wrapper create-add-form__item__wrapper_with-attach">
             <div class="select-block select-block_white">
-              <label class="select-block__label">Список поставщиков для рассылки</label>
+              <label class="select-block__label">{{ $t('views.bulletin_creation.suppliers') }}</label>
               <v-select
                 v-model="bulletin.suppliers"
                 :items="suppliers"
                 multiple
                 solo
                 chips
-                label="Все"
+                :label="$t('common.all')"
               />
             </div>
 
@@ -183,20 +183,22 @@
                       transform="translate(-7 15.058) rotate(-90)"
                     />
                   </svg>
-                  прикрепить файл
+                  {{ $t('views.bulletin_creation.attach_file') }}
                 </button>
                 <button
                   type="submit"
                   class="btn aurus-button aurus-button_line aurus-button_lowercase attach-block__button"
                 >
-                  создать
+                  {{ $t('common.create') }}
                 </button>
               </div>
             </div>
           </div>
 
           <div class="create-add-form__item__wrapper create-add-form__item__wrapper_with-checkbox">
-            <span class="create-add-form__item__title">Выполнить рассылку</span>
+            <span class="create-add-form__item__title">
+              {{ $t('views.bulletin_creation.send_mails') }}
+            </span>
             <div class="create-add-form__item__inner align-items-center my-auto">
               <div
                 class="custom-control custom-checkbox d-flex aurus-custom-control aurus-custom-control_white"
@@ -211,7 +213,7 @@
                   for="add-messsage-mailing"
                   class="custom-control-label"
                 >
-                  да (вид уведомления "Важное сообщение")
+                  {{ $t('views.bulletin_creation.send_mails_true') }}
                 </label>
               </div>
             </div>

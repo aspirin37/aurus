@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">Объявления</h1>
+      <h1 class="display-1 primary--text">{{ $t('views.bulletin_list.bulletin_list') }}</h1>
       <div class="ml-auto">
         <v-btn
           to="/bulletins/list/create"
@@ -11,14 +11,14 @@
           large
         >
           <v-icon left>mdi-plus</v-icon>
-          добавить
+          {{ $t('common.add') }}
         </v-btn>
         <v-btn
           outlined
           large
         >
           <v-icon left>mdi-filter-variant</v-icon>
-          Фильтр
+          {{ $t('common.filter') }}
         </v-btn>
         <!-- <filter-component
           filterClass="adds-table-page__top__button"
@@ -60,13 +60,37 @@ export default {
   data() {
     return {
       headers: [
-        { text: 'Тема', value: 'subject' },
-        { text: 'Дата', value: 'startDate' },
-        { text: 'Истекает', value: 'endDate' },
-        { text: 'Редактор', value: 'editedBy.name' },
-        { text: 'Дата ред.', value: 'updatedAt' },
-        { text: 'E-mail', value: 'isImportant' },
-        { text: 'Действия', value: 'actions', sortable: false, width: 150, align: 'center' },
+        {
+          text: this.$t('views.bulletin_list.subject'),
+          value: 'subject'
+        },
+        {
+          text: this.$t('views.bulletin_list.start_date'),
+          value: 'startDate'
+        },
+        {
+          text: this.$t('views.bulletin_list.end_date'),
+          value: 'endDate'
+        },
+        {
+          text: this.$t('views.bulletin_list.edited_by'),
+          value: 'editedBy.name'
+        },
+        {
+          text: this.$t('views.bulletin_list.edited_at'),
+          value: 'updatedAt'
+        },
+        {
+          text: this.$t('views.bulletin_list.email'),
+          value: 'isImportant'
+        },
+        {
+          text: this.$t('common.actions'),
+          value: 'actions',
+          sortable: false,
+          width: 150,
+          align: 'center'
+        },
       ],
 
       items: [],

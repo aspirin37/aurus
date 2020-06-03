@@ -61,18 +61,18 @@ export default {
     menus: [
       {
         id: 0,
-        name: 'Объявления',
+        name: vm.$t('navigation.bulletins'),
         icon: 'art_track',
         link: '/bulletins',
         deep: [
           {
             id: 0,
-            name: 'Доска объявлений',
+            name: vm.$t('navigation.bulletin_board'),
             link: '/board'
           },
           {
             id: 1,
-            name: 'Управлений списком сообщений',
+            name: vm.$t('navigation.bulletin_management'),
             link: '/list'
           }
         ]

@@ -15,7 +15,9 @@
     "sign_out": "Sign out",
     "password_placeholder": "Set a new password",
     "edit": "Edit",
-    "save": "Save"
+    "save": "Save",
+    "create": "Create",
+    "all": "All"
   },
   "views": {
     "sign_in": {
@@ -47,9 +49,34 @@
       "availability": "Avalabililty",
       "compatibility": "Compatibility",
       "select_role": "Select a role"
+    },
+    "bulletin_list": {
+      "bulletin_list": "Bulletins",
+      "subject": "Subject",
+      "start_date": "Date",
+      "end_date": "Valid till",
+      "edited_by": "Edited by",
+      "edited_at": "Edited at",
+      "email": "E-mail"
+    },
+    "bulletin_creation": {
+      "bulletin_creation": "New bulletin",
+      "back_to_list": "back to bulletins",
+      "subject": "Subject",
+      "start_date": "Date",
+      "start_time": "Time",
+      "end_date": "Valid till",
+      "text": "Message",
+      "suppliers": "Supplier list",
+      "attach_file": "attach file",
+      "send_mails": "Send mails",
+      "send_mails_true": "yes (important message)"
     }
   },
   "navigation": {
+    "bulletins": "Bulletins",
+    "bulletin_board": "Bulletin board",
+    "bulletin_management": "Bulletin list management",
     "users": "Users",
     "emails": "Emails",
     "roles": "Roles"

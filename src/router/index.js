@@ -32,7 +32,7 @@ const routes = [
       component: () => import('@/views/EmailList'),
     }, {
       path: 'bulletins/board',
-      name: 'BulletinList',
+      name: 'BulletinBoard',
       component: () => import('@/views/bulletins/BulletinList')
     }, {
       path: 'bulletins/list',
