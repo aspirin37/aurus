@@ -10,6 +10,7 @@ import '@/assets/styles/index.scss';
 
 import config from './utils/config';
 import vuetify from './plugins/vuetify';
+import i18n from './plugins/i18n';
 
 Vue.use(BootstrapVue);
 
@@ -21,6 +22,7 @@ const app = new Vue({
   el: '#app',
   store,
   router,
+  i18n,
   vuetify,
   render: (h) => h(App),
 });

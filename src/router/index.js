@@ -20,6 +20,9 @@ const routes = [
     component: () => import('@/components/app/AppLayout'),
     beforeEnter: redirectIfNotAuthorized,
     children: [{
+      path: '',
+      redirect: 'users',
+    }, {
       path: 'users',
       name: 'UserList',
       component: () => import('@/views/UserList'),
@@ -39,6 +42,15 @@ const routes = [
       path: 'bulletins/list/create',
       name: 'BulletinCreation',
       component: () => import('@/views//bulletins/BulletinCreation')
+    }, {
+      path: 'emails/:id',
+      name: 'Email',
+      props: true,
+      component: () => import('@/views/Email'),
+    }, {
+      path: 'roles',
+      name: 'RoleList',
+      component: () => import('@/views/RoleList'),
     }],
   },
   {
@@ -49,9 +61,6 @@ const routes = [
     path: '/reset-password',
     name: 'ResetPassword',
     component: () => import('@/views/ResetPassword.vue'),
-  }, {
-    path: '*',
-    redirect: '/users',
   },
 ];
 
