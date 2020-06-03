@@ -75,7 +75,20 @@ html {
   }
 }
 
-.theme--light.v-data-table tbody tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper), {
+.theme--light.v-data-table tbody tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
   background: inherit !important;
   color: var(--aurum);
+}
+
+.v-application .navigation__item__deep__link {
+  color: var(--margaritas);
+
+  &_active {
+    color: var(--aurum); 
+  }
+}
+
+.v-time-picker-clock__hand.accent, .v-time-picker-clock__item--active.accent {
+  background-color: #82b1ff !important;
+  border-color: #82b1ff !important;
 }

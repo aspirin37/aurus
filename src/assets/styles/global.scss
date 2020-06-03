@@ -20,20 +20,112 @@ img {
 }
 
 .input-block,
-.select-block {
+.select-block,
+.textarea-block,
+.aurus-multiselect {
   display: grid;
   row-gap: 7px;
 }
 
-.input-block__label {
+.input-block__label,
+.textarea-block__label,
+.aurus-multiselect__title {
   color: var(--platinum);
   display: block;
   line-height: initial;
   margin-bottom: 0;
 }
 
-.input-block_white label {
+.select-block__label {
+  color: var(--platinum);
+  display: block;
+  line-height: initial;
+  margin-bottom: 0;
+  user-select: none;
+}
+
+.input-block_white label,
+.textarea-block_white label,
+.aurus-multiselect_white .aurus-multiselect__title,
+.select-block_white .select-block__label {
   color: var(--topaz);
+}
+
+.aurus-multiselect .multiselect__placeholder {
+  font-size: 1rem;
+}
+
+.aurus-multiselect .multiselect__tags {
+  border-color: #ddd;
+  transition: all 0.3s ease-in-out;
+  padding: 10px 40px 0 8px;
+  min-height: 46px;
+}
+
+.aurus-multiselect .multiselect__tags:hover {
+  border-color: var(--margaritas);
+}
+
+.aurus-multiselect .multiselect--active .multiselect__tags,
+.aurus-multiselect .multiselect--above .multiselect__content-wrapper {
+  border-color: var(--aurum);
+}
+
+.aurus-multiselect .multiselect__content-wrapper::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+}
+
+.aurus-multiselect .multiselect__content-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--amber);
+  border-radius: 10px;
+}
+
+.aurus-multiselect .multiselect__option--highlight,
+.aurus-multiselect .multiselect__option--highlight::after {
+  background: var(--aurum);
+}
+
+.aurus-multiselect .multiselect__option--selected.multiselect__option--highlight,
+.aurus-multiselect .multiselect__option--selected.multiselect__option--highlight::after {
+  background-color: var(--ruby);
+}
+
+.aurus-multiselect .multiselect__tag {
+  background-color: var(--aurum);
+  padding: 6px 26px 5px 10px;
+}
+
+.aurus-multiselect .multiselect__tag-icon:after {
+  color: #fff;
+}
+
+.aurus-multiselect .multiselect__tag-icon:focus,
+.aurus-multiselect .multiselect__tag-icon:hover {
+  background: var(--aurum);
+}
+
+.aurus-multiselect .multiselect__option--selected {
+  background-color: #f1eeeb;
+  font-weight: normal;
+}
+
+.textarea-block__textarea {
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  padding: 10px 6px;
+  color: var(--topaz);
+  transition: border-color 0.3s ease-in-out;
+}
+
+.textarea-block__textarea:hover {
+  border-color: var(--margaritas);
+}
+
+.textarea-block__textarea:focus {
+  outline: none;
+  border-color: var(--aurum);
 }
 
 .input-block__input {
@@ -52,6 +144,15 @@ img {
   color: var(--topaz);
 }
 
+.select-block__select {
+  min-height: 46px;
+  border-color: var(--platinum);
+}
+
+.select-block__select_white {
+  border-color: #dddddd;
+}
+
 .input-block__input_white::placeholder {
   color: var(--platinum);
 }
@@ -60,7 +161,8 @@ img {
   padding: 5px 6px;
 }
 
-.input-block__input:hover {
+.input-block__input:hover,
+.select-block .select-block__select:hover {
   border-color: var(--margaritas);
 }
 
@@ -78,7 +180,6 @@ img {
   border-color: var(--amber);
 }
 
-.select-block__label,
 .switch-block__label {
   color: var(--topaz);
   display: block;
@@ -186,6 +287,10 @@ img {
   background-color: var(--aurum);
 }
 
+.aurus-custom-control_white .custom-control-label {
+  color: var(--topaz)
+}
+
 .aurus-button {
   font-weight: 500;
   width: fit-content;
@@ -220,7 +325,7 @@ img {
 }
 
 .aurus-button_event,
-.aurus-button_event:focus {
+.aurus-button_event:active {
   background-color: var(--aurum);
   color: #fff;
 }
@@ -240,8 +345,8 @@ img {
   color: var(--aurum);
 }
 
-.aurus-button_line:focus,
-.aurus-button_grayline:focus {
+.aurus-button_line:active,
+.aurus-button_grayline:active {
   border-color: #9d6d4c;
   color: #9d6d4c;
   box-shadow: none;

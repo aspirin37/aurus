@@ -1,0 +1,453 @@
+<template>
+  <div>
+    <div class="d-flex mb-3">
+      <h1 class="display-1 primary--text">Новое объявление</h1>
+      <div class="ml-auto d-flex">
+        <router-link to="/bulletins/list" class="create-add-page__top__back-link my-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+            <path
+              d="M9,4l.881.881L6.394,8.375H14v1.25H6.394l3.487,3.494L9,14,4,9Z"
+              transform="translate(-4 -4)"
+            />
+          </svg>
+          назад к объявлениям
+        </router-link>
+      </div>
+    </div>
+    <main class="create-add-page__main">
+      <v-form @submit.prevent="create" class="create-add-form">
+        <div class="input-block input-block_white">
+          <label class="input-block__label">Тема сообщения</label>
+          <v-text-field
+            v-model="bulletin.subject"
+            hide-details
+            solo
+          />
+        </div>
+
+        <div class="create-add-form__item create-add-form__item_three">
+          <div class="input-block input-block_white">
+            <label class="input-block__label">Дата сообщения</label>
+            <v-menu
+              v-model="isStartDatePickerShown"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              nudge-bottom="10px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="startDate"
+                  readonly
+                  hide-details
+                  solo
+                  v-on="on"
+                />
+              </template>
+              <v-date-picker
+                v-model="startDate"
+                dark
+                @input="isStartDatePickerShown = false"
+              />
+            </v-menu>
+          </div>
+
+          <div class="input-block input-block_white">
+            <label class="input-block__label">Время сообщения</label>
+            <v-menu
+              ref="startTime"
+              v-model="isStartTimePickerShown"
+              :close-on-content-click="false"
+              :return-value.sync="startTime"
+              transition="scale-transition"
+              offset-y
+              nudge-bottom="10px"
+              max-width="290px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="startTime"
+                  readonly
+                  hide-details
+                  solo
+                  v-on="on"
+                />
+              </template>
+              <v-time-picker
+                v-if="isStartTimePickerShown"
+                v-model="startTime"
+                dark
+                @click:minute="$refs.startTime.save(startTime)"
+              />
+            </v-menu>
+          </div>
+
+          <div class="input-block input-block_white">
+            <label class="input-block__label">Дата окончания действия сообщения</label>
+            <v-menu
+              v-model="isEndDatePickerShown"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              nudge-bottom="10px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="endDate"
+                  readonly
+                  hide-details
+                  solo
+                  v-on="on"
+                />
+              </template>
+              <v-date-picker
+                v-model="endDate"
+                dark
+                @input="isEndDatePickerShown = false"
+              />
+            </v-menu>
+          </div>
+        </div>
+
+        <div class="create-add-form__item">
+          <div class="textarea-block textarea-block_white">
+            <label class="textarea-block__label">Текст сообщения</label>
+            <textarea
+              v-model="bulletin.text"
+              rows="5"
+              class="textarea-block__textarea"
+            />
+          </div>
+        </div>
+
+        <div class="create-add-form__item create-add-form__item_two">
+          <div class="create-add-form__item__wrapper create-add-form__item__wrapper_with-attach">
+            <div class="select-block select-block_white">
+              <label class="select-block__label">Список поставщиков для рассылки</label>
+              <v-select
+                v-model="bulletin.suppliers"
+                :items="suppliers"
+                multiple
+                solo
+                chips
+                label="Все"
+              />
+            </div>
+
+            <div class="attach">
+              <div class="attach-block">
+                <div
+                  v-for="(attachment, index) of bulletin.attachments"
+                  :key="index"
+                  class="attach-block__element"
+                >
+                  <span class="attach-block__title">{{ attachment.name }}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="9.333"
+                    height="12"
+                    viewBox="0 0 9.333 12"
+                    @click="removeAttachment(index)"
+                  >
+                    <path
+                      d="M5.667,13.667A1.337,1.337,0,0,0,7,15h5.333a1.337,1.337,0,0,0,1.333-1.333v-8h-8Zm8.667-10H12L11.333,3H8l-.667.667H5V5h9.333Z"
+                      transform="translate(-5 -3)"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <div class="attach-block attach-block_buttons">
+                <input
+                  type="file"
+                  ref="attachments"
+                  class="d-none"
+                  @change="addAttachments"
+                />
+                <button
+                  type="button"
+                  class="btn aurus-button aurus-button_line aurus-button_lowercase attach-block__button attach-block__button_upload"
+                  @click.prevent="selectAttachments"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="7.182"
+                    height="13.058"
+                    viewBox="0 0 7.182 13.058"
+                  >
+                    <path
+                      d="M2,10.591A3.589,3.589,0,0,1,5.591,7h6.855a2.612,2.612,0,0,1,0,5.223H6.9a1.632,1.632,0,1,1,0-3.264h4.9v1.306H6.838c-.359,0-.359.653,0,.653h5.608a1.306,1.306,0,0,0,0-2.612H5.591a2.285,2.285,0,0,0,0,4.57h6.2v1.306h-6.2A3.589,3.589,0,0,1,2,10.591Z"
+                      transform="translate(-7 15.058) rotate(-90)"
+                    />
+                  </svg>
+                  прикрепить файл
+                </button>
+                <button
+                  type="submit"
+                  class="btn aurus-button aurus-button_line aurus-button_lowercase attach-block__button"
+                >
+                  создать
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="create-add-form__item__wrapper create-add-form__item__wrapper_with-checkbox">
+            <span class="create-add-form__item__title">Выполнить рассылку</span>
+            <div class="create-add-form__item__inner align-items-center my-auto">
+              <div
+                class="custom-control custom-checkbox d-flex aurus-custom-control aurus-custom-control_white"
+              >
+                <input
+                  v-model="bulletin.isImportant"
+                  id="add-messsage-mailing"
+                  type="checkbox"
+                  class="custom-control-input"
+                />
+                <label
+                  for="add-messsage-mailing"
+                  class="custom-control-label"
+                >
+                  да (вид уведомления "Важное сообщение")
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </v-form>
+    </main>
+  </div>
+</template>
+
+<script>
+import uuidv4 from 'uuid/v4';
+
+export default {
+  name: 'BulletinCreation',
+
+  data() {
+    return {
+      bulletin: {
+        subject: '',
+        startDate: null,
+        endDate: null,
+        text: '',
+        suppliers: [],
+        isImportant: false,
+        attachments: []
+      },
+
+      startDate: new Date().toISOString().substr(0, 10),
+      startTime: '00:00',
+      endDate: new Date().toISOString().substr(0, 10),
+
+      attachments: [],
+
+      isStartDatePickerShown: false,
+      isStartTimePickerShown: false,
+      isEndDatePickerShown: false,
+
+      suppliers: [],
+
+      loading: false,
+      creating: false
+    }
+  },
+
+  created() {
+    this.getSuppliers();
+  },
+
+  methods: {
+    selectAttachments() {
+      this.$refs.attachments.value = ``;
+      this.$refs.attachments.click();
+    },
+
+    addAttachments() {
+      const attachments = [...this.$refs.attachments.files].map((item) => ({
+        ...item,
+        blobName: ''
+      }));
+      this.attachments.push(...attachments);
+    },
+
+    removeAttachment(index) {
+      this.attachments.splice(index, 1);
+    },
+
+    async getSuppliers() {
+      this.loading = true;
+      try {
+        const { data } = await this.$http.get('suppliers');
+        this.suppliers = data.rows.map((item) => item.gsdb);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async postAttachment(attachment) {
+      if (!attachment.blobName) {
+        const uuid = uuidv4();
+        const { path } = await this.$http.get(`/containers/${BULLETINS_CONTAINER}/${uuid}`, {
+          params: {
+            type: attachment.type,
+            operation: 'write'
+          }
+        });
+        await this.$http.post(path, attachment);
+        attachment.blobName = uuid;
+      }
+      const { type, name, blobName } = attachment;
+      return { type, name, blobName };
+    },
+
+    async postAttachments() {
+      const uploaders = this.attachments.map((attachment) => this.postAttachment(attachment));
+      const attachments = await Promise.all(uploaders);
+      return attachments;
+    },
+
+    async create() {
+      this.bulletin.startDate = new Date(this.startDate);
+      this.bulletin.startDate.setHours(...this.startTime.split(':'));
+      this.bulletin.endDate = new Date(this.endDate);
+
+      this.creating = true;
+      try {
+        this.bulletin.attachments = await this.postAttachments();
+        const { data } = await this.$http.post('bulletins', this.bulletin);
+        this.$router.push('/bulletins/list');
+      } finally {
+        this.creating = false
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.create-add-page__top__back-link {
+  text-decoration: none;
+  transition: color 0.3s ease-in-out 0s;
+
+  svg {
+    fill: #ad7c59;
+    margin-right: 5px;
+    transition: fill 0.3s ease-in-out 0s;
+  }
+
+  &:hover {
+    color: var(--margaritas);
+
+    svg {
+      fill: var(--margaritas);
+    }
+  }
+}
+
+.create-add-page__main {
+  padding: 25px;
+  min-height: calc(100vh - 215px);
+  background-color: #fff;
+
+  .create-add-form {
+    max-width: 1082px;
+    display: grid;
+    row-gap: 25px;
+
+    &__item {
+      display: grid;
+      column-gap: 50px;
+
+      &_three {
+        grid-template-columns: repeat(3, auto);
+      }
+
+      &_two {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      &__wrapper {
+        display: grid;
+        row-gap: 7px;
+
+        &_with-attach {
+          row-gap: 40px;
+        }
+
+        &_with-checkbox {
+          grid-template-rows: 19px 38px;
+        }
+      }
+    }
+
+    .attach {
+      display: grid;
+      row-gap: 20px;
+    }
+
+    .attach-block {
+      &_buttons {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        column-gap: 20px;
+      }
+
+      &__element {
+        background-color: #f8f6f5;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      &__title {
+        color: var(--sapphirus);
+      }
+
+      svg {
+        fill: var(--margaritas);
+        cursor: pointer;
+        transition: fill 0.3s ease-in-out;
+
+        &:hover {
+          fill: var(--platinum);
+        }
+      }
+
+      &__button {
+        width: 100%;
+        padding: 12px 10px;
+
+        &_upload {
+          color: var(--aurum);
+
+          svg {
+            fill: var(--aurum);
+          }
+
+          &:hover {
+            color: var(--margaritas);
+
+            svg {
+              fill: var(--margaritas);
+            }
+          }
+
+          &:active {
+            color: #9d6d4c;
+
+            svg {
+              fill: #9d6d4c;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>

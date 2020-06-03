@@ -27,6 +27,18 @@ const routes = [
       path: 'emails',
       name: 'EmailList',
       component: () => import('@/views/EmailList'),
+    }, {
+      path: 'bulletins/board',
+      name: 'BulletinList',
+      component: () => import('@/views/bulletins/BulletinList')
+    }, {
+      path: 'bulletins/list',
+      name: 'BulletinList',
+      component: () => import('@/views/bulletins/BulletinList')
+    }, {
+      path: 'bulletins/list/create',
+      name: 'BulletinCreation',
+      component: () => import('@/views//bulletins/BulletinCreation')
     }],
   },
   {

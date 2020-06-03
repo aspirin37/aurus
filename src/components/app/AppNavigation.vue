@@ -60,6 +60,24 @@ export default {
     activeMenuId: null,
     menus: [
       {
+        id: 0,
+        name: 'Объявления',
+        icon: 'art_track',
+        link: '/bulletins',
+        deep: [
+          {
+            id: 0,
+            name: 'Доска объявлений',
+            link: '/board'
+          },
+          {
+            id: 1,
+            name: 'Управлений списком сообщений',
+            link: '/list'
+          }
+        ]
+      },
+      {
         name: 'Пользователи',
         link: '/users',
         icon: 'mdi-account-multiple',
