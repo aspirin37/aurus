@@ -17,7 +17,9 @@
     "edit": "Изменить",
     "save": "Сохранить",
     "create": "Создать",
-    "all": "Все"
+    "all": "Все",
+    "yes": "Да",
+    "no": "Нет"
   },
   "views": {
     "sign_in": {
@@ -50,6 +52,21 @@
       "compatibility": "Совместимость",
       "select_role": "Выберите роль"
     },
+    "bulletin_board": {
+      "bulletin_board": "Доска объявлений",
+      "all": "Все",
+      "current": "Текущие",
+      "past": "Прошедшие",
+      "start_date": "Дата",
+      "end_date": "Истекает",
+      "text": "Текст сообщения"
+    },
+    "bulletin_details": {
+      "back_to_board": "назад к объявлениям",
+      "start_date": "Дата",
+      "end_date": "Истекает",
+      "attachments": "Прикрепленные файлы"
+    },
     "bulletin_list": {
       "bulletin_list": "Объявления",
       "subject": "Тема",
@@ -57,7 +74,9 @@
       "end_date": "Истекает",
       "edited_by": "Редактор",
       "edited_at": "Дата ред.",
-      "email": "E-mail"
+      "email": "E-mail",
+      "bulletin_edit": "Редактирование сообщения",
+      "text": "Текст сообщения"
     },
     "bulletin_creation": {
       "bulletin_creation": "Новое объявление",

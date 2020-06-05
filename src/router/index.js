@@ -33,7 +33,12 @@ const routes = [
     }, {
       path: 'bulletins/board',
       name: 'BulletinBoard',
-      component: () => import('@/views/bulletins/BulletinList')
+      component: () => import('@/views/bulletins/BulletinBoard')
+    },{
+      path: 'bulletins/board/:id',
+      name: 'BulletinDetails',
+      props: true,
+      component: () => import('@/views/bulletins/BulletinDetails')
     }, {
       path: 'bulletins/list',
       name: 'BulletinList',

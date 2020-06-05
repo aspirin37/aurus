@@ -17,7 +17,9 @@
     "edit": "Edit",
     "save": "Save",
     "create": "Create",
-    "all": "All"
+    "all": "All",
+    "yes": "Yes",
+    "no": "No"
   },
   "views": {
     "sign_in": {
@@ -50,6 +52,21 @@
       "compatibility": "Compatibility",
       "select_role": "Select a role"
     },
+    "bulletin_board": {
+      "bulletin_board": "Bulletin board",
+      "all": "All",
+      "current": "Current",
+      "past": "Past",
+      "start_date": "Date",
+      "end_date": "Valid till",
+      "text": "Message"
+    },
+    "bulletin_details": {
+      "back_to_board": "back to bulletins",
+      "start_date": "Date",
+      "end_date": "Valid till",
+      "attachments": "Attachments"
+    },
     "bulletin_list": {
       "bulletin_list": "Bulletins",
       "subject": "Subject",
@@ -57,7 +74,9 @@
       "end_date": "Valid till",
       "edited_by": "Edited by",
       "edited_at": "Edited at",
-      "email": "E-mail"
+      "email": "E-mail",
+      "bulletin_edit": "Edit bulletin",
+      "text": "Message"
     },
     "bulletin_creation": {
       "bulletin_creation": "New bulletin",

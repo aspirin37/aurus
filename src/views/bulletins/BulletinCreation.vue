@@ -38,7 +38,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="startDate"
+                  v-model="startDateFormatted"
                   readonly
                   hide-details
                   solo
@@ -96,7 +96,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="endDate"
+                  v-model="endDateFormatted"
                   readonly
                   hide-details
                   solo
@@ -140,11 +140,11 @@
             <div class="attach">
               <div class="attach-block">
                 <div
-                  v-for="(attachment, index) of bulletin.attachments"
+                  v-for="(attachment, index) of attachments"
                   :key="index"
                   class="attach-block__element"
                 >
-                  <span class="attach-block__title">{{ attachment.name }}</span>
+                  <span class="attach-block__title">{{ attachment.file.name }}</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="9.333"
@@ -170,6 +170,7 @@
                 <button
                   type="button"
                   class="btn aurus-button aurus-button_line aurus-button_lowercase attach-block__button attach-block__button_upload"
+                  :disabled="loading"
                   @click.prevent="selectAttachments"
                 >
                   <svg
@@ -187,6 +188,7 @@
                 </button>
                 <button
                   type="submit"
+                  :disabled="loading"
                   class="btn aurus-button aurus-button_line aurus-button_lowercase attach-block__button"
                 >
                   {{ $t('common.create') }}
@@ -254,8 +256,17 @@ export default {
 
       suppliers: [],
 
-      loading: false,
-      creating: false
+      loading: false
+    }
+  },
+
+  computed: {
+    startDateFormatted() {
+      return this.$d(new Date(this.startDate));
+    },
+
+    endDateFormatted() {
+      return this.$d(new Date(this.endDate));
     }
   },
 
@@ -271,7 +282,7 @@ export default {
 
     addAttachments() {
       const attachments = [...this.$refs.attachments.files].map((item) => ({
-        ...item,
+        file: item,
         blobName: ''
       }));
       this.attachments.push(...attachments);
@@ -282,12 +293,10 @@ export default {
     },
 
     async getSuppliers() {
-      this.loading = true;
       try {
         const { data } = await this.$http.get('suppliers');
         this.suppliers = data.rows.map((item) => item.gsdb);
       } finally {
-        this.loading = false;
       }
     },
 
@@ -296,7 +305,7 @@ export default {
         const uuid = uuidv4();
         const { path } = await this.$http.get(`/containers/${BULLETINS_CONTAINER}/${uuid}`, {
           params: {
-            type: attachment.type,
+            type: attachment.file.type,
             operation: 'write'
           }
         });
@@ -318,13 +327,13 @@ export default {
       this.bulletin.startDate.setHours(...this.startTime.split(':'));
       this.bulletin.endDate = new Date(this.endDate);
 
-      this.creating = true;
+      this.loading = true;
       try {
         this.bulletin.attachments = await this.postAttachments();
         const { data } = await this.$http.post('bulletins', this.bulletin);
         this.$router.push('/bulletins/list');
       } finally {
-        this.creating = false
+        this.loading = false
       }
     }
   }

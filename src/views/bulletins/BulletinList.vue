@@ -20,42 +20,60 @@
           <v-icon left>mdi-filter-variant</v-icon>
           {{ $t('common.filter') }}
         </v-btn>
-        <!-- <filter-component
-          filterClass="adds-table-page__top__button"
-          :openFilter="openFilter"
-          :changeFilterState="changeFilterState"
-        /> -->
       </div>
     </div>
     <v-data-table
       fixed-header
       :headers="headers"
-      :items="items"
+      :items="bulletins"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading"
-      loading-text="Данные загружаются..."
+      :loading-text="$t('common.loading_data')"
     >
-      <template v-slot:item.actions="{ }">
+      <template v-slot:item.actions="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
-            v-b-modal.user-modal
+            v-b-modal.bulletin-modal
+            class="mr-2"
             :class="hover ? '' : 'text--disabled'"
             color="primary"
             size="20"
-            @click="showUserModal('edit', item)"
+            @click="showBulletinModal(item)"
           >
             mdi-pencil
           </v-icon>
         </v-hover>
+        <v-hover v-slot="{hover}">
+          <v-icon
+            v-b-modal.bulletin-modal
+            :class="hover ? '' : 'text--disabled'"
+            color="primary"
+            size="20"
+            @click="showBulletinModal(item)"
+          >
+            mdi-delete
+          </v-icon>
+        </v-hover>
       </template>
     </v-data-table>
+    <bulletin-modal
+      v-model="isBulletinModalShown"
+      :selected-bulletin="selectedBulletin"
+      @submit="getItems"
+    />
   </div>
 </template>
 
 <script>
+import BulletinModal from '@/components/bulletins/BulletinModal.vue';
+
 export default {
   name: "BulletinList",
+
+  components: {
+    BulletinModal
+  },
 
   data() {
     return {
@@ -88,8 +106,7 @@ export default {
           text: this.$t('common.actions'),
           value: 'actions',
           sortable: false,
-          width: 150,
-          align: 'center'
+          width: 150
         },
       ],
 
@@ -99,7 +116,23 @@ export default {
 
       total: 0,
 
-      loading: false
+      loading: false,
+
+      selectedBulletin: null,
+
+      isBulletinModalShown: false
+    }
+  },
+
+  computed: {
+    bulletins() {
+      return this.items.map((item) => ({
+        ...item,
+        startDate: this.$d(new Date(item.startDate)),
+        endDate: this.$d(new Date(item.endDate)),
+        updatedAt: this.$d(new Date(item.updatedAt)),
+        isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no')
+      }));
     }
   },
 
@@ -142,6 +175,11 @@ export default {
         this.loading = false;
       }
     },
+
+    showBulletinModal(item) {
+      this.selectedBulletin = item;
+      this.isBulletinModalShown = true;
+    }
   }
 };
 </script>
