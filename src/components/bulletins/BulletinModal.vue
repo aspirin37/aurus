@@ -42,7 +42,7 @@
           outlined
           large
           :disabled="loading"
-          @click="$emit('input', false)"
+          @click="hideModal"
         >
           {{ $t('common.cancel') }}
         </v-btn>

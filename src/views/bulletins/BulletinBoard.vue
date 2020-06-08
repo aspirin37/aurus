@@ -74,7 +74,10 @@ export default {
       this.loading = true;
       try {
         const { data } = await this.$http.get('/bulletins', {
-          params: { status: this.status }
+          params: {
+            status: this.status,
+            query: { isActive: true }
+          }
         });
         this.items = data.rows.map((item) => ({
           ...item,

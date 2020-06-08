@@ -17,6 +17,7 @@
     "edit": "Изменить",
     "save": "Сохранить",
     "create": "Создать",
+    "delete": "Удалить",
     "all": "Все",
     "yes": "Да",
     "no": "Нет"
@@ -76,7 +77,10 @@
       "edited_at": "Дата ред.",
       "email": "E-mail",
       "bulletin_edit": "Редактирование сообщения",
-      "text": "Текст сообщения"
+      "text": "Текст сообщения",
+      "bulletin_delete": "Удаление сообщения",
+      "bulletin_remove_answer": "Уверены, что хотите удалить это сообщение?",
+      "bulletin_remove_confirmation": "Сообщение будет безвозвратно удалено."
     },
     "bulletin_creation": {
       "bulletin_creation": "Новое объявление",

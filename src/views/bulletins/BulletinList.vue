@@ -50,7 +50,7 @@
             :class="hover ? '' : 'text--disabled'"
             color="primary"
             size="20"
-            @click="showBulletinModal(item)"
+            @click="showRemoveModal(item)"
           >
             mdi-delete
           </v-icon>
@@ -62,17 +62,24 @@
       :selected-bulletin="selectedBulletin"
       @submit="getItems"
     />
+    <bulletin-remove
+      v-model="isRemoveModalShown"
+      :selected-bulletin="selectedBulletin"
+      @submit="getItems"
+    />
   </div>
 </template>
 
 <script>
 import BulletinModal from '@/components/bulletins/BulletinModal.vue';
+import BulletinRemove from '@/components/bulletins/BulletinRemove.vue';
 
 export default {
   name: "BulletinList",
 
   components: {
-    BulletinModal
+    BulletinModal,
+    BulletinRemove
   },
 
   data() {
@@ -120,7 +127,9 @@ export default {
 
       selectedBulletin: null,
 
-      isBulletinModalShown: false
+      isBulletinModalShown: false,
+
+      isRemoveModalShown: false
     }
   },
 
@@ -167,6 +176,8 @@ export default {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
 
+      params.query = { isActive: true };
+
       try {
         const { data } = await this.$http.get('bulletins', { params });
         this.items = data.rows.map((it) => ({ ...it }));
@@ -179,6 +190,11 @@ export default {
     showBulletinModal(item) {
       this.selectedBulletin = item;
       this.isBulletinModalShown = true;
+    },
+
+    showRemoveModal(item) {
+      this.selectedBulletin = item;
+      this.isRemoveModalShown = true;
     }
   }
 };
