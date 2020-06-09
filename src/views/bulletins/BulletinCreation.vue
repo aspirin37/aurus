@@ -463,3 +463,9 @@ export default {
   }
 }
 </style>
+
+<style lang="scss">
+.create-add-page__main .v-input__slot {
+  box-shadow: none !important;
+}
+</style>

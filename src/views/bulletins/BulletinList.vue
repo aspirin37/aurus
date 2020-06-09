@@ -143,9 +143,10 @@ export default {
     bulletins() {
       return this.items.map((item) => ({
         ...item,
-        startDate: this.$d(new Date(item.startDate)),
-        endDate: this.$d(new Date(item.endDate)),
-        updatedAt: this.$d(new Date(item.updatedAt)),
+        startDate: this.$d(item.startDate),
+        endDate: this.$d(item.endDate),
+        createdAt: this.$d(item.createdAt),
+        updatedAt: this.$d(item.updatedAt),
         isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no')
       }));
     }
@@ -187,7 +188,13 @@ export default {
 
       try {
         const { data } = await this.$http.get('bulletins', { params });
-        this.items = data.rows.map((it) => ({ ...it }));
+        this.items = data.rows.map((item) => ({
+          ...item,
+          startDate: new Date(item.startDate),
+          endDate: new Date(item.endDate),
+          createdAt: new Date(item.createdAt),
+          updatedAt: item.updatedAt && new Date(item.updatedAt)
+        }));
         this.total = data.total;
       } finally {
         this.loading = false;

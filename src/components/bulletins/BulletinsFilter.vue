@@ -184,7 +184,7 @@ export default {
 
   methods: {
     hide() {
-      this.$emit('hideFilter');
+      this.$emit('input', false);
     },
 
     submit() {

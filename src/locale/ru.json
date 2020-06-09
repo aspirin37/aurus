@@ -72,6 +72,7 @@
       "bulletin_list": "Объявления",
       "subject": "Тема",
       "start_date": "Дата",
+      "start_time": "Время сообщения",
       "end_date": "Истекает",
       "edited_by": "Редактор",
       "updated_at": "Дата ред.",

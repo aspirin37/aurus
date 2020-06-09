@@ -25,6 +25,100 @@
             solo
           />
         </div>
+
+        <v-row>
+          <v-col cols="4">
+            <div class="input-block input-block_white">
+              <label class="input-block__label">{{ $t('views.bulletin_list.start_date') }}</label>
+              <v-menu
+                v-model="isStartDatePickerShown"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                nudge-bottom="10px"
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="startDateFormatted"
+                    readonly
+                    hide-details
+                    solo
+                    v-on="on"
+                  />
+                </template>
+                <v-date-picker
+                  v-model="bulletin.startDate"
+                  dark
+                  @input="isStartDatePickerShown = false"
+                />
+              </v-menu>
+            </div>
+          </v-col>
+
+          <v-col cols="4">
+            <div class="input-block input-block_white">
+              <label class="input-block__label">{{ $t('views.bulletin_list.start_time') }}</label>
+              <v-menu
+                ref="startTime"
+                v-model="isStartTimePickerShown"
+                :close-on-content-click="false"
+                :return-value.sync="bulletin.startTime"
+                transition="scale-transition"
+                offset-y
+                nudge-bottom="10px"
+                max-width="290px"
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="bulletin.startTime"
+                    readonly
+                    hide-details
+                    solo
+                    v-on="on"
+                  />
+                </template>
+                <v-time-picker
+                  v-if="isStartTimePickerShown"
+                  v-model="bulletin.startTime"
+                  dark
+                  @click:minute="$refs.startTime.save(bulletin.startTime)"
+                />
+              </v-menu>
+            </div>
+          </v-col>
+
+          <v-col cols="4">
+            <div class="input-block input-block_white">
+              <label class="input-block__label">{{ $t('views.bulletin_list.end_date') }}</label>
+              <v-menu
+                v-model="isEndDatePickerShown"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                nudge-bottom="10px"
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="endDateFormatted"
+                    readonly
+                    hide-details
+                    solo
+                    v-on="on"
+                  />
+                </template>
+                <v-date-picker
+                  v-model="bulletin.endDate"
+                  dark
+                  @input="isEndDatePickerShown = false"
+                />
+              </v-menu>
+            </div>
+          </v-col>
+        </v-row>
+
         <div class="textarea-block textarea-block_white">
           <label class="textarea-block__label">
             {{ $t('views.bulletin_list.text') }}
@@ -36,6 +130,7 @@
           />
         </div>
       </div>
+
       <div class="v-application d-flex">
         <v-btn
           class="mr-4 flex-grow-1"
@@ -85,19 +180,48 @@ export default {
     return {
       bulletin: {
         subject: '',
-        text: ''
+        text: '',
+        startDate: null,
+        startTime: null,
+        endDate: null
       },
 
       loading: false,
 
-      isShown: false
+      isShown: false,
+
+      isStartDatePickerShown: false,
+      isStartTimePickerShown: false,
+      isEndDatePickerShown: false
+    }
+  },
+
+  computed: {
+    startDateFormatted() {
+      return this.$d(new Date(this.bulletin.startDate));
+    },
+
+    endDateFormatted() {
+      return this.$d(new Date(this.bulletin.endDate));
     }
   },
 
   methods: {
     getBulletin() {
-      const { subject, text } = this.selectedBulletin;
-      this.bulletin = { subject, text };
+      const {
+        subject,
+        text,
+        startDate,
+        endDate
+      } = this.selectedBulletin;
+
+      this.bulletin = {
+        subject,
+        text,
+        startDate: new Date(startDate).toISOString().substr(0, 10),
+        startTime: new Date(startDate).toISOString().substr(11, 5),
+        endDate: new Date(endDate).toISOString().substr(0, 10)
+      };
     },
 
     hideModal() {
@@ -106,8 +230,20 @@ export default {
 
     async submit() {
       this.loading = true;
+
+      const { subject, text } = this.bulletin;
+
+      const startDate = new Date(this.bulletin.startDate);
+      startDate.setHours(...this.bulletin.startTime.split(':'));
+      const endDate = new Date(this.bulletin.endDate);
+
       try {
-        await this.$http.patch(`/bulletins/${this.selectedBulletin.id}`, this.bulletin);
+        await this.$http.patch(`/bulletins/${this.selectedBulletin.id}`, {
+          subject,
+          text,
+          startDate,
+          endDate
+        });
         this.hideModal();
         this.$emit('submit');
       } finally {

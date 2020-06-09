@@ -72,6 +72,7 @@
       "bulletin_list": "Bulletins",
       "subject": "Subject",
       "start_date": "Date",
+      "start_time": "Time",
       "end_date": "Valid till",
       "edited_by": "Edited by",
       "updated_at": "Updated at",
