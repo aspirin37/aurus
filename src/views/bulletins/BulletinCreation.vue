@@ -1,10 +1,20 @@
 <template>
   <div>
     <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">{{ $t('views.bulletin_creation.bulletin_creation') }}</h1>
+      <h1 class="display-1 primary--text">
+        {{ $t('views.bulletin_creation.bulletin_creation') }}
+      </h1>
       <div class="ml-auto d-flex">
-        <router-link to="/bulletins/list" class="create-add-page__top__back-link my-auto">
-          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+        <router-link
+          to="/bulletins/list"
+          class="create-add-page__top__back-link my-auto"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+          >
             <path
               d="M9,4l.881.881L6.394,8.375H14v1.25H6.394l3.487,3.494L9,14,4,9Z"
               transform="translate(-4 -4)"
@@ -15,7 +25,10 @@
       </div>
     </div>
     <main class="create-add-page__main">
-      <v-form @submit.prevent="create" class="create-add-form">
+      <v-form
+        class="create-add-form"
+        @submit.prevent="create"
+      >
         <div class="input-block input-block_white">
           <label class="input-block__label">{{ $t('views.bulletin_creation.subject') }}</label>
           <v-text-field
@@ -126,7 +139,9 @@
         <div class="create-add-form__item create-add-form__item_two">
           <div class="create-add-form__item__wrapper create-add-form__item__wrapper_with-attach">
             <div class="select-block select-block_white">
-              <label class="select-block__label">{{ $t('views.bulletin_creation.suppliers') }}</label>
+              <label class="select-block__label">
+                {{ $t('views.bulletin_creation.suppliers') }}
+              </label>
               <v-select
                 v-model="bulletin.suppliers"
                 :items="suppliers"
@@ -153,21 +168,24 @@
                     viewBox="0 0 9.333 12"
                     @click="removeAttachment(index)"
                   >
+                    <!-- eslint-disable max-len -->
                     <path
                       d="M5.667,13.667A1.337,1.337,0,0,0,7,15h5.333a1.337,1.337,0,0,0,1.333-1.333v-8h-8Zm8.667-10H12L11.333,3H8l-.667.667H5V5h9.333Z"
                       transform="translate(-5 -3)"
                     />
+                    <!-- eslint-enable max-len -->
                   </svg>
                 </div>
               </div>
 
               <div class="attach-block attach-block_buttons">
                 <input
-                  type="file"
                   ref="attachments"
+                  type="file"
                   class="d-none"
                   @change="addAttachments"
-                />
+                >
+                <!-- eslint-disable max-len -->
                 <button
                   type="button"
                   class="btn aurus-button aurus-button_line aurus-button_lowercase attach-block__button attach-block__button_upload"
@@ -194,6 +212,7 @@
                 >
                   {{ $t('common.create') }}
                 </button>
+                <!-- eslint-enable max-len -->
               </div>
             </div>
           </div>
@@ -203,15 +222,16 @@
               {{ $t('views.bulletin_creation.send_mails') }}
             </span>
             <div class="create-add-form__item__inner align-items-center my-auto">
+              <!-- eslint-disable max-len -->
               <div
                 class="custom-control custom-checkbox d-flex aurus-custom-control aurus-custom-control_white"
               >
                 <input
-                  v-model="bulletin.isImportant"
                   id="add-messsage-mailing"
+                  v-model="bulletin.isImportant"
                   type="checkbox"
                   class="custom-control-input"
-                />
+                >
                 <label
                   for="add-messsage-mailing"
                   class="custom-control-label"
@@ -219,6 +239,7 @@
                   {{ $t('views.bulletin_creation.send_mails_true') }}
                 </label>
               </div>
+              <!-- eslint-enable max-len -->
             </div>
           </div>
         </div>
@@ -242,7 +263,7 @@ export default {
         text: '',
         suppliers: [],
         isImportant: false,
-        attachments: []
+        attachments: [],
       },
 
       startDate: new Date().toISOString().substr(0, 10),
@@ -261,8 +282,8 @@ export default {
 
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
-      }
-    }
+      },
+    };
   },
 
   computed: {
@@ -272,7 +293,7 @@ export default {
 
     endDateFormatted() {
       return this.$d(new Date(this.endDate));
-    }
+    },
   },
 
   created() {
@@ -281,14 +302,14 @@ export default {
 
   methods: {
     selectAttachments() {
-      this.$refs.attachments.value = ``;
+      this.$refs.attachments.value = '';
       this.$refs.attachments.click();
     },
 
     addAttachments() {
       const attachments = [...this.$refs.attachments.files].map((item) => ({
         file: item,
-        blobName: ''
+        blobName: '',
       }));
       this.attachments.push(...attachments);
     },
@@ -298,26 +319,27 @@ export default {
     },
 
     async getSuppliers() {
-      try {
-        const { data } = await this.$http.get('suppliers');
-        this.suppliers = data.rows.map((item) => item.gsdb);
-      } finally {
-      }
+      const { data } = await this.$http.get('suppliers');
+      this.suppliers = data.rows.map((item) => item.gsdb);
     },
 
     async postAttachment(attachment) {
-      if (!attachment.blobName) {
+      let { blobName } = attachment.blobName;
+      if (!blobName) {
         const uuid = uuidv4();
-        const { path } = await this.$http.get(`/containers/${BULLETINS_CONTAINER}/${uuid}`, {
-          params: {
-            type: attachment.file.type,
-            operation: 'write'
-          }
-        });
+        const { path } = await this.$http.get(
+          `/containers/${this.$configBULLETINS_CONTAINER}/${uuid}`,
+          {
+            params: {
+              type: attachment.file.type,
+              operation: 'write',
+            },
+          },
+        );
         await this.$http.post(path, attachment);
-        attachment.blobName = uuid;
+        blobName = uuid;
       }
-      const { type, name, blobName } = attachment;
+      const { type, name } = attachment;
       return { type, name, blobName };
     },
 
@@ -339,19 +361,19 @@ export default {
       this.loading = true;
       try {
         this.bulletin.attachments = await this.postAttachments();
-        const { data } = await this.$http.post('bulletins', this.bulletin);
+        await this.$http.post('bulletins', this.bulletin);
         this.$router.push('/bulletins/list');
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
 
     validate() {
       const required = ['subject', 'startDate', 'endDate', 'text'];
       return required.every((field) => this.bulletin[field]);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

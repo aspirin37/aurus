@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">{{ $t('views.bulletin_list.bulletin_list') }}</h1>
+      <h1 class="display-1 primary--text">
+        {{ $t('views.bulletin_list.bulletin_list') }}
+      </h1>
       <div class="ml-auto">
         <v-btn
           to="/bulletins/list/create"
@@ -10,7 +12,9 @@
           outlined
           large
         >
-          <v-icon left>mdi-plus</v-icon>
+          <v-icon left>
+            mdi-plus
+          </v-icon>
           {{ $t('common.add') }}
         </v-btn>
         <v-btn
@@ -18,12 +22,18 @@
           large
           @click="toggleFilter"
         >
-          <v-icon left>mdi-filter-variant</v-icon>
+          <v-icon left>
+            mdi-filter-variant
+          </v-icon>
           {{ $t('common.filter') }}
         </v-btn>
       </div>
     </div>
-    <bulletins-filter v-model="isFilterShown" @submitFilter="getItems" @hide="hideFilter"/>
+    <bulletins-filter
+      v-model="isFilterShown"
+      @submitFilter="getItems"
+      @hide="hideFilter"
+    />
     <v-data-table
       fixed-header
       :headers="headers"
@@ -78,12 +88,12 @@ import BulletinModal from '@/components/bulletins/BulletinModal.vue';
 import BulletinRemove from '@/components/bulletins/BulletinRemove.vue';
 
 export default {
-  name: "BulletinList",
+  name: 'BulletinList',
 
   components: {
     BulletinsFilter,
     BulletinModal,
-    BulletinRemove
+    BulletinRemove,
   },
 
   data() {
@@ -91,34 +101,34 @@ export default {
       headers: [
         {
           text: this.$t('views.bulletin_list.subject'),
-          value: 'subject'
+          value: 'subject',
         },
         {
           text: this.$t('views.bulletin_list.start_date'),
-          value: 'startDate'
+          value: 'startDate',
         },
         {
           text: this.$t('views.bulletin_list.end_date'),
-          value: 'endDate'
+          value: 'endDate',
         },
         {
           text: this.$t('views.bulletin_list.edited_by'),
           value: 'editedBy.name',
-          sortable: false
+          sortable: false,
         },
         {
           text: this.$t('views.bulletin_list.updated_at'),
-          value: 'updatedAt'
+          value: 'updatedAt',
         },
         {
           text: this.$t('views.bulletin_list.email'),
-          value: 'isImportant'
+          value: 'isImportant',
         },
         {
           text: this.$t('common.actions'),
           value: 'actions',
           sortable: false,
-          width: 150
+          width: 150,
         },
       ],
 
@@ -136,8 +146,8 @@ export default {
 
       isRemoveModalShown: false,
 
-      isFilterShown: false
-    }
+      isFilterShown: false,
+    };
   },
 
   computed: {
@@ -148,9 +158,9 @@ export default {
         endDate: this.$d(item.endDate),
         createdAt: this.$d(item.createdAt),
         updatedAt: this.$d(item.updatedAt),
-        isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no')
+        isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no'),
       }));
-    }
+    },
   },
 
   watch: {
@@ -190,7 +200,7 @@ export default {
           startDate: new Date(item.startDate),
           endDate: new Date(item.endDate),
           createdAt: new Date(item.createdAt),
-          updatedAt: item.updatedAt && new Date(item.updatedAt)
+          updatedAt: item.updatedAt && new Date(item.updatedAt),
         }));
         this.total = data.total;
       } finally {
@@ -214,7 +224,7 @@ export default {
 
     hideFilter() {
       this.isFilterShown = false;
-    }
-  }
+    },
+  },
 };
 </script>

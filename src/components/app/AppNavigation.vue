@@ -68,14 +68,14 @@ export default {
           {
             id: 0,
             name: vm.$t('navigation.bulletin_board'),
-            link: '/board'
+            link: '/board',
           },
           {
             id: 1,
             name: vm.$t('navigation.bulletin_management'),
-            link: '/list'
-          }
-        ]
+            link: '/list',
+          },
+        ],
       },
       {
         name: vm.$t('navigation.users'),

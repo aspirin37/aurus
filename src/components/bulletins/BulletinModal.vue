@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    v-model="isShown"
     ref="modal"
+    v-model="isShown"
     :title="$t('views.bulletin_list.bulletin_edit')"
     modal-class="aurus-modal"
     hide-header-close
@@ -164,19 +164,19 @@ export default {
   name: 'BulletinModal',
 
   model: {
-    prop: 'value'
+    prop: 'value',
   },
 
   props: {
     value: {
       type: Boolean,
-      required: true
+      required: true,
     },
 
     selectedBulletin: {
       type: Object,
-      default: {}
-    }
+      default: () => ({}),
+    },
   },
 
   data() {
@@ -186,7 +186,7 @@ export default {
         text: '',
         startDate: null,
         startTime: null,
-        endDate: null
+        endDate: null,
       },
 
       loading: false,
@@ -199,8 +199,8 @@ export default {
 
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
-      }
-    }
+      },
+    };
   },
 
   computed: {
@@ -210,7 +210,13 @@ export default {
 
     endDateFormatted() {
       return this.$d(new Date(this.bulletin.endDate));
-    }
+    },
+  },
+
+  watch: {
+    value(val) {
+      this.isShown = val;
+    },
   },
 
   methods: {
@@ -219,7 +225,7 @@ export default {
         subject,
         text,
         startDate,
-        endDate
+        endDate,
       } = this.selectedBulletin;
 
       this.bulletin = {
@@ -227,12 +233,12 @@ export default {
         text,
         startDate: new Date(startDate).toISOString().substr(0, 10),
         startTime: new Date(startDate).toISOString().substr(11, 5),
-        endDate: new Date(endDate).toISOString().substr(0, 10)
+        endDate: new Date(endDate).toISOString().substr(0, 10),
       };
     },
 
     hideModal() {
-      this.$emit('input', false)
+      this.$emit('input', false);
     },
 
     async submit() {
@@ -253,7 +259,7 @@ export default {
           subject,
           text,
           startDate,
-          endDate
+          endDate,
         });
         this.hideModal();
         this.$emit('submit');
@@ -265,13 +271,7 @@ export default {
     validate() {
       const required = ['subject', 'startDate', 'endDate', 'text'];
       return required.every((field) => this.bulletin[field]);
-    }
+    },
   },
-
-  watch: {
-    value(val) {
-      this.isShown = val;
-    }
-  }
-}
+};
 </script>

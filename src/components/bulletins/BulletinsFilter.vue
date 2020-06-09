@@ -1,5 +1,8 @@
 <template>
-  <v-form v-if="isShown" class="bulletin-list__filter white mb-5">
+  <v-form
+    v-if="isShown"
+    class="bulletin-list__filter white mb-5"
+  >
     <v-container>
       <v-row>
         <v-col cols="3">
@@ -115,7 +118,10 @@
             />
           </div>
         </v-col>
-        <v-col cols="2" class="bulletin-list__filter-submit">
+        <v-col
+          cols="2"
+          class="bulletin-list__filter-submit"
+        >
           <v-btn
             color="primary"
             outlined
@@ -136,14 +142,14 @@ export default {
   name: 'BulletinsFilter',
 
   model: {
-    prop: 'isShown'
+    prop: 'isShown',
   },
 
   props: {
     isShown: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   data() {
@@ -153,7 +159,7 @@ export default {
         startDate: null,
         endDate: null,
         updatedAt: null,
-        isImportant: null
+        isImportant: null,
       },
 
       isStartDatePickerShown: false,
@@ -163,9 +169,9 @@ export default {
       emailOptions: [
         { value: null, text: '' },
         { value: false, text: this.$t('common.no') },
-        { value: true, text: this.$t('common.yes') }
-      ]
-    }
+        { value: true, text: this.$t('common.yes') },
+      ],
+    };
   },
 
   computed: {
@@ -178,8 +184,8 @@ export default {
     },
 
     updatedAtFormatted() {
-      return this.filter.updatedAt && this.$d(new Date(this.filter.updatedAt))
-    }
+      return this.filter.updatedAt && this.$d(new Date(this.filter.updatedAt));
+    },
   },
 
   methods: {
@@ -198,34 +204,34 @@ export default {
       if (this.filter.subject) {
         filter.subject = {
           $regex: `.*${this.filter.subject}.*`,
-          $options : 'i'
+          $options: 'i',
         };
       }
       if (this.filter.startDate) {
         filter.startDate = {
           $gte: new Date(this.filter.startDate),
-          $lte: new Date(Number(new Date(this.filter.startDate)) + 24 * 60 * 60 * 1000)
-        }
+          $lte: new Date(Number(new Date(this.filter.startDate)) + 24 * 60 * 60 * 1000),
+        };
       }
       if (this.filter.endDate) {
         filter.endDate = {
           $gte: new Date(this.filter.endDate),
-          $lte: new Date(Number(new Date(this.filter.endDate)) + 24 * 60 * 60 * 1000)
-        }
+          $lte: new Date(Number(new Date(this.filter.endDate)) + 24 * 60 * 60 * 1000),
+        };
       }
       if (this.filter.updatedAt) {
         filter.updatedAt = {
           $gte: new Date(this.filter.updatedAt),
-          $lte: new Date(Number(new Date(this.filter.updatedAt)) + 24 * 60 * 60 * 1000)
-        }
+          $lte: new Date(Number(new Date(this.filter.updatedAt)) + 24 * 60 * 60 * 1000),
+        };
       }
       if (this.filter.isImportant !== null) {
         filter.isImportant = this.filter.isImportant;
       }
       return filter;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">

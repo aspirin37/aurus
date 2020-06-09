@@ -1,10 +1,20 @@
 <template>
   <div class="adds-board-detail-page">
     <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">{{ bulletin.subject }}</h1>
+      <h1 class="display-1 primary--text">
+        {{ bulletin.subject }}
+      </h1>
       <div class="ml-auto d-flex">
-        <router-link to="/bulletins/board" class="adds-board-detail-page__top__back-link my-auto">
-          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+        <router-link
+          to="/bulletins/board"
+          class="adds-board-detail-page__top__back-link my-auto"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+          >
             <path
               d="M9,4l.881.881L6.394,8.375H14v1.25H6.394l3.487,3.494L9,14,4,9Z"
               transform="translate(-4 -4)"
@@ -61,15 +71,15 @@ export default {
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data() {
     return {
       bulletin: {},
-      loading: false
-    }
+      loading: false,
+    };
   },
 
   created() {
@@ -86,14 +96,14 @@ export default {
           startDate: new Date(data.startDate),
           endDate: new Date(data.endDate),
           createdAt: new Date(data.createdAt),
-          updatedAt: data.updatedAt ? new Date(data.updatedAt) : null
+          updatedAt: data.updatedAt ? new Date(data.updatedAt) : null,
         };
       } finally {
         this.loading = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

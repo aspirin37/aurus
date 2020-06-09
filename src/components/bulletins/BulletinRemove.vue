@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    v-model="isShown"
     ref="modal"
+    v-model="isShown"
     :title="$t('views.bulletin_list.bulletin_delete')"
     modal-class="aurus-modal"
     hide-header-close
@@ -45,32 +45,38 @@ export default {
   name: 'BulletinRemove',
 
   model: {
-    prop: 'value'
+    prop: 'value',
   },
 
   props: {
     value: {
       type: Boolean,
-      required: true
+      required: true,
     },
 
     selectedBulletin: {
       type: Object,
-      default: {}
-    }
+      default: () => ({}),
+    },
   },
 
   data() {
     return {
       loading: false,
 
-      isShown: false
-    }
+      isShown: false,
+    };
+  },
+
+  watch: {
+    value(val) {
+      this.isShown = val;
+    },
   },
 
   methods: {
     hideModal() {
-      this.$emit('input', false)
+      this.$emit('input', false);
     },
 
     async submit() {
@@ -82,15 +88,9 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
-
-  watch: {
-    value(val) {
-      this.isShown = val;
-    }
-  }
-}
+};
 </script>
 
 <style lang="scss">

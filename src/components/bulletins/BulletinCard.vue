@@ -12,14 +12,21 @@
         </v-col>
       </v-row>
     </v-card-text>
-    <v-card-title class="px-0 pt-0">{{ bulletin.subject }}</v-card-title>
+    <v-card-title class="px-0 pt-0">
+      {{ bulletin.subject }}
+    </v-card-title>
     <v-card-text class="p-0">
       <router-link
         :to="`/bulletins/board/${bulletin.id}`"
         class="adds-board-page__main__add__link"
       >
         {{ $t('views.bulletin_board.text') }}
-        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+        >
           <path
             d="M9,4l-.881.881,3.487,3.494H4v1.25h7.606L8.119,13.119,9,14l5-5Z"
             transform="translate(-4 -4)"
@@ -37,10 +44,10 @@ export default {
   props: {
     bulletin: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
