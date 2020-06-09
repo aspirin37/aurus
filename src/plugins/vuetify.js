@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 import ru from 'vuetify/es5/locale/ru';
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import en from 'vuetify/es5/locale/en';
 import i18n from './i18n';
 
@@ -36,5 +37,8 @@ export default new Vuetify({
   lang: {
     locales: { ru, en },
     current: i18n.locale,
+  },
+  icons: {
+    iconfont: 'md',
   },
 });

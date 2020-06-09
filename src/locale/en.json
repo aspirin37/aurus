@@ -15,7 +15,12 @@
     "sign_out": "Sign out",
     "password_placeholder": "Set a new password",
     "edit": "Edit",
-    "save": "Save"
+    "save": "Save",
+    "create": "Create",
+    "delete": "Delete",
+    "all": "All",
+    "yes": "Yes",
+    "no": "No"
   },
   "views": {
     "sign_in": {
@@ -47,14 +52,63 @@
       "availability": "Avalabililty",
       "compatibility": "Compatibility",
       "select_role": "Select a role"
+    },
+    "bulletin_board": {
+      "bulletin_board": "Bulletin board",
+      "all": "All",
+      "current": "Current",
+      "past": "Past",
+      "start_date": "Date",
+      "end_date": "Valid till",
+      "text": "Message"
+    },
+    "bulletin_details": {
+      "back_to_board": "back to bulletins",
+      "start_date": "Date",
+      "end_date": "Valid till",
+      "attachments": "Attachments"
+    },
+    "bulletin_list": {
+      "bulletin_list": "Bulletins",
+      "subject": "Subject",
+      "start_date": "Date",
+      "start_time": "Time",
+      "end_date": "Valid till",
+      "edited_by": "Edited by",
+      "updated_at": "Updated at",
+      "email": "E-mail",
+      "bulletin_edit": "Edit bulletin",
+      "text": "Message",
+      "bulletin_delete": "Delete bulletin",
+      "bulletin_remove_answer": "Are you sure you want to delete this message?",
+      "bulletin_remove_confirmation": "The message will be permanently deleted."
+    },
+    "bulletin_creation": {
+      "bulletin_creation": "New bulletin",
+      "back_to_list": "back to bulletins",
+      "subject": "Subject",
+      "start_date": "Date",
+      "start_time": "Time",
+      "end_date": "Valid till",
+      "text": "Message",
+      "suppliers": "Supplier list",
+      "attach_file": "attach file",
+      "send_mails": "Send mails",
+      "send_mails_true": "yes (important message)"
     }
   },
   "navigation": {
+    "bulletins": "Bulletins",
+    "bulletin_board": "Bulletin board",
+    "bulletin_management": "Bulletin list management",
     "users": "Users",
     "emails": "Emails",
     "roles": "Roles"
   },
   "layout": {
     "collapse": "Collapse menu"
+  },
+  "validation": {
+    "required": "This field is required"
   }
 }

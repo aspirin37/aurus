@@ -60,6 +60,24 @@ export default {
     activeMenuId: null,
     menus: [
       {
+        id: 0,
+        name: vm.$t('navigation.bulletins'),
+        icon: 'art_track',
+        link: '/bulletins',
+        deep: [
+          {
+            id: 0,
+            name: vm.$t('navigation.bulletin_board'),
+            link: '/board',
+          },
+          {
+            id: 1,
+            name: vm.$t('navigation.bulletin_management'),
+            link: '/list',
+          },
+        ],
+      },
+      {
         name: vm.$t('navigation.users'),
         link: '/users',
         icon: 'mdi-account-multiple',
