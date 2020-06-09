@@ -103,7 +103,8 @@ export default {
         },
         {
           text: this.$t('views.bulletin_list.edited_by'),
-          value: 'editedBy.name'
+          value: 'editedBy.name',
+          sortable: false
         },
         {
           text: this.$t('views.bulletin_list.updated_at'),
@@ -161,10 +162,6 @@ export default {
     },
   },
 
-  created() {
-    this.getItems();
-  },
-
   methods: {
     async getItems(filter = {}) {
       this.loading = true;
@@ -179,7 +176,7 @@ export default {
         params.page = page;
       }
 
-      if (sortBy.length) {
+      if (sortBy && sortBy.length) {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
 
