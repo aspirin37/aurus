@@ -74,7 +74,7 @@
       "start_date": "Date",
       "end_date": "Valid till",
       "edited_by": "Edited by",
-      "edited_at": "Edited at",
+      "updated_at": "Updated at",
       "email": "E-mail",
       "bulletin_edit": "Edit bulletin",
       "text": "Message",

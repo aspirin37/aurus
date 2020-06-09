@@ -134,6 +134,7 @@
                 solo
                 chips
                 :label="$t('common.all')"
+                class="select-block__select"
               />
             </div>
 

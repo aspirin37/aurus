@@ -4,7 +4,7 @@
       <h1 class="display-1 primary--text">{{ $t('views.bulletin_board.bulletin_board') }}</h1>
       <div class="adds-board-page__top__filter ml-auto">
         <v-btn-toggle
-          v-model="status"
+          v-model="validity"
           tile
           dense
           group
@@ -50,7 +50,7 @@ export default {
 
   data() {
     return {
-      status: 'current',
+      validity: 'current',
       items: []
     }
   },
@@ -75,7 +75,7 @@ export default {
       try {
         const { data } = await this.$http.get('/bulletins', {
           params: {
-            status: this.status,
+            validity: this.validity,
             query: { isActive: true }
           }
         });

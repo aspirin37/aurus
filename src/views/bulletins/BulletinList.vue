@@ -16,12 +16,14 @@
         <v-btn
           outlined
           large
+          @click="toggleFilter"
         >
           <v-icon left>mdi-filter-variant</v-icon>
           {{ $t('common.filter') }}
         </v-btn>
       </div>
     </div>
+    <bulletins-filter v-model="isFilterShown" @submitFilter="getItems" @hide="hideFilter"/>
     <v-data-table
       fixed-header
       :headers="headers"
@@ -71,6 +73,7 @@
 </template>
 
 <script>
+import BulletinsFilter from '@/components/bulletins/BulletinsFilter.vue';
 import BulletinModal from '@/components/bulletins/BulletinModal.vue';
 import BulletinRemove from '@/components/bulletins/BulletinRemove.vue';
 
@@ -78,6 +81,7 @@ export default {
   name: "BulletinList",
 
   components: {
+    BulletinsFilter,
     BulletinModal,
     BulletinRemove
   },
@@ -102,7 +106,7 @@ export default {
           value: 'editedBy.name'
         },
         {
-          text: this.$t('views.bulletin_list.edited_at'),
+          text: this.$t('views.bulletin_list.updated_at'),
           value: 'updatedAt'
         },
         {
@@ -129,7 +133,9 @@ export default {
 
       isBulletinModalShown: false,
 
-      isRemoveModalShown: false
+      isRemoveModalShown: false,
+
+      isFilterShown: false
     }
   },
 
@@ -159,7 +165,7 @@ export default {
   },
 
   methods: {
-    async getItems() {
+    async getItems(filter = {}) {
       this.loading = true;
       const {
         sortBy, sortDesc, page, itemsPerPage,
@@ -176,7 +182,8 @@ export default {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
 
-      params.query = { isActive: true };
+      params.query = { isActive: true, ...filter };
+      params.validity = 'all';
 
       try {
         const { data } = await this.$http.get('bulletins', { params });
@@ -195,6 +202,14 @@ export default {
     showRemoveModal(item) {
       this.selectedBulletin = item;
       this.isRemoveModalShown = true;
+    },
+
+    toggleFilter() {
+      this.isFilterShown = !this.isFilterShown;
+    },
+
+    hideFilter() {
+      this.isFilterShown = false;
     }
   }
 };

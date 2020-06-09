@@ -74,7 +74,7 @@
       "start_date": "Дата",
       "end_date": "Истекает",
       "edited_by": "Редактор",
-      "edited_at": "Дата ред.",
+      "updated_at": "Дата ред.",
       "email": "E-mail",
       "bulletin_edit": "Редактирование сообщения",
       "text": "Текст сообщения",
