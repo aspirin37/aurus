@@ -21,8 +21,8 @@
           </label>
           <v-text-field
             v-model="bulletin.subject"
-            hide-details
             solo
+            :rules="[rules.required]"
           />
         </div>
 
@@ -44,6 +44,7 @@
                     readonly
                     hide-details
                     solo
+                    :rules="[rules.required]"
                     v-on="on"
                   />
                 </template>
@@ -76,6 +77,7 @@
                     readonly
                     hide-details
                     solo
+                    :rules="[rules.required]"
                     v-on="on"
                   />
                 </template>
@@ -106,6 +108,7 @@
                     readonly
                     hide-details
                     solo
+                    :rules="[rules.required]"
                     v-on="on"
                   />
                 </template>
@@ -123,10 +126,10 @@
           <label class="textarea-block__label">
             {{ $t('views.bulletin_list.text') }}
           </label>
-          <textarea
+          <v-textarea
             v-model="bulletin.text"
-            rows="5"
-            class="textarea-block__textarea"
+            outlined
+            :rules="[rules.required]"
           />
         </div>
       </div>
@@ -192,7 +195,11 @@ export default {
 
       isStartDatePickerShown: false,
       isStartTimePickerShown: false,
-      isEndDatePickerShown: false
+      isEndDatePickerShown: false,
+
+      rules: {
+        required: (value) => Boolean(value) || this.$t('validation.required'),
+      }
     }
   },
 
@@ -229,13 +236,17 @@ export default {
     },
 
     async submit() {
-      this.loading = true;
-
       const { subject, text } = this.bulletin;
 
       const startDate = new Date(this.bulletin.startDate);
       startDate.setHours(...this.bulletin.startTime.split(':'));
       const endDate = new Date(this.bulletin.endDate);
+
+      if (!this.validate()) {
+        return;
+      }
+
+      this.loading = true;
 
       try {
         await this.$http.patch(`/bulletins/${this.selectedBulletin.id}`, {
@@ -249,6 +260,11 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+
+    validate() {
+      const required = ['subject', 'startDate', 'endDate', 'text'];
+      return required.every((field) => this.bulletin[field]);
     }
   },
 

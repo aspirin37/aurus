@@ -20,8 +20,8 @@
           <label class="input-block__label">{{ $t('views.bulletin_creation.subject') }}</label>
           <v-text-field
             v-model="bulletin.subject"
-            hide-details
             solo
+            :rules="[rules.required]"
           />
         </div>
 
@@ -40,8 +40,8 @@
                 <v-text-field
                   v-model="startDateFormatted"
                   readonly
-                  hide-details
                   solo
+                  :rules="[rules.required]"
                   v-on="on"
                 />
               </template>
@@ -70,8 +70,8 @@
                 <v-text-field
                   v-model="startTime"
                   readonly
-                  hide-details
                   solo
+                  :rules="[rules.required]"
                   v-on="on"
                 />
               </template>
@@ -98,8 +98,8 @@
                 <v-text-field
                   v-model="endDateFormatted"
                   readonly
-                  hide-details
                   solo
+                  :rules="[rules.required]"
                   v-on="on"
                 />
               </template>
@@ -115,10 +115,10 @@
         <div class="create-add-form__item">
           <div class="textarea-block textarea-block_white">
             <label class="textarea-block__label">{{ $t('views.bulletin_creation.text') }}</label>
-            <textarea
+            <v-textarea
               v-model="bulletin.text"
-              rows="5"
-              class="textarea-block__textarea"
+              outlined
+              :rules="[rules.required]"
             />
           </div>
         </div>
@@ -257,7 +257,11 @@ export default {
 
       suppliers: [],
 
-      loading: false
+      loading: false,
+
+      rules: {
+        required: (value) => Boolean(value) || this.$t('validation.required'),
+      }
     }
   },
 
@@ -328,6 +332,10 @@ export default {
       this.bulletin.startDate.setHours(...this.startTime.split(':'));
       this.bulletin.endDate = new Date(this.endDate);
 
+      if (!this.validate()) {
+        return;
+      }
+
       this.loading = true;
       try {
         this.bulletin.attachments = await this.postAttachments();
@@ -336,6 +344,11 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+
+    validate() {
+      const required = ['subject', 'startDate', 'endDate', 'text'];
+      return required.every((field) => this.bulletin[field]);
     }
   }
 }
@@ -369,7 +382,7 @@ export default {
   .create-add-form {
     max-width: 1082px;
     display: grid;
-    row-gap: 25px;
+    row-gap: 3px;
 
     &__item {
       display: grid;

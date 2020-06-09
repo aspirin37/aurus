@@ -107,5 +107,8 @@
   },
   "layout": {
     "collapse": "Collapse menu"
+  },
+  "validation": {
+    "required": "This field is required"
   }
 }
