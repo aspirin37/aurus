@@ -56,6 +56,10 @@ const routes = [
       path: 'roles',
       name: 'RoleList',
       component: () => import('@/views/RoleList'),
+    }, {
+      path: 'labels/print',
+      name: 'LabelPrinting',
+      component: () => import('@/views/labels/LabelPrinting')
     }],
   },
   {
