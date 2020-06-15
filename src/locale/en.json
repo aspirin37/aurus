@@ -15,7 +15,12 @@
     "sign_out": "Sign out",
     "password_placeholder": "Set a new password",
     "edit": "Edit",
-    "save": "Save"
+    "save": "Save",
+    "date": "Date",
+    "status": "Status",
+    "supplier": "Supplier",
+    "plant": "Plant",
+    "download": "Download"
   },
   "views": {
     "sign_in": {
@@ -47,12 +52,22 @@
       "availability": "Avalabililty",
       "compatibility": "Compatibility",
       "select_role": "Select a role"
+    },
+    "report_list": {
+      "title": "Reports"
+    },
+    "orders": {
+      "order_groups": "Orders grouped by day",
+      "view_orders": "View orders",
+      "confirm_orders": "Confirm view",
+      "order_confirmed": "Viewed"
     }
   },
   "navigation": {
     "users": "Users",
     "emails": "Emails",
-    "roles": "Roles"
+    "roles": "Roles",
+    "reports": "Reports"
   },
   "layout": {
     "collapse": "Collapse menu"

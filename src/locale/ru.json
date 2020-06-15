@@ -15,7 +15,12 @@
     "sign_out": "Выйти",
     "password_placeholder": "Задайте новый пароль",
     "edit": "Изменить",
-    "save": "Сохранить"
+    "save": "Сохранить",
+    "date": "Дата",
+    "status": "Статус",
+    "supplier": "Поставщик",
+    "plant": "Завод",
+    "download": "Скачать"
   },
   "views": {
     "sign_in": {
@@ -47,12 +52,22 @@
       "availability": "Доступность",
       "compatibility": "Совместимость",
       "select_role": "Выберите роль"
+    },
+    "report_list": {
+      "title": "Отчеты"
+    },
+    "orders": {
+      "order_groups": "Список заказов по дням",
+      "view_orders": "Просмотр заказов",
+      "confirm_orders": "Подтвердить просмотр",
+      "order_confirmed": "Просмотрено"
     }
   },
   "navigation": {
     "users": "Пользователи",
     "emails": "Архив писем",
-    "roles": "Роли"
+    "roles": "Роли",
+    "reports": "Отчеты"
   },
   "layout": {
     "collapse": "Свернуть меню"

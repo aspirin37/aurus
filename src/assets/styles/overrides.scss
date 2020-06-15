@@ -14,3 +14,24 @@
 .auth-block {
   height: 750px;
 }
+
+.icon-link {
+  text-decoration: none !important;
+}
+
+.fixed-column-table {
+  display: flex;
+  white-space: nowrap;
+
+  &__columns {
+    position: relative;
+    z-index: 3;
+    padding-bottom: 8px;
+    border-bottom: thin solid rgba(0, 0, 0, 0.12);
+    box-shadow: 4px 0 5px -2px rgba(0,0,0,.16078);
+  }
+
+  .v-data-table {
+    border-radius: 0;
+  }
+}

@@ -27,6 +27,19 @@ const routes = [
       name: 'UserList',
       component: () => import('@/views/UserList'),
     }, {
+      path: 'orders/order-groups',
+      name: 'OrderGroupList',
+      component: () => import('@/views/OrderGroupList'),
+    }, {
+      path: 'orders/order-groups/:id',
+      name: 'OrderGroup',
+      props: true,
+      component: () => import('@/views/OrderGroup'),
+    }, {
+      path: 'reports',
+      name: 'ReportList',
+      component: () => import('@/views/ReportList'),
+    }, {
       path: 'emails',
       name: 'EmailList',
       component: () => import('@/views/EmailList'),

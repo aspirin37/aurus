@@ -37,12 +37,12 @@
 
       &__link {
         font-size: 18px;
-        color: var(--margaritas);
+        color: var(--margaritas) !important;
         transition: color 0.3s ease-in-out;
 
         &:hover,
         &_active {
-          color: var(--aurum);
+          color: var(--aurum) !important;
           text-decoration: none;
         }
       }
