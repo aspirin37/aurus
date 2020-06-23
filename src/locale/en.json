@@ -20,7 +20,8 @@
     "delete": "Delete",
     "all": "All",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "upload": "upload"
   },
   "views": {
     "sign_in": {
@@ -95,6 +96,22 @@
       "attach_file": "attach file",
       "send_mails": "Send mails",
       "send_mails_true": "yes (important message)"
+    },
+    "label_printing": {
+      "label_printing": "Label printing",
+      "step1": "Step 1",
+      "step2": "Step 2",
+      "download_template": "download xls template",
+      "print": "Print labels",
+      "selected_file": "Selected file: ",
+      "create_labels": "get labels"
+    },
+    "label_template": {
+      "label_template": "Update label template",
+      "current_template": "Current template: ",
+      "select_file": "select template",
+      "selected_file": "Selected file: ",
+      "template_fields": "Template can include fields:"
     }
   },
   "navigation": {
@@ -103,7 +120,10 @@
     "bulletin_management": "Bulletin list management",
     "users": "Users",
     "emails": "Emails",
-    "roles": "Roles"
+    "roles": "Roles",
+    "labels": "Labels",
+    "label_printing": "Label printing",
+    "label_template": "Label template"
   },
   "layout": {
     "collapse": "Collapse menu"

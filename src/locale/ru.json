@@ -20,7 +20,8 @@
     "delete": "Удалить",
     "all": "Все",
     "yes": "Да",
-    "no": "Нет"
+    "no": "Нет",
+    "upload": "загрузить"
   },
   "views": {
     "sign_in": {
@@ -95,6 +96,22 @@
       "attach_file": "прикрепить файл",
       "send_mails": "Выполнить рассылку",
       "send_mails_true": "да (вид уведомления \"Важное сообщение \")"
+    },
+    "label_printing": {
+      "label_printing": "Печать этикеток",
+      "step1": "1 шаг",
+      "step2": "2 шаг",
+      "download_template": "скачать шаблон в xls",
+      "print": "Отправьте этикетки на печать",
+      "selected_file": "Выбранный файл: ",
+      "create_labels": "получить этикетки"
+    },
+    "label_template": {
+      "label_template": "Редактирование шаблона этикетки",
+      "current_template": "Действующий шаблон: ",
+      "select_template": "выбрать шаблон",
+      "selected_file": "Выбранный файл: ",
+      "template_fields": "Шаблон может содержать следующие поля:"
     }
   },
   "navigation": {
@@ -103,7 +120,10 @@
     "bulletin_management": "Управление списком сообщений",
     "users": "Пользователи",
     "emails": "Архив писем",
-    "roles": "Роли"
+    "roles": "Роли",
+    "labels": "Этикетки",
+    "label_printing": "Печать этикеток",
+    "label_template": "Шаблон этикетки"
   },
   "layout": {
     "collapse": "Свернуть меню"

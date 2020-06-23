@@ -62,8 +62,8 @@ export default {
       {
         id: 0,
         name: vm.$t('navigation.bulletins'),
-        icon: 'art_track',
         link: '/bulletins',
+        icon: 'art_track',
         deep: [
           {
             id: 0,
@@ -94,6 +94,24 @@ export default {
         link: '/emails',
         icon: 'mdi-email-outline',
         deep: [],
+      },
+      {
+        id: 5,
+        name: vm.$t('navigation.labels'),
+        link: '/labels',
+        icon: 'mdi-relative-scale',
+        deep: [
+          {
+            id: 0,
+            name: vm.$t('navigation.label_printing'),
+            link: '/print',
+          },
+          {
+            id: 1,
+            name: vm.$t('navigation.label_template'),
+            link: '/template',
+          },
+        ],
       },
       // {
       //   id: 2,
