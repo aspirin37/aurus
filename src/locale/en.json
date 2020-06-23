@@ -102,9 +102,16 @@
       "step1": "Step 1",
       "step2": "Step 2",
       "download_template": "download xls template",
-      "template": "Label template",
-      "copy_amount": "Copies amount",
-      "print": "print"
+      "print": "Print labels",
+      "selected_file": "Selected file: ",
+      "create_labels": "get labels"
+    },
+    "label_template": {
+      "label_template": "Update label template",
+      "current_template": "Current template: ",
+      "select_file": "select template",
+      "selected_file": "Selected file: ",
+      "template_fields": "Template can include fields:"
     }
   },
   "navigation": {
@@ -115,7 +122,8 @@
     "emails": "Emails",
     "roles": "Roles",
     "labels": "Labels",
-    "label_printing": "Label printing"
+    "label_printing": "Label printing",
+    "label_template": "Label template"
   },
   "layout": {
     "collapse": "Collapse menu"

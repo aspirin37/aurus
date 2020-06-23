@@ -105,6 +105,11 @@ export default {
             id: 0,
             name: vm.$t('navigation.label_printing'),
             link: '/print'
+          },
+          {
+            id: 1,
+            name: vm.$t('navigation.label_template'),
+            link: '/template'
           }
         ]
       }

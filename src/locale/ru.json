@@ -102,9 +102,16 @@
       "step1": "1 шаг",
       "step2": "2 шаг",
       "download_template": "скачать шаблон в xls",
-      "template": "Макет этикетки",
-      "copy_amount": "Количество копий",
-      "print": "отправить в печать"
+      "print": "Отправьте этикетки на печать",
+      "selected_file": "Выбранный файл: ",
+      "create_labels": "получить этикетки"
+    },
+    "label_template": {
+      "label_template": "Редактирование шаблона этикетки",
+      "current_template": "Действующий шаблон: ",
+      "select_template": "выбрать шаблон",
+      "selected_file": "Выбранный файл: ",
+      "template_fields": "Шаблон может содержать следующие поля:"
     }
   },
   "navigation": {
@@ -115,7 +122,8 @@
     "emails": "Архив писем",
     "roles": "Роли",
     "labels": "Этикетки",
-    "label_printing": "Печать этикеток"
+    "label_printing": "Печать этикеток",
+    "label_template": "Шаблон этикетки"
   },
   "layout": {
     "collapse": "Свернуть меню"
