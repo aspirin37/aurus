@@ -6,17 +6,20 @@
       </h1>
     </div>
     <main class="label-template">
-      <div v-if="template" class="mb-5 ml-1">
+      <div
+        v-if="template"
+        class="mb-5 ml-1"
+      >
         <span>{{ $t('views.label_template.current_template') }}</span>
         <a :href="template.path">{{ template.name }}</a>
       </div>
       <input
         v-show="false"
-        type="file"
         ref="file"
+        type="file"
         accept=".xml"
         @change="setFile"
-      />
+      >
       <button
         :disabled="loading"
         class="btn aurus-button aurus-button_line aurus-button_lowercase label-template__select"
@@ -36,14 +39,24 @@
           <span class="label-template__selected-label">
             {{ $t('views.label_template.selected_file') }}
           </span>
-          <span v-if="file" class="label-template__selected-filename">{{ file.name }}</span>
+          <span
+            v-if="file"
+            class="label-template__selected-filename"
+          >{{ file.name }}</span>
         </span>
       </div>
 
       <div>
-        <h2 class="label-template__fields h5">Шаблон может содержать следующие поля:</h2>
+        <h2 class="label-template__fields h5">
+          Шаблон может содержать следующие поля:
+        </h2>
         <ul>
-          <li v-for="field of fields" :key="field">{{ field }}</li>
+          <li
+            v-for="field of fields"
+            :key="field"
+          >
+            {{ field }}
+          </li>
         </ul>
       </div>
     </main>
@@ -59,8 +72,12 @@ export default {
       template: null,
       file: null,
       fields: [],
-      loading: false
-    }
+      loading: false,
+    };
+  },
+
+  created() {
+    this.loadData();
   },
 
   methods: {
@@ -80,7 +97,7 @@ export default {
     },
 
     setFile() {
-      this.file = this.$refs.file.files[0];
+      [this.file] = this.$refs.file.files;
     },
 
     async loadData() {
@@ -97,19 +114,15 @@ export default {
       this.loading = true;
       try {
         const formData = new FormData();
-        formData.append(`file`, this.file);
+        formData.append('file', this.file);
         await this.$http.post('/labels/template', formData);
         await this.loadTemplate();
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
-
-  created() {
-    this.loadData();
-  }
-}
+};
 </script>
 
 <style lang="scss">

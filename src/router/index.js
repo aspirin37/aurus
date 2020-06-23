@@ -59,11 +59,11 @@ const routes = [
     }, {
       path: 'labels/print',
       name: 'LabelPrinting',
-      component: () => import('@/views/labels/LabelPrinting')
+      component: () => import('@/views/labels/LabelPrinting'),
     }, {
       path: 'labels/template',
       name: 'LabelTemplate',
-      component: () => import('@/views/labels/LabelTemplate')
+      component: () => import('@/views/labels/LabelTemplate'),
     }],
   },
   {

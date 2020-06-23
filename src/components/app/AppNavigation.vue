@@ -104,15 +104,15 @@ export default {
           {
             id: 0,
             name: vm.$t('navigation.label_printing'),
-            link: '/print'
+            link: '/print',
           },
           {
             id: 1,
             name: vm.$t('navigation.label_template'),
-            link: '/template'
-          }
-        ]
-      }
+            link: '/template',
+          },
+        ],
+      },
       // {
       //   id: 2,
       //   name: 'Заказы',

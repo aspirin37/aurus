@@ -19,7 +19,9 @@
               Загрузите данные для формирования этикетки
             </h3>
 
+
             <div class="mt-10">
+              <!-- eslint-disable max-len -->
               <button
                 :disabled="loading"
                 class="btn aurus-button aurus-button_line aurus-button_lowercase step_first__buttons__button step_first__buttons__button_download mr-5"
@@ -28,7 +30,14 @@
                 <v-icon>mdi-download</v-icon>
                 {{ $t('views.label_printing.download_template') }}
               </button>
-              <a v-if="template" v-show="false" ref="template" :href="template.path" />
+              <!-- eslint-enable max-len -->
+              <a
+                v-if="template"
+                v-show="false"
+                ref="template"
+                :href="template.path"
+              />
+              <!-- eslint-disable max-len -->
               <button
                 :disabled="loading"
                 class="btn aurus-button aurus-button_line aurus-button_lowercase step_first__buttons__button"
@@ -37,13 +46,14 @@
                 <v-icon>mdi-upload</v-icon>
                 {{ $t('common.upload') }}
               </button>
+              <!-- eslint-enable max-len -->
               <input
                 v-show="false"
-                type="file"
                 ref="file"
+                type="file"
                 accept=".xlsx"
                 @change="setFile()"
-              />
+              >
             </div>
 
             <div class="step_first__selected">
@@ -70,6 +80,7 @@
             </h3>
 
             <div class="mt-10">
+              <!-- eslint-disable max-len -->
               <button
                 :disabled="loading"
                 class="btn aurus-button aurus-button_line aurus-button_lowercase step_second__buttons__button"
@@ -77,7 +88,14 @@
               >
                 {{ $t('views.label_printing.create_labels') }}
               </button>
-              <a v-if="pdf" v-show="false" ref="pdf" :href="pdf" download="labels.pdf" />
+              <!-- eslint-enable max-len -->
+              <a
+                v-if="pdf"
+                v-show="false"
+                ref="pdf"
+                :href="pdf"
+                download="labels.pdf"
+              />
             </div>
           </div>
         </v-col>
@@ -96,8 +114,8 @@ export default {
       file: null,
       pdf: null,
       loading: false,
-      copyAmount: 0
-    }
+      copyAmount: 0,
+    };
   },
 
   methods: {
@@ -121,14 +139,14 @@ export default {
     },
 
     setFile() {
-      this.file = this.$refs.file.files[0];
+      [this.file] = this.$refs.file.files;
     },
 
     async createLabels() {
       this.loading = true;
       try {
         const formData = new FormData();
-        formData.append(`file`, this.file);
+        formData.append('file', this.file);
         const { data } = await this.$http.post('/labels', formData, { responseType: 'blob' });
         this.pdf = `data:application/pdf;charset=utf-8;%EF%BB%BF,${data}`;
         await this.$nextTick();
@@ -136,9 +154,9 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
