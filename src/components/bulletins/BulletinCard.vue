@@ -53,6 +53,7 @@ export default {
 <style lang="scss" scoped>
 .adds-board-page__main__add {
   padding: 20px 40px;
+  margin-bottom: 20px;
 }
 
 .adds-board-page__main__add__link {

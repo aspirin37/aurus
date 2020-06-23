@@ -5,8 +5,9 @@
       "madeAt": 1589377274866
     },
     "1500|npm-audit-resolver>audit-resolve-core>yargs-parser": {
-      "decision": "postpone",
-      "madeAt": 1591709686120
+      "decision": "ignore",
+      "madeAt": 1592546114188,
+      "expiresAt": 1595138059169
     }
   },
   "rules": {},
