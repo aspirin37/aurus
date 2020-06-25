@@ -148,9 +148,9 @@ export default {
         const fileData = await this.getFileData(this.file);
         const { data } = await this.$http.post('/labels', fileData, {
           headers: {
-            'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
           },
-          responseType: 'blob'
+          responseType: 'blob',
         });
         this.pdf = URL.createObjectURL(data);
         await this.$nextTick();
@@ -163,12 +163,12 @@ export default {
     getFileData(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
-        reader.onload = function () {
-          resolve(reader.result)
-        }
+        reader.onload = () => {
+          resolve(reader.result);
+        };
         reader.readAsArrayBuffer(file);
       });
-    }
+    },
   },
 };
 </script>
