@@ -145,15 +145,29 @@ export default {
     async createLabels() {
       this.loading = true;
       try {
-        const formData = new FormData();
-        formData.append('file', this.file);
-        const { data } = await this.$http.post('/labels', formData, { responseType: 'blob' });
-        this.pdf = `data:application/pdf;charset=utf-8;%EF%BB%BF,${data}`;
+        const fileData = await this.getFileData(this.file);
+        const { data } = await this.$http.post('/labels', fileData, {
+          headers: {
+            'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          },
+          responseType: 'blob',
+        });
+        this.pdf = URL.createObjectURL(data);
         await this.$nextTick();
         this.$refs.pdf.click();
       } finally {
         this.loading = false;
       }
+    },
+
+    getFileData(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          resolve(reader.result);
+        };
+        reader.readAsArrayBuffer(file);
+      });
     },
   },
 };
