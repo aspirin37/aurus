@@ -123,7 +123,7 @@ export default {
           {
             id: 8,
             name: vm.$t('navigation.promises'),
-            link: '/promises',
+            link: '/orders/promises',
           },
         ],
       },
