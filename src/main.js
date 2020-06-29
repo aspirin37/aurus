@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import VueMoment from 'vue-moment';
+import moment from 'moment-timezone';
 
 import App from './App.vue';
 import router from './router';
@@ -14,7 +15,9 @@ import vuetify from './plugins/vuetify';
 import i18n from './plugins/i18n';
 
 Vue.use(BootstrapVue);
-Vue.use(VueMoment);
+Vue.use(VueMoment, {
+  moment,
+});
 
 Vue.prototype.$config = config;
 Vue.prototype.$http = http;

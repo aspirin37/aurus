@@ -36,9 +36,25 @@ const routes = [
       props: true,
       component: () => import('@/views/OrderGroup'),
     }, {
-      path: 'reports',
-      name: 'ReportList',
-      component: () => import('@/views/ReportList'),
+      path: 'orders/nearest-shipment',
+      name: 'NearestShipment',
+      component: () => import('@/views/NearestShipment'),
+    }, {
+      path: 'orders/reports-by-part',
+      name: 'ReportListByPart',
+      component: () => import('@/views/ReportListByPart'),
+    }, {
+      path: 'orders/reports-by-parts',
+      name: 'ReportListByParts',
+      component: () => import('@/views/ReportListByParts'),
+    }, {
+      path: 'orders/history-by-days',
+      name: 'HistoryByDays',
+      component: () => import('@/views/HistoryByDays'),
+    }, {
+      path: 'orders/history-by-weeks',
+      name: 'HistoryByWeeks',
+      component: () => import('@/views/HistoryByWeeks'),
     }, {
       path: 'emails',
       name: 'EmailList',
@@ -52,6 +68,10 @@ const routes = [
       path: 'roles',
       name: 'RoleList',
       component: () => import('@/views/RoleList'),
+    }, {
+      path: 'profile',
+      name: 'Profile',
+      component: () => import('@/views/Profile'),
     }],
   },
   {

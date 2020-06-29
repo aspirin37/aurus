@@ -24,6 +24,10 @@ export default {
       type: String,
       required: true,
     },
+    params: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   methods: {
     async downloadExcel() {
@@ -31,6 +35,7 @@ export default {
         method: 'GET',
         responseType: 'blob',
         url: this.url,
+        params: this.params,
       });
 
       const url = window.URL.createObjectURL(new Blob([response.data]));

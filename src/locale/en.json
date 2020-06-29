@@ -20,7 +20,10 @@
     "status": "Status",
     "supplier": "Supplier",
     "plant": "Plant",
-    "download": "Download"
+    "part": "Part",
+    "download": "Download",
+    "search": "Search",
+    "noData": "No data found"
   },
   "views": {
     "sign_in": {
@@ -60,14 +63,26 @@
       "order_groups": "Orders grouped by day",
       "view_orders": "View orders",
       "confirm_orders": "Confirm view",
-      "order_confirmed": "Viewed"
+      "order_confirmed": "Viewed",
+      "nearest_shipment": "Nearest shipment date",
+      "report_list_by_part": "12 months reports by part",
+      "report_list_by_parts": "12 months reports by parts",
+      "history_by_days": "History for a part by days with a horizon of 14 days and with a running total",
+      "history_by_weeks": "History for a part by weeks with a horizon of 17 weeks and with a running total"
     }
   },
   "navigation": {
     "users": "Users",
     "emails": "Emails",
     "roles": "Roles",
-    "reports": "Reports"
+    "reports": "Reports",
+    "orders": "Orders",
+    "orders_grouped_by_day": "Orders grouped by day",
+    "nearest_shipment": "Nearest shipment date",
+    "report_list_by_part": "12 months reports by part",
+    "report_list_by_parts": "12 months reports by parts",
+    "history_by_days": "History for a part by days with a horizon of 14 days and with a running total",
+    "history_by_weeks": "History for a part by weeks with a horizon of 17 weeks and with a running total"
   },
   "layout": {
     "collapse": "Collapse menu"

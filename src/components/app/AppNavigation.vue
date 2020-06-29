@@ -75,142 +75,40 @@ export default {
         icon: 'mdi-email-outline',
       },
       {
-        name: 'Заказы',
+        name: vm.$t('navigation.orders'),
         link: '/orders',
-        icon: 'mdi-email-outline',
+        icon: 'mdi-format-list-bulleted',
         deep: [
           {
-            name: 'Список заказов по дням',
+            name: vm.$t('navigation.orders_grouped_by_day'),
             link: '/orders/order-groups',
           },
-          // {
-          //   id: 1,
-          //   name: 'Список заказов по дням (поставщики)',
-          //   link: '/orders-day-provider',
-          // },
-          // {
-          //   id: 2,
-          //   name: 'Подтверждение заказа',
-          //   link: '/order-approve',
-          // },
-          // {
-          //   id: 3,
-          //   name: 'С ближайшей датой отгрузки',
-          //   link: '/orders-date-shipment',
-          // },
-          // {
-          //   id: 4,
-          //   name: 'По деталям с горизонтом 12 месяцев',
-          //   link: '/orders-details-12-month',
-          // },
-          // {
-          //   id: 5,
-          //   name: 'По детали с горизонтом  12 месяцев',
-          //   link: '/order-detail-12-month',
-          // },
-          // {
-          //   id: 6,
-          //   name:
-          //     'По детали по неделям с горизонтом на 14 недель с накопительным итогом',
-          //   link: '/orders-detail-14-weeks',
-          // },
-          // {
-          //   id: 7,
-          //   name:
-          //     'По детали по дням с горизонтом на 14 дней с накопительным итогом',
-          //   link: '/orders-detail-14-days',
-          // },
-          // {
-          //   id: 8,
-          //   name: 'Список корректировок по заказам',
-          //   link: '/adjustment',
-          // },
+          {
+            name: vm.$t('navigation.nearest_shipment'),
+            link: '/orders/nearest-shipment',
+          },
+          {
+            name: vm.$t('navigation.report_list_by_part'),
+            link: '/orders/reports-by-part',
+          },
+          {
+            name: vm.$t('navigation.report_list_by_parts'),
+            link: '/orders/reports-by-parts',
+          },
+          {
+            name: vm.$t('navigation.history_by_days'),
+            link: '/orders/history-by-days',
+          },
+          {
+            name: vm.$t('navigation.history_by_weeks'),
+            link: '/orders/history-by-weeks',
+          },
         ],
       },
-      {
-        name: vm.$t('navigation.reports'),
-        link: '/reports',
-        icon: 'mdi-format-list-bulleted',
-        // deep: [
-        //   {
-        //     id: 0,
-        //     name: 'С ближайшей датой отгрузки',
-        //     link: '',
-        //   },
-        //   {
-        //     id: 1,
-        //     name: 'По деталям с горизонтом 12 месяцев',
-        //     link: '',
-        //   },
-        //   {
-        //     id: 2,
-        //     name: 'По детали с горизонтом  12 месяцев',
-        //     link: '',
-        //   },
-        //   {
-        //     id: 3,
-        //     name:
-        //       'По детали по дням с горизонтом на 14 дней с накопительным итогом',
-        //     link: '',
-        //   },
-        //   {
-        //     id: 4,
-        //     name:
-        //       'По детали по неделям с горизонтом на 14 недель с накопительным итогом',
-        //     link: '',
-        //   },
-        //   {
-        //     id: 5,
-        //     name: 'Список корректировок по заказам',
-        //     link: '',
-        //   },
-        // ],
-      },
       // {
-      //   id: 4,
-      //   name: 'Файлы',
-      //   link: 'null',
-      //   icon: 'flies',
-      //   deep: [
-      //     {
-      //       id: 0,
-      //       name: 'С ближайшей датой отгрузки',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 1,
-      //       name: 'По деталям с горизонтом 12 месяцев',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 2,
-      //       name: 'По детали с горизонтом  12 месяцев',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 3,
-      //       name:
-      //         'По детали по дням с горизонтом на 14 дней с накопительным итогом',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 4,
-      //       name:
-      //         'По детали по неделям с горизонтом на 14 недель с накопительным итогом',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 5,
-      //       name: 'Список корректировок по заказам',
-      //       link: '',
-      //     },
-      //   ],
-      // },
-      // {
-      //   id: 5,
-      //   name: 'Этикетки',
-      //   link: 'null',
-      //   icon: 'labels',
+      //   name: vm.$t('navigation.reports'),
+      //   link: '/reports',
+      //   icon: 'mdi-format-list-bulleted',
       //   deep: [
       //     {
       //       id: 0,

@@ -1,20 +1,9 @@
 <template>
   <div>
-    <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
+    <div class="d-flex mb-3 align-items-end">
+      <h1 class="h4 primary--text">
         {{ $t('views.email_list.email_list') }}
       </h1>
-      <div class="ml-auto">
-        <v-btn
-          outlined
-          large
-        >
-          <v-icon left>
-            mdi-filter-variant
-          </v-icon>
-          {{ $t('common.filter') }}
-        </v-btn>
-      </div>
     </div>
     <v-data-table
       fixed-header
