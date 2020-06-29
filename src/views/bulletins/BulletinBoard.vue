@@ -102,6 +102,7 @@ export default {
           params: {
             validity: this.validity,
             query: { isActive: true },
+            pageSize: 0
           },
         });
         this.items = data.rows.map((item) => ({

@@ -10,9 +10,13 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.supplier') }}
             </label>
-            <v-text-field
+            <v-autocomplete
               v-model="filter.gsdb"
+              :items="suppliers"
+              item-text="gsdb"
+              value="gsdb"
               hide-details
+              clearable
               solo
             />
           </div>
@@ -34,9 +38,13 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.part_number') }}
             </label>
-            <v-text-field
+            <v-autocomplete
               v-model="filter.partNumber"
+              :items="parts"
+              item-text="number"
+              item-value="number"
               hide-details
+              clearable
               solo
             />
           </div>
@@ -193,8 +201,18 @@ export default {
   props: {
     isShown: {
       type: Boolean,
-      default: false,
+      required: true,
     },
+
+    suppliers: {
+      type: Array,
+      default: () => []
+    },
+
+    parts: {
+      type: Array,
+      default: () => []
+    }
   },
 
   data() {
@@ -250,7 +268,7 @@ export default {
         filter.plant = this.filter.plant;
       }
       if (this.filter.partNumber) {
-        filter.part.number = this.filter.partNumber;
+        filter.part = { number: this.filter.partNumber };
       }
       if (typeof this.filter.totalQty === 'number') {
         filter.totalQty = this.filter.totalQty;

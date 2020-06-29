@@ -178,18 +178,13 @@ export default {
       } = this.options;
 
       const params = {};
-
-      if (itemsPerPage !== -1) {
-        params.pageSize = itemsPerPage;
-        params.page = page;
-      }
-
+      params.query = { isActive: true, ...filter };
+      params.validity = 'all';
+      params.pageSize = itemsPerPage === -1 ? 0 : itemsPerPage;
+      params.page = page;
       if (sortBy && sortBy.length) {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
-
-      params.query = { isActive: true, ...filter };
-      params.validity = 'all';
 
       try {
         const { data } = await this.$http.get('bulletins', { params });

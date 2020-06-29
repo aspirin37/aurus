@@ -31,6 +31,8 @@
     </div>
     <promises-filter
       v-model="isFilterShown"
+      :suppliers="suppliers"
+      :parts="parts"
       @submitFilter="getItems"
       @hide="hideFilter"
     />
@@ -40,7 +42,7 @@
       :items="promises"
       :options.sync="options"
       :server-items-length="total"
-      :loading="loading"
+      :loading="loading || loadingAdditional"
       :loading-text="$t('common.loading_data')"
     >
       <template v-slot:item.remove="{ item }">
@@ -58,6 +60,7 @@
     </v-data-table>
     <promise-creation
       v-model="isPromiseModalShown"
+      :parts="parts"
       @submit="getItems"
     />
     <promise-remove
@@ -131,6 +134,10 @@ export default {
       total: 0,
 
       loading: false,
+      loadingAdditional: false,
+
+      suppliers: [],
+      parts: [],
 
       selectedPromise: null,
 
@@ -160,6 +167,10 @@ export default {
     },
   },
 
+  created() {
+    this.getAdditional();
+  },
+
   methods: {
     async getItems(filter = {}) {
       this.loading = true;
@@ -169,17 +180,12 @@ export default {
       } = this.options;
 
       const params = {};
-
-      if (itemsPerPage !== -1) {
-        params.pageSize = itemsPerPage;
-        params.page = page;
-      }
-
+      params.pageSize = itemsPerPage === -1 ? 0 : itemsPerPage;
+      params.page = page;
+      params.query = filter;
       if (sortBy && sortBy.length) {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
-
-      params.query = filter;
 
       try {
         const { data } = await this.$http.get('/promises', { params });
@@ -193,6 +199,31 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+
+    async getAdditional() {
+      this.loadingAdditional = true;
+
+      try {
+        await Promise.all([
+          this.getSuppliers(),
+          this.getParts()
+        ])
+      } finally {
+        this.loadingAdditional = false;
+      }
+    },
+
+    async getSuppliers() {
+      const params = { pageSize: 0 };
+      const { data } = await this.$http.get('/suppliers', { params });
+      this.suppliers = data.rows;
+    },
+
+    async getParts() {
+      const params = { pageSize: 0 };
+      const { data } = await this.$http.get('/parts', { params });
+      this.parts = data.rows;
     },
 
     showPromiseModal() {

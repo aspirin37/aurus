@@ -27,8 +27,11 @@
           <label class="input-block__label">
             {{ $t('views.promise_list.part_number') }}
           </label>
-          <v-text-field
+          <v-autocomplete
             v-model="promise.partNumber"
+            :items="parts"
+            item-text="number"
+            item-value="number"
             solo
             :rules="[rules.required]"
           />
@@ -50,7 +53,6 @@
                   <v-text-field
                     v-model="shippingDateFormatted"
                     readonly
-                    hide-details
                     solo
                     :rules="[rules.required]"
                     v-on="on"
@@ -118,6 +120,11 @@ export default {
       type: Boolean,
       required: true,
     },
+
+    parts: {
+      type: Array,
+      default: () => []
+    }
   },
 
   data() {
@@ -147,7 +154,7 @@ export default {
     },
 
     shippingDateFormatted() {
-      return this.$d(new Date(this.promise.shippingDate));
+      return this.promise.shippingDate && this.$d(new Date(this.promise.shippingDate));
     },
   },
 
