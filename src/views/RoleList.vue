@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="display-1 primary--text mb-3">
+    <h1 class="h4 primary--text mb-3">
       {{ $t('views.role_list.role_list') }}
     </h1>
     <v-data-table

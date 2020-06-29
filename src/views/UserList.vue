@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
+    <div class="d-flex mb-3 align-items-end">
+      <h1 class="h4 primary--text">
         {{ $t('views.user_list.title') }}
       </h1>
       <div class="ml-auto">
@@ -38,26 +38,6 @@
       :loading-text="$t('common.loading_data')"
     >
       <template v-slot:item.actions="{ item }">
-        <v-hover v-slot="{hover}">
-          <v-icon
-            class="mr-4"
-            :class="hover ? '' : 'text--disabled'"
-            color="primary"
-            size="20"
-          >
-            mdi-book-open-variant
-          </v-icon>
-        </v-hover>
-        <v-hover v-slot="{hover}">
-          <v-icon
-            class="mr-4"
-            :class="hover ? '' : 'text--disabled'"
-            color="primary"
-            size="20"
-          >
-            mdi-email-outline
-          </v-icon>
-        </v-hover>
         <v-hover v-slot="{hover}">
           <v-icon
             :class="hover ? '' : 'text--disabled'"

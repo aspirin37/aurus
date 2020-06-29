@@ -7,11 +7,10 @@ html {
 }
 
 .v-data-table__wrapper {
-  max-height: calc(100vh - 277px);
 
   &::-webkit-scrollbar {
     width: 4px;
-    height: 4px;
+    height: 8px;
     background-color: #fff;
   }
 
