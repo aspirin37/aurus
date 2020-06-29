@@ -206,13 +206,13 @@ export default {
 
     suppliers: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
 
     parts: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
 
   data() {

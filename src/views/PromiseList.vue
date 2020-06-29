@@ -207,8 +207,8 @@ export default {
       try {
         await Promise.all([
           this.getSuppliers(),
-          this.getParts()
-        ])
+          this.getParts(),
+        ]);
       } finally {
         this.loadingAdditional = false;
       }

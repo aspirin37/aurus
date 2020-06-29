@@ -123,8 +123,8 @@ export default {
 
     parts: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
 
   data() {
