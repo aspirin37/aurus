@@ -12,7 +12,7 @@
         <div class="header__user__modal">
           <div class="header__user__modal__content">
             <router-link
-              to="/"
+              to="/profile"
               class="header__user__modal__link"
             >
               {{ $t('common.my_profile') }}

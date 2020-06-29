@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex mb-3 align-items-end">
       <h1 class="h4 primary--text">
-        {{ $t('views.email_list.email_list') }}
+        {{ $t('views.orders.order_groups') }}
       </h1>
     </div>
     <v-data-table
@@ -14,17 +14,24 @@
       :loading="loading"
       :loading-text="$t('common.loading_data')"
     >
+      <template v-slot:item.date="{ item }">
+        {{ item.date | moment("DD.MM.YY") }}
+      </template>
       <template v-slot:item.actions="{ item }">
-        <v-hover v-slot="{ hover }">
-          <v-icon
-            class="mr-4"
-            :class="hover ? '' : 'text--disabled'"
-            color="primary"
-            size="20"
-            @click="$router.push(`/emails/${item.id}`)"
+        <v-hover v-slot="{hover}">
+          <router-link
+            class="icon-link"
+            :to="`/orders/order-groups/${item.id}`"
           >
-            mdi-email-outline
-          </v-icon>
+            <v-icon
+              class="mr-4"
+              :class="hover ? '' : 'text--disabled'"
+              color="primary"
+              size="20"
+            >
+              mdi-open-in-new
+            </v-icon>
+          </router-link>
         </v-hover>
       </template>
     </v-data-table>
@@ -32,9 +39,8 @@
 </template>
 
 <script>
-
 export default {
-  name: 'EmailList',
+  name: 'OrderGroupList',
   data() {
     return {
       total: 0,
@@ -42,10 +48,10 @@ export default {
       loading: false,
       options: {},
       headers: [
-        { text: this.$t('views.email_list.event'), value: 'event' },
-        { text: this.$t('views.email_list.to'), value: 'to' },
-        { text: this.$t('views.email_list.cc'), value: 'cc' },
-        { text: this.$t('views.email_list.subject'), value: 'subject' },
+        { text: this.$t('common.date'), value: 'date' },
+        { text: this.$t('common.supplier'), value: 'supplier' },
+        { text: this.$t('common.plant'), value: 'plant' },
+        { text: this.$t('common.status'), value: 'status' },
         {
           text: this.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
         },
@@ -81,7 +87,7 @@ export default {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
 
-      const { data } = await this.$http.get('mails', { params }).finally(() => {
+      const { data } = await this.$http.get('/order-groups', { params }).finally(() => {
         this.loading = false;
       });
 
@@ -91,3 +97,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.fixed-column-table {
+  display: flex;
+  white-space: nowrap;
+}
+</style>
