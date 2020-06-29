@@ -97,6 +97,18 @@
       "send_mails": "Send mails",
       "send_mails_true": "yes (important message)"
     },
+    "promise_list": {
+      "promise_list": "List of order corrections",
+      "add_promise": "Add correction",
+      "supplier": "Supplier",
+      "plant": "Plant",
+      "detail_number": "Detail number",
+      "sent": "Sent",
+      "last_order": "Last order",
+      "last_shipment": "Last shipment",
+      "promised_shipment": "Promised shipment",
+      "promised_amount": "Promised amount"
+    },
     "label_printing": {
       "label_printing": "Label printing",
       "step1": "Step 1",
@@ -109,7 +121,7 @@
     "label_template": {
       "label_template": "Update label template",
       "current_template": "Current template: ",
-      "select_file": "select template",
+      "select_template": "select template",
       "selected_file": "Selected file: ",
       "template_fields": "Template can include fields:"
     }
@@ -121,6 +133,8 @@
     "users": "Users",
     "emails": "Emails",
     "roles": "Roles",
+    "orders": "Orders",
+    "promises": "List of order corrections",
     "labels": "Labels",
     "label_printing": "Label printing",
     "label_template": "Label template"

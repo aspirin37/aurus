@@ -96,6 +96,19 @@ export default {
         deep: [],
       },
       {
+        id: 3,
+        name: vm.$t('navigation.orders'),
+        link: '/orders',
+        icon: 'playlist_add',
+        deep: [
+          {
+            id: 8,
+            name: vm.$t('navigation.promises'),
+            link: '/promises'
+          }
+        ]
+      },
+      {
         id: 5,
         name: vm.$t('navigation.labels'),
         link: '/labels',

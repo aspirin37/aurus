@@ -46,7 +46,6 @@
       <template v-slot:item.actions="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
-            v-b-modal.bulletin-modal
             class="mr-2"
             :class="hover ? '' : 'text--disabled'"
             color="primary"
@@ -58,7 +57,6 @@
         </v-hover>
         <v-hover v-slot="{hover}">
           <v-icon
-            v-b-modal.bulletin-modal
             :class="hover ? '' : 'text--disabled'"
             color="primary"
             size="20"
