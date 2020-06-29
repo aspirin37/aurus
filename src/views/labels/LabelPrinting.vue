@@ -35,7 +35,8 @@
                 v-if="template"
                 v-show="false"
                 ref="template"
-                :href="template.path"
+                :href="template"
+                download="asn-template.xlsx"
               />
               <!-- eslint-disable max-len -->
               <button
@@ -123,8 +124,13 @@ export default {
       if (!this.template) {
         this.loading = true;
         try {
-          const { data } = await this.$http.get('/labels/template');
-          this.template = data;
+          const { data } = await this.$http.get('/asn/asn-template.xlsx', {
+            headers: {
+              'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            },
+            responseType: 'blob',
+          });
+          this.template = URL.createObjectURL(data);
           await this.$nextTick();
         } finally {
           this.loading = false;
