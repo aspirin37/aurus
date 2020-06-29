@@ -60,6 +60,22 @@ export default {
     activeMenuId: null,
     menus: [
       {
+        id: 0,
+        name: vm.$t('navigation.bulletins'),
+        link: '/bulletins',
+        icon: 'art_track',
+        deep: [
+          {
+            name: vm.$t('navigation.bulletin_board'),
+            link: '/bulletins/board',
+          },
+          {
+            name: vm.$t('navigation.bulletin_management'),
+            link: '/bulletins/list',
+          },
+        ],
+      },
+      {
         name: vm.$t('navigation.users'),
         link: '/users',
         icon: 'mdi-account-multiple',
@@ -75,6 +91,7 @@ export default {
         icon: 'mdi-email-outline',
       },
       {
+        id: 1,
         name: vm.$t('navigation.orders'),
         link: '/orders',
         icon: 'mdi-format-list-bulleted',
@@ -105,45 +122,22 @@ export default {
           },
         ],
       },
-      // {
-      //   name: vm.$t('navigation.reports'),
-      //   link: '/reports',
-      //   icon: 'mdi-format-list-bulleted',
-      //   deep: [
-      //     {
-      //       id: 0,
-      //       name: 'С ближайшей датой отгрузки',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 1,
-      //       name: 'По деталям с горизонтом 12 месяцев',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 2,
-      //       name: 'По детали с горизонтом  12 месяцев',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 3,
-      //       name:
-      //         'По детали по дням с горизонтом на 14 дней с накопительным итогом',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 4,
-      //       name:
-      //         'По детали по неделям с горизонтом на 14 недель с накопительным итогом',
-      //       link: '',
-      //     },
-      //     {
-      //       id: 5,
-      //       name: 'Список корректировок по заказам',
-      //       link: '',
-      //     },
-      //   ],
-      // },
+      {
+        id: 2,
+        name: vm.$t('navigation.labels'),
+        link: '/labels',
+        icon: 'mdi-relative-scale',
+        deep: [
+          {
+            name: vm.$t('navigation.label_printing'),
+            link: '/labels/print',
+          },
+          {
+            name: vm.$t('navigation.label_template'),
+            link: '/labels/template',
+          },
+        ],
+      },
     ],
   }),
   methods: {

@@ -23,7 +23,13 @@
     "part": "Деталь",
     "download": "Скачать",
     "search": "Найти",
-    "noData": "По вашему запросу ничего не найдено"
+    "noData": "По вашему запросу ничего не найдено",
+    "create": "Создать",
+    "delete": "Удалить",
+    "all": "Все",
+    "yes": "Да",
+    "no": "Нет",
+    "upload": "загрузить"
   },
   "views": {
     "sign_in": {
@@ -69,9 +75,71 @@
       "report_list_by_parts": "По деталям с горизонтом 12 месяцев",
       "history_by_days": "По детали по дням с горизонтом на 14 дней с накопительным итогом",
       "history_by_weeks": "По детали по неделям с горизонтом на 17 недель с накопительным итогом"
+    },
+    "bulletin_board": {
+      "bulletin_board": "Доска объявлений",
+      "all": "Все",
+      "current": "Текущие",
+      "past": "Прошедшие",
+      "start_date": "Дата",
+      "end_date": "Истекает",
+      "text": "Текст сообщения"
+    },
+    "bulletin_details": {
+      "back_to_board": "назад к объявлениям",
+      "start_date": "Дата",
+      "end_date": "Истекает",
+      "attachments": "Прикрепленные файлы"
+    },
+    "bulletin_list": {
+      "bulletin_list": "Объявления",
+      "subject": "Тема",
+      "start_date": "Дата",
+      "start_time": "Время сообщения",
+      "end_date": "Истекает",
+      "edited_by": "Редактор",
+      "updated_at": "Дата ред.",
+      "email": "E-mail",
+      "bulletin_edit": "Редактирование сообщения",
+      "text": "Текст сообщения",
+      "bulletin_delete": "Удаление сообщения",
+      "bulletin_remove_answer": "Уверены, что хотите удалить это сообщение?",
+      "bulletin_remove_confirmation": "Сообщение будет безвозвратно удалено."
+    },
+    "bulletin_creation": {
+      "bulletin_creation": "Новое объявление",
+      "back_to_list": "назад к объявлениям",
+      "subject": "Тема сообщения",
+      "start_date": "Дата сообщения",
+      "start_time": "Время сообщения",
+      "end_date": "Дата окончания действия сообщения",
+      "text": "Текст сообщения",
+      "suppliers": "Список поставщиков для рассылки",
+      "attach_file": "прикрепить файл",
+      "send_mails": "Выполнить рассылку",
+      "send_mails_true": "да (вид уведомления \"Важное сообщение \")"
+    },
+    "label_printing": {
+      "label_printing": "Печать этикеток",
+      "step1": "1 шаг",
+      "step2": "2 шаг",
+      "download_template": "скачать шаблон в xls",
+      "print": "Отправьте этикетки на печать",
+      "selected_file": "Выбранный файл: ",
+      "create_labels": "получить этикетки"
+    },
+    "label_template": {
+      "label_template": "Редактирование шаблона этикетки",
+      "current_template": "Действующий шаблон: ",
+      "select_template": "выбрать шаблон",
+      "selected_file": "Выбранный файл: ",
+      "template_fields": "Шаблон может содержать следующие поля:"
     }
   },
   "navigation": {
+    "bulletins": "Объявления",
+    "bulletin_board": "Доска объявлений",
+    "bulletin_management": "Управление списком сообщений",
     "users": "Пользователи",
     "emails": "Архив писем",
     "roles": "Роли",
@@ -82,9 +150,15 @@
     "report_list_by_part": "По детали с горизонтом 12 месяцев",
     "report_list_by_parts": "По деталям с горизонтом 12 месяцев",
     "history_by_days": "По детали по дням с горизонтом на 14 дней с накопительным итогом",
-    "history_by_weeks": "По детали по неделям с горизонтом на 17 недель с накопительным итогом"
+    "history_by_weeks": "По детали по неделям с горизонтом на 17 недель с накопительным итогом",
+    "labels": "Этикетки",
+    "label_printing": "Печать этикеток",
+    "label_template": "Шаблон этикетки"
   },
   "layout": {
     "collapse": "Свернуть меню"
+  },
+  "validation": {
+    "required": "Обязательное поле"
   }
 }
