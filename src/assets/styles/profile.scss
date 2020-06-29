@@ -43,7 +43,7 @@
 
       &__top {
         display: grid;
-        align-items: start;
+        align-items: flex-start;
         justify-content: space-between;
         grid-template-columns: 1fr auto;
         column-gap: 20px;

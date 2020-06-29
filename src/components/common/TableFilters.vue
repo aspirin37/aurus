@@ -38,7 +38,7 @@
         v-if="noItemsFound"
         class="h4 text-center"
       >
-        {{ $t('common.noData') }}
+        {{ $t('common.no_data') }}
       </div>
     </transition>
   </div>
@@ -74,7 +74,7 @@ export default {
 
     &__form {
       display: flex;
-      justify-content: start;
+      justify-content: flex-start;
       align-items: flex-end;
       margin-bottom: 20px;
     }
