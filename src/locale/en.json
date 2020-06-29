@@ -102,12 +102,17 @@
       "add_promise": "Add correction",
       "supplier": "Supplier",
       "plant": "Plant",
-      "detail_number": "Detail number",
+      "part_number": "Part number",
       "sent": "Sent",
       "last_order": "Last order",
       "last_shipment": "Last shipment",
       "promised_shipment": "Promised shipment",
-      "promised_amount": "Promised amount"
+      "promised_amount": "Promised amount",
+      "shipping_date": "Shipping date",
+      "amount": "Amount",
+      "promise_delete": "Delete record",
+      "promise_remove_answer": "Are you sure you want to delete this record?",
+      "promise_remove_confirmation": "The record will be permanently deleted."
     },
     "label_printing": {
       "label_printing": "Label printing",

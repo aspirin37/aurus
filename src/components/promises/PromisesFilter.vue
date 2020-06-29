@@ -32,7 +32,7 @@
         <v-col cols="4">
           <div class="input-block input-block_white">
             <label class="input-block__label">
-              {{ $t('views.promise_list.detail_number') }}
+              {{ $t('views.promise_list.part_number') }}
             </label>
             <v-text-field
               v-model="filter.partNumber"
@@ -163,7 +163,10 @@
             />
           </div>
         </v-col>
-        <v-col cols="2" class="promise-list__filter-submit">
+        <v-col
+          cols="2"
+          class="promise-list__filter-submit"
+        >
           <v-btn
             color="primary"
             outlined
@@ -190,8 +193,8 @@ export default {
   props: {
     isShown: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   data() {
@@ -204,13 +207,13 @@ export default {
         lastOrderDate: null,
         lastDate: null,
         shippingDate: null,
-        amount: null
+        amount: null,
       },
 
       isLastOrderDatePickerShown: false,
       isLastDatePickerShown: false,
-      isShippingDatePickerShown: false
-    }
+      isShippingDatePickerShown: false,
+    };
   },
 
   computed: {
@@ -266,8 +269,8 @@ export default {
       }
       return filter;
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">

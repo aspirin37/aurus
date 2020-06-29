@@ -102,12 +102,17 @@
       "add_promise": "добавить корректировку",
       "supplier": "Поставщик",
       "plant": "Завод",
-      "detail_number": "№ детали",
+      "part_number": "№ детали",
       "sent": "Отправлено",
       "last_order": "Последний заказ",
       "last_shipment": "Последняя отгрузка",
       "promised_shipment": "Обещанная отгрузка",
-      "promised_amount": "Обещанное кол-во"
+      "promised_amount": "Обещанное кол-во",
+      "shipping_date": "Дата планируемой отгрузки",
+      "amount": "Количество деталей",
+      "promise_delete": "Удаление записи",
+      "promise_remove_answer": "Уверены, что хотите удалить эту запись?",
+      "promise_remove_confirmation": "Запись будет безвозвратно удалена."
     },
     "label_printing": {
       "label_printing": "Печать этикеток",

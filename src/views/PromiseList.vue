@@ -10,6 +10,7 @@
           color="primary"
           outlined
           large
+          @click="showPromiseModal"
         >
           <v-icon left>
             mdi-plus
@@ -55,17 +56,30 @@
         </v-hover>
       </template>
     </v-data-table>
+    <promise-creation
+      v-model="isPromiseModalShown"
+      @submit="getItems"
+    />
+    <promise-remove
+      v-model="isRemoveModalShown"
+      :selected-promise="selectedPromise"
+      @submit="getItems"
+    />
   </div>
 </template>
 
 <script>
-import PromisesFilter from '@/components/promises/PromisesFilter';
+import PromisesFilter from '@/components/promises/PromisesFilter.vue';
+import PromiseCreation from '@/components/promises/PromiseCreation.vue';
+import PromiseRemove from '@/components/promises/PromiseRemove.vue';
 
 export default {
   name: 'PromiseList',
 
   components: {
-    PromisesFilter
+    PromisesFilter,
+    PromiseCreation,
+    PromiseRemove,
   },
 
   data() {
@@ -73,55 +87,57 @@ export default {
       headers: [
         {
           text: this.$t('views.promise_list.supplier'),
-          value: 'gsdb'
+          value: 'gsdb',
         },
         {
           text: this.$t('views.promise_list.plant'),
-          value: 'plant'
+          value: 'plant',
         },
         {
-          text: this.$t('views.promise_list.detail_number'),
-          value: 'part.number'
+          text: this.$t('views.promise_list.part_number'),
+          value: 'part.number',
         },
         {
           text: this.$t('views.promise_list.sent'),
-          value: 'totalQty'
+          value: 'totalQty',
         },
         {
           text: this.$t('views.promise_list.last_order'),
-          value: 'lastOrderDate'
+          value: 'lastOrderDate',
         },
         {
           text: this.$t('views.promise_list.last_shipment'),
-          value: 'lastDate'
+          value: 'lastDate',
         },
         {
           text: this.$t('views.promise_list.promised_shipment'),
-          value: 'shippingDate'
+          value: 'shippingDate',
         },
         {
           text: this.$t('views.promise_list.promised_amount'),
-          value: 'amount'
+          value: 'amount',
         },
         {
           text: this.$t('common.delete'),
           value: 'remove',
           sortable: false,
           width: 100,
-          align: 'center'
-        }
+          align: 'center',
+        },
       ],
 
       items: [],
-
       options: {},
-
       total: 0,
 
       loading: false,
 
+      selectedPromise: null,
+
+      isPromiseModalShown: false,
+      isRemoveModalShown: false,
       isFilterShown: false,
-    }
+    };
   },
 
   computed: {
@@ -130,9 +146,9 @@ export default {
         ...item,
         lastOrderDate: this.$d(item.lastOrderDate),
         lastDate: this.$d(item.lastDate),
-        shippingDate: this.$d(item.shippingDate)
+        shippingDate: this.$d(item.shippingDate),
       }));
-    }
+    },
   },
 
   watch: {
@@ -171,12 +187,21 @@ export default {
           ...item,
           lastOrderDate: new Date(item.lastOrderDate),
           lastDate: new Date(item.lastDate),
-          shippingDate: new Date(item.shippingDate)
+          shippingDate: new Date(item.shippingDate),
         }));
         this.total = data.total;
       } finally {
         this.loading = false;
       }
+    },
+
+    showPromiseModal() {
+      this.isPromiseModalShown = true;
+    },
+
+    showRemoveModal(item) {
+      this.selectedPromise = item;
+      this.isRemoveModalShown = true;
     },
 
     toggleFilter() {
@@ -185,7 +210,7 @@ export default {
 
     hideFilter() {
       this.isFilterShown = false;
-    }
-  }
-}
+    },
+  },
+};
 </script>
