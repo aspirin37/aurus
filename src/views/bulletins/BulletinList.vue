@@ -46,7 +46,6 @@
       <template v-slot:item.actions="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
-            v-b-modal.bulletin-modal
             class="mr-2"
             :class="hover ? '' : 'text--disabled'"
             color="primary"
@@ -58,7 +57,6 @@
         </v-hover>
         <v-hover v-slot="{hover}">
           <v-icon
-            v-b-modal.bulletin-modal
             :class="hover ? '' : 'text--disabled'"
             color="primary"
             size="20"
@@ -180,18 +178,13 @@ export default {
       } = this.options;
 
       const params = {};
-
-      if (itemsPerPage !== -1) {
-        params.pageSize = itemsPerPage;
-        params.page = page;
-      }
-
+      params.query = { isActive: true, ...filter };
+      params.validity = 'all';
+      params.pageSize = itemsPerPage === -1 ? 0 : itemsPerPage;
+      params.page = page;
       if (sortBy && sortBy.length) {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
-
-      params.query = { isActive: true, ...filter };
-      params.validity = 'all';
 
       try {
         const { data } = await this.$http.get('bulletins', { params });

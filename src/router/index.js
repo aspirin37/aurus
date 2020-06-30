@@ -56,6 +56,10 @@ const routes = [
       name: 'HistoryByWeeks',
       component: () => import('@/views/HistoryByWeeks'),
     }, {
+      path: 'orders/promises',
+      name: 'PromiseList',
+      component: () => import('@/views/PromiseList'),
+    }, {
       path: 'emails',
       name: 'EmailList',
       component: () => import('@/views/EmailList'),

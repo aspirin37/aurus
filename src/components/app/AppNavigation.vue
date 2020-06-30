@@ -120,10 +120,15 @@ export default {
             name: vm.$t('navigation.history_by_weeks'),
             link: '/orders/history-by-weeks',
           },
+          {
+            id: 8,
+            name: vm.$t('navigation.promises'),
+            link: '/orders/promises',
+          },
         ],
       },
       {
-        id: 2,
+        id: 5,
         name: vm.$t('navigation.labels'),
         link: '/labels',
         icon: 'mdi-relative-scale',
