@@ -150,7 +150,8 @@
       "current_template": "Current template: ",
       "select_template": "select template",
       "selected_file": "Selected file: ",
-      "template_fields": "Template can include fields:"
+      "template_elements": "Supported elements:",
+      "template_fields": "Computed fields:"
     }
   },
   "navigation": {

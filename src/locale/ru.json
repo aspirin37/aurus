@@ -150,7 +150,8 @@
       "current_template": "Действующий шаблон: ",
       "select_template": "выбрать шаблон",
       "selected_file": "Выбранный файл: ",
-      "template_fields": "Шаблон может содержать следующие поля:"
+      "template_elements": "Поддерживаемые элементы:",
+      "template_fields": "Возможные вычисляемые поля:"
     }
   },
   "navigation": {

@@ -47,17 +47,38 @@
       </div>
 
       <div>
-        <h2 class="label-template__fields h5">
-          Шаблон может содержать следующие поля:
+        <h2 class="label-template__fields h5 mb-3">
+          {{ $t('views.label_template.template_elements') }}
         </h2>
-        <ul>
-          <li
+        <v-chip-group
+          column
+          class="mb-6"
+        >
+          <v-chip @click="copyToClipboard('Text')">
+            Text
+          </v-chip>
+          <v-chip @click="copyToClipboard('Line')">
+            Line
+          </v-chip>
+          <v-chip @click="copyToClipboard('Barcode')">
+            Barcode
+          </v-chip>
+        </v-chip-group>
+      </div>
+
+      <div>
+        <h2 class="label-template__fields h5 mb-3">
+          {{ $t('views.label_template.template_fields') }}
+        </h2>
+        <v-chip-group column>
+          <v-chip
             v-for="field of fields"
             :key="field"
+            @click="copyToClipboard(field)"
           >
             {{ field }}
-          </li>
-        </ul>
+          </v-chip>
+        </v-chip-group>
       </div>
     </main>
   </div>
@@ -120,6 +141,10 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+
+    copyToClipboard(field) {
+      navigator.clipboard.writeText(field);
     },
   },
 };
