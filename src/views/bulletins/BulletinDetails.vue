@@ -31,7 +31,7 @@
             {{ $t('views.bulletin_details.start_date') }}:&nbsp;
           </span>
           <span class="adds-board-detail-page__main__header__date">
-            {{ $d(bulletin.startDate) | moment('L LT') }}
+            {{ bulletin.startDate | moment('L LT') }}
           </span>
         </div>
         <div class="adds-board-detail-page__main__header__item">
@@ -39,7 +39,7 @@
             {{ $t('views.bulletin_details.end_date') }}:&nbsp;
           </span>
           <span class="adds-board-detail-page__main__header__date">
-            {{ $d(bulletin.endDate) | moment('L') }}
+            {{ bulletin.endDate | moment('L') }}
           </span>
         </div>
       </div>

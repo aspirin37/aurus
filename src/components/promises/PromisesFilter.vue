@@ -236,15 +236,15 @@ export default {
 
   computed: {
     lastOrderDateFormatted() {
-      return this.filter.lastOrderDate && this.$d(new Date(this.filter.lastOrderDate));
+      return this.filter.lastOrderDate && this.$moment.utc(this.filter.lastOrderDate).format('L');
     },
 
     lastDateFormatted() {
-      return this.filter.lastDate && this.$d(new Date(this.filter.lastDate));
+      return this.filter.lastDate && this.$moment.utc(this.filter.lastDate).format('L');
     },
 
     shippingDateFormatted() {
-      return this.filter.shippingDate && this.$d(new Date(this.filter.shippingDate));
+      return this.filter.shippingDate && this.$moment.utc(this.filter.shippingDate).format('L');
     },
   },
 
@@ -274,13 +274,13 @@ export default {
         filter.totalQty = this.filter.totalQty;
       }
       if (this.filter.lastOrderDate) {
-        filter.lastOrderDate = new Date(this.filter.lastOrderDate);
+        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate);
       }
       if (this.filter.lastDate) {
-        filter.lastDate = new Date(this.filter.lastDate);
+        filter.lastDate = this.$moment.utc(this.filter.lastDate);
       }
       if (this.filter.shippingDate) {
-        filter.shippingDate = new Date(this.filter.shippingDate);
+        filter.shippingDate = this.$moment.utc(this.filter.shippingDate);
       }
       if (typeof this.filter.amount === 'number') {
         filter.amount = this.filter.amount;

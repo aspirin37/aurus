@@ -154,7 +154,7 @@ export default {
     },
 
     shippingDateFormatted() {
-      return this.promise.shippingDate && this.$d(new Date(this.promise.shippingDate));
+      return this.promise.shippingDate && this.$moment.utc(this.promise.shippingDate).format('L');
     },
   },
 
@@ -182,7 +182,7 @@ export default {
         plant,
         amount,
         part: { number: this.promise.partNumber },
-        shippingDate: new Date(this.promise.shippingDate),
+        shippingDate: this.$moment.utc(this.promise.shippingDate),
         gsdb: this.user.gsdb,
       };
 

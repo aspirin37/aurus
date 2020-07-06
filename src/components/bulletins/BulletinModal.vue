@@ -205,11 +205,11 @@ export default {
 
   computed: {
     startDateFormatted() {
-      return this.$d(new Date(this.bulletin.startDate));
+      return this.$moment.utc(this.bulletin.startDate).format('L');
     },
 
     endDateFormatted() {
-      return this.$d(new Date(this.bulletin.endDate));
+      return this.$moment.utc(this.bulletin.endDate).format('L');
     },
   },
 
@@ -244,9 +244,9 @@ export default {
     async submit() {
       const { subject, text } = this.bulletin;
 
-      const startDate = new Date(this.bulletin.startDate);
-      startDate.setHours(...this.bulletin.startTime.split(':'));
-      const endDate = new Date(this.bulletin.endDate);
+      const [hour, minute] = this.startTime.split(':');
+      const startDate = this.$moment.utc(this.bulletin.startDate).hour(hour).minute(minute);
+      const endDate = this.$moment.utc(this.bulletin.endDate);
 
       if (!this.validate()) {
         return;

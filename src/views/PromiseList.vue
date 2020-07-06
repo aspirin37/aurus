@@ -151,9 +151,9 @@ export default {
     promises() {
       return this.items.map((item) => ({
         ...item,
-        lastOrderDate: this.$d(item.lastOrderDate),
-        lastDate: this.$d(item.lastDate),
-        shippingDate: this.$d(item.shippingDate),
+        lastOrderDate: this.$moment.utc(item.lastOrderDate).format('L'),
+        lastDate: this.$moment.utc(item.lastDate).format('L'),
+        shippingDate: this.$moment.utc(item.shippingDate).format('L'),
       }));
     },
   },

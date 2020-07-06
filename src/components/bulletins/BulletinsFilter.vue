@@ -214,10 +214,7 @@ export default {
         };
       }
       if (this.filter.endDate) {
-        filter.endDate = {
-          $gte: this.$moment.utc(this.filter.endDate),
-          $lte: this.$moment.utc(this.filter.endDate).endOf('day'),
-        };
+        filter.endDate = this.$moment.utc(this.filter.endDate);
       }
       if (this.filter.updatedAt) {
         filter.updatedAt = {
