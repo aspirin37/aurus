@@ -18,6 +18,7 @@ Vue.use(BootstrapVue);
 Vue.use(VueMoment, {
   moment,
 });
+Vue.moment.locale(localStorage.getItem('locale') || 'en');
 
 Vue.prototype.$config = config;
 Vue.prototype.$http = http;

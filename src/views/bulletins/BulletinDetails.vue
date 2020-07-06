@@ -31,7 +31,7 @@
             {{ $t('views.bulletin_details.start_date') }}:&nbsp;
           </span>
           <span class="adds-board-detail-page__main__header__date">
-            {{ $d(bulletin.startDate) }}
+            {{ $d(bulletin.startDate) | moment('L LT') }}
           </span>
         </div>
         <div class="adds-board-detail-page__main__header__item">
@@ -39,7 +39,7 @@
             {{ $t('views.bulletin_details.end_date') }}:&nbsp;
           </span>
           <span class="adds-board-detail-page__main__header__date">
-            {{ $d(bulletin.endDate) }}
+            {{ $d(bulletin.endDate) | moment('L') }}
           </span>
         </div>
       </div>
@@ -82,11 +82,34 @@ export default {
     };
   },
 
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+  },
+
   created() {
+    this.getTimezone();
     this.getItem();
   },
 
   methods: {
+    async getTimezone() {
+      if (!this.user) {
+        this.$moment.tz.setDefault();
+        return;
+      }
+
+      try {
+        const { data } = await this.$http.get(`/suppliers/${this.user.gsdb}`);
+        if (data.timezone) {
+          this.$moment.tz(data.timezone);
+        }
+      } catch (error) {
+        this.$moment.tz.setDefault();
+      }
+    },
+
     async getItem() {
       this.loading = true;
       try {

@@ -152,10 +152,10 @@ export default {
     bulletins() {
       return this.items.map((item) => ({
         ...item,
-        startDate: this.$d(item.startDate),
-        endDate: this.$d(item.endDate),
-        createdAt: this.$d(item.createdAt),
-        updatedAt: this.$d(item.updatedAt),
+        startDate: this.$moment.utc(item.startDate).format('L LT'),
+        endDate: this.$moment.utc(item.endDate).format('L'),
+        createdAt: this.$moment.utc(item.createdAt).format('L'),
+        updatedAt: this.$moment.utc(item.updatedAt).format('L'),
         isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no'),
       }));
     },
