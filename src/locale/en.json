@@ -94,11 +94,11 @@
     "bulletin_list": {
       "bulletin_list": "Bulletins",
       "subject": "Subject",
-      "start_date": "Date",
-      "start_time": "Time",
-      "end_date": "Valid till",
+      "start_date": "Date (UTC)",
+      "start_time": "Time (UTC)",
+      "end_date": "Valid till (UTC)",
       "edited_by": "Edited by",
-      "updated_at": "Updated at",
+      "updated_at": "Updated at (UTC)",
       "email": "E-mail",
       "bulletin_edit": "Edit bulletin",
       "text": "Message",
@@ -110,9 +110,9 @@
       "bulletin_creation": "New bulletin",
       "back_to_list": "back to bulletins",
       "subject": "Subject",
-      "start_date": "Date",
-      "start_time": "Time",
-      "end_date": "Valid till",
+      "start_date": "Date (UTC)",
+      "start_time": "Time (UTC)",
+      "end_date": "Valid till (UTC)",
       "text": "Message",
       "suppliers": "Supplier list",
       "attach_file": "attach file",
@@ -150,7 +150,8 @@
       "current_template": "Current template: ",
       "select_template": "select template",
       "selected_file": "Selected file: ",
-      "template_fields": "Template can include fields:"
+      "template_elements": "Supported elements:",
+      "template_fields": "Computed fields:"
     }
   },
   "navigation": {

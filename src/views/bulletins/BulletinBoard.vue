@@ -81,6 +81,10 @@ export default {
   },
 
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
+
     oddBulletins() {
       return this.items.filter((_, i) => i % 2 === 0);
     },
@@ -91,10 +95,27 @@ export default {
   },
 
   created() {
+    this.getTimezone();
     this.getItems();
   },
 
   methods: {
+    async getTimezone() {
+      if (!this.user) {
+        this.$moment.tz.setDefault();
+        return;
+      }
+
+      try {
+        const { data } = await this.$http.get(`/suppliers/${this.user.gsdb}`);
+        if (data.timezone) {
+          this.$moment.tz(data.timezone);
+        }
+      } catch (error) {
+        this.$moment.tz.setDefault();
+      }
+    },
+
     async getItems() {
       this.loading = true;
       try {
