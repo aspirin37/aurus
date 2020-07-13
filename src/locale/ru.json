@@ -151,7 +151,8 @@
       "select_template": "выбрать шаблон",
       "selected_file": "Выбранный файл: ",
       "template_elements": "Поддерживаемые элементы:",
-      "template_fields": "Возможные вычисляемые поля:"
+      "template_fields": "Возможные свойства детали:",
+      "template_fonts": "Поддерживаемые шрифты:"
     }
   },
   "navigation": {
