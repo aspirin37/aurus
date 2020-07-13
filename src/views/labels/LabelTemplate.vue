@@ -46,7 +46,7 @@
         </span>
       </div>
 
-      <div>
+      <div v-if="elements.length">
         <h2 class="label-template__fields h5 mb-3">
           {{ $t('views.label_template.template_elements') }}
         </h2>
@@ -54,29 +54,45 @@
           column
           class="mb-6"
         >
-          <v-chip @click="copyToClipboard('Text')">
-            Text
-          </v-chip>
-          <v-chip @click="copyToClipboard('Line')">
-            Line
-          </v-chip>
-          <v-chip @click="copyToClipboard('Barcode')">
-            Barcode
+          <v-chip
+            v-for="element of elements"
+            :key="element"
+            @click="copyToClipboard(element)"
+          >
+            {{ element }}
           </v-chip>
         </v-chip-group>
       </div>
 
-      <div>
+      <div v-if="fields.length">
         <h2 class="label-template__fields h5 mb-3">
           {{ $t('views.label_template.template_fields') }}
         </h2>
-        <v-chip-group column>
+        <v-chip-group
+          column
+          class="mb-6"
+        >
           <v-chip
             v-for="field of fields"
             :key="field"
             @click="copyToClipboard(field)"
           >
             {{ field }}
+          </v-chip>
+        </v-chip-group>
+      </div>
+
+      <div v-if="fonts.length">
+        <h2 class="label-template__fields h5 mb-3">
+          {{ $t('views.label_template.template_fonts') }}
+        </h2>
+        <v-chip-group column>
+          <v-chip
+            v-for="font of fonts"
+            :key="font"
+            @click="copyToClipboard(font)"
+          >
+            {{ font }}
           </v-chip>
         </v-chip-group>
       </div>
@@ -92,13 +108,18 @@ export default {
     return {
       template: null,
       file: null,
+      elements: [],
       fields: [],
+      fonts: [],
       loading: false,
     };
   },
 
   created() {
-    this.loadData();
+    this.loadTemplate();
+    this.loadElements();
+    this.loadFields();
+    this.loadFonts();
   },
 
   methods: {
@@ -107,9 +128,19 @@ export default {
       this.template = data;
     },
 
+    async loadElements() {
+      const { data: elements } = await this.$http.get('/labels/elements');
+      this.elements = elements;
+    },
+
     async loadFields() {
-      const { data } = await this.$http.get('/labels/fields');
-      this.fields = data;
+      const { data: fields } = await this.$http.get('/labels/fields');
+      this.fields = fields;
+    },
+
+    async loadFonts() {
+      const { data: fonts } = await this.$http.get('/labels/fonts');
+      this.fonts = fonts;
     },
 
     selectFile() {
@@ -119,16 +150,6 @@ export default {
 
     setFile() {
       [this.file] = this.$refs.file.files;
-    },
-
-    async loadData() {
-      this.loading = true;
-      try {
-        await this.loadTemplate();
-        await this.loadFields();
-      } finally {
-        this.loading = false;
-      }
     },
 
     async saveTemplate() {

@@ -151,7 +151,8 @@
       "select_template": "select template",
       "selected_file": "Selected file: ",
       "template_elements": "Supported elements:",
-      "template_fields": "Computed fields:"
+      "template_fields": "Available part properties:",
+      "template_fonts": "Supported fonts:"
     }
   },
   "navigation": {
