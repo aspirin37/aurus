@@ -1,7 +1,7 @@
 <template>
   <div class="adds-board-page">
-    <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
+    <div class="d-flex align-items-end">
+      <h1 class="h4 primary--text">
         {{ $t('views.bulletin_board.bulletin_board') }}
       </h1>
       <div class="adds-board-page__top__filter ml-auto">
@@ -36,7 +36,8 @@
         </v-btn-toggle>
       </div>
     </div>
-    <v-container>
+    <app-loader v-if="loading" />
+    <v-container v-else>
       <v-row>
         <v-col
           cols="6"
@@ -65,18 +66,21 @@
 
 <script>
 import BulletinCard from '@/components/bulletins/BulletinCard.vue';
+import AppLoader from '@/components/common/AppLoader.vue';
 
 export default {
   name: 'BulletinBoard',
 
   components: {
     BulletinCard,
+    AppLoader,
   },
 
   data() {
     return {
       validity: 'current',
       items: [],
+      loading: false,
     };
   },
 

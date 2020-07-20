@@ -60,10 +60,6 @@ const routes = [
       name: 'PromiseList',
       component: () => import('@/views/PromiseList'),
     }, {
-      path: 'emails',
-      name: 'EmailList',
-      component: () => import('@/views/EmailList'),
-    }, {
       path: 'bulletins/board',
       name: 'BulletinBoard',
       component: () => import('@/views/bulletins/BulletinBoard'),
@@ -79,12 +75,16 @@ const routes = [
     }, {
       path: 'bulletins/list/create',
       name: 'BulletinCreation',
-      component: () => import('@/views//bulletins/BulletinCreation'),
+      component: () => import('@/views/bulletins/BulletinCreation'),
+    }, {
+      path: 'emails',
+      name: 'EmailList',
+      component: () => import('@/views/emails/EmailList'),
     }, {
       path: 'emails/:id',
       name: 'Email',
       props: true,
-      component: () => import('@/views/Email'),
+      component: () => import('@/views/emails/Email'),
     }, {
       path: 'roles',
       name: 'RoleList',

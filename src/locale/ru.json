@@ -45,9 +45,16 @@
     "email_list": {
       "email_list": "Архив писем",
       "event": "Событие",
+      "subject": "Тема",
       "to": "Кому",
       "cc": "Копия",
-      "subject": "Тема"
+      "suppliers": "Поставщики",
+      "supplier": "Поставщик",
+      "type": "Тип события"
+    },
+    "email": {
+      "email_content": "Содержимое письма",
+      "back": "назад к списку"
     },
     "user_list": {
       "adding_user": "Добавление нового пользователя",

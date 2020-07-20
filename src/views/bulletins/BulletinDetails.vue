@@ -1,72 +1,84 @@
 <template>
-  <div class="adds-board-detail-page">
-    <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
-        {{ bulletin.subject }}
-      </h1>
-      <div class="ml-auto d-flex">
-        <router-link
-          to="/bulletins/board"
-          class="adds-board-detail-page__top__back-link my-auto"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
+  <div>
+    <app-loader v-if="loading" />
+    <div
+      v-else
+      class="adds-board-detail-page"
+    >
+      <div class="d-flex mb-3">
+        <h1 class="h4 primary--text">
+          {{ bulletin.subject }}
+        </h1>
+        <div class="ml-auto d-flex">
+          <router-link
+            to="/bulletins/board"
+            class="adds-board-detail-page__top__back-link my-auto"
           >
-            <path
-              d="M9,4l.881.881L6.394,8.375H14v1.25H6.394l3.487,3.494L9,14,4,9Z"
-              transform="translate(-4 -4)"
-            />
-          </svg>
-          {{ $t('views.bulletin_details.back_to_board') }}
-        </router-link>
-      </div>
-    </div>
-    <main class="adds-board-detail-page__main">
-      <div class="adds-board-detail-page__main__header">
-        <div class="adds-board-detail-page__main__header__item">
-          <span class="adds-board-detail-page__main__header__title">
-            {{ $t('views.bulletin_details.start_date') }}:&nbsp;
-          </span>
-          <span class="adds-board-detail-page__main__header__date">
-            {{ bulletin.startDate | moment('L LT') }}
-          </span>
-        </div>
-        <div class="adds-board-detail-page__main__header__item">
-          <span class="adds-board-detail-page__main__header__title">
-            {{ $t('views.bulletin_details.end_date') }}:&nbsp;
-          </span>
-          <span class="adds-board-detail-page__main__header__date">
-            {{ bulletin.endDate | moment('L') }}
-          </span>
-        </div>
-      </div>
-      <div class="adds-board-detail-page__main__content">
-        <p class="adds-board-detail-page__main__content__text">
-          {{ bulletin.text }}
-        </p>
-        <div class="attach">
-          <span class="attach__title">{{ $t('views.bulletin_details.attachments') }}</span>
-          <div class="attach__container">
-            <a
-              v-for="attachment of bulletin.attachments"
-              :key="attachment.blobName"
-              :href="attachment.path"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="10"
+              height="10"
+              viewBox="0 0 10 10"
             >
-              {{ attachment.name }}
-            </a>
+              <path
+                d="M9,4l.881.881L6.394,8.375H14v1.25H6.394l3.487,3.494L9,14,4,9Z"
+                transform="translate(-4 -4)"
+              />
+            </svg>
+            {{ $t('views.bulletin_details.back_to_board') }}
+          </router-link>
+        </div>
+      </div>
+      <main class="adds-board-detail-page__main">
+        <div class="adds-board-detail-page__main__header">
+          <div class="adds-board-detail-page__main__header__item">
+            <span class="adds-board-detail-page__main__header__title">
+              {{ $t('views.bulletin_details.start_date') }}:&nbsp;
+            </span>
+            <span class="adds-board-detail-page__main__header__date">
+              {{ bulletin.startDate | moment('L LT') }}
+            </span>
+          </div>
+          <div class="adds-board-detail-page__main__header__item">
+            <span class="adds-board-detail-page__main__header__title">
+              {{ $t('views.bulletin_details.end_date') }}:&nbsp;
+            </span>
+            <span class="adds-board-detail-page__main__header__date">
+              {{ bulletin.endDate | moment('L') }}
+            </span>
           </div>
         </div>
-      </div>
-    </main>
+        <div class="adds-board-detail-page__main__content">
+          <p class="adds-board-detail-page__main__content__text">
+            {{ bulletin.text }}
+          </p>
+          <div class="attach">
+            <span class="attach__title">{{ $t('views.bulletin_details.attachments') }}</span>
+            <div class="attach__container">
+              <a
+                v-for="attachment of bulletin.attachments"
+                :key="attachment.blobName"
+                :href="attachment.path"
+              >
+                {{ attachment.name }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
 </template>
 
 <script>
+import AppLoader from '@/components/common/AppLoader.vue';
+
 export default {
   name: 'BulletinDetails',
+
+  components: {
+    AppLoader,
+  },
 
   props: {
     id: {

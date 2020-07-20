@@ -45,9 +45,16 @@
     "email_list": {
       "email_list": "E-mails",
       "event": "Event",
+      "subject": "Subject",
       "to": "To",
       "cc": "cc",
-      "subject": "Subject"
+      "suppliers": "Suppliers",
+      "supplier": "Supplier",
+      "type": "Event type"
+    },
+    "email": {
+      "email_content": "E-mail content",
+      "back": "back to list"
     },
     "user_list": {
       "adding_user": "Adding a new user",

@@ -1,7 +1,7 @@
 <template>
   <div class="labels-page">
-    <div class="mb-3">
-      <h1 class="display-1 primary--text">
+    <div>
+      <h1 class="h4 primary--text">
         {{ $t('views.label_printing.label_printing') }}
       </h1>
     </div>
@@ -12,7 +12,7 @@
           class="pl-0"
         >
           <div class="step px-10 py-6 white">
-            <h2 class="display-1 primary--text">
+            <h2 class="h4 primary--text">
               {{ $t('views.label_printing.step1') }}
             </h2>
             <h3 class="h5 step__top__description">
@@ -73,7 +73,7 @@
           class="pr-0"
         >
           <div class="step px-10 py-6 white">
-            <h2 class="display-1 primary--text">
+            <h2 class="h4 primary--text">
               {{ $t('views.label_printing.step2') }}
             </h2>
             <h3 class="h5 step__top__description">

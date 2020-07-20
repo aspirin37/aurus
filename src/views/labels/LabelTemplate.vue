@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="mb-9">
-      <h1 class="display-1 primary--text">
+    <div class="mb-6">
+      <h1 class="h4 primary--text">
         {{ $t('views.label_template.label_template') }}
       </h1>
     </div>
