@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
+    <div class="d-flex mb-3 align-items-end">
+      <h1 class="h4 primary--text">
         {{ $t('views.promise_list.promise_list') }}
       </h1>
       <div class="ml-auto">

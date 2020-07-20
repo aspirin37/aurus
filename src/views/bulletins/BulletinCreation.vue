@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
+      <h1 class="h4 primary--text">
         {{ $t('views.bulletin_creation.bulletin_creation') }}
       </h1>
       <div class="ml-auto d-flex">

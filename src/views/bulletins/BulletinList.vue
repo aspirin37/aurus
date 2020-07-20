@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
+    <div class="d-flex mb-3 align-items-end">
+      <h1 class="h4 primary--text">
         {{ $t('views.bulletin_list.bulletin_list') }}
       </h1>
       <div class="ml-auto">
@@ -103,11 +103,11 @@ export default {
         },
         {
           text: this.$t('views.bulletin_list.start_date'),
-          value: 'startDate',
+          value: '_startDate',
         },
         {
           text: this.$t('views.bulletin_list.end_date'),
-          value: 'endDate',
+          value: '_endDate',
         },
         {
           text: this.$t('views.bulletin_list.edited_by'),
@@ -116,11 +116,11 @@ export default {
         },
         {
           text: this.$t('views.bulletin_list.updated_at'),
-          value: 'updatedAt',
+          value: '_updatedAt',
         },
         {
           text: this.$t('views.bulletin_list.email'),
-          value: 'isImportant',
+          value: '_isImportant',
         },
         {
           text: this.$t('common.actions'),
@@ -152,11 +152,11 @@ export default {
     bulletins() {
       return this.items.map((item) => ({
         ...item,
-        startDate: this.$moment.utc(item.startDate).format('L LT'),
-        endDate: this.$moment.utc(item.endDate).format('L'),
-        createdAt: this.$moment.utc(item.createdAt).format('L'),
-        updatedAt: this.$moment.utc(item.updatedAt).format('L'),
-        isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no'),
+        _startDate: this.$moment.utc(item.startDate).format('L LT'),
+        _endDate: this.$moment.utc(item.endDate).format('L'),
+        _createdAt: this.$moment.utc(item.createdAt).format('L'),
+        _updatedAt: this.$moment.utc(item.updatedAt).format('L'),
+        _isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no'),
       }));
     },
   },
