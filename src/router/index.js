@@ -94,6 +94,10 @@ const routes = [
       name: 'Profile',
       component: () => import('@/views/Profile'),
     }, {
+      path: 'asn',
+      name: 'ShipmentNoticeList',
+      component: () => import('@/views/asn/ShipmentNoticeList'),
+    }, {
       path: 'labels/print',
       name: 'LabelPrinting',
       component: () => import('@/views/labels/LabelPrinting'),

@@ -2,13 +2,14 @@
   <v-form
     v-if="isShown"
     class="email-list__filter white mb-5"
+    @submit.prevent="submit"
   >
     <v-container>
       <v-row>
         <v-col cols="3">
           <div class="input-block input-block_white">
             <label class="input-block__label">
-              {{ $t('views.email_list.supplier') }}
+              {{ $t('common.supplier') }}
             </label>
             <v-autocomplete
               v-model="localFilter.supplier"
@@ -51,16 +52,16 @@
         </v-col>
         <v-col
           cols="2"
-          class="email-list__filter-submit"
+          class="email-list__filter-apply"
         >
           <v-btn
+            type="submit"
             color="primary"
             outlined
             large
-            class="email-list__filter-submit-button"
-            @click="submit"
+            class="email-list__filter-apply-button"
           >
-            Применить
+            {{ $t('common.apply') }}
           </v-btn>
         </v-col>
       </v-row>
@@ -121,7 +122,7 @@ export default {
     },
 
     submit() {
-      this.$emit('submitFilter', this.localFilter);
+      this.$emit('applyFilter', this.localFilter);
     },
   },
 };
@@ -132,7 +133,7 @@ export default {
   box-shadow: none !important;
 }
 
-.email-list__filter-submit {
+.email-list__filter-apply {
   align-self: flex-end;
 
   &-button {

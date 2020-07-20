@@ -33,7 +33,7 @@
       v-model="isFilterShown"
       :suppliers="suppliers"
       :parts="parts"
-      @submitFilter="getItems"
+      @applyFilter="getItems"
       @hide="hideFilter"
     />
     <v-data-table
@@ -89,11 +89,11 @@ export default {
     return {
       headers: [
         {
-          text: this.$t('views.promise_list.supplier'),
+          text: this.$t('common.supplier'),
           value: 'gsdb',
         },
         {
-          text: this.$t('views.promise_list.plant'),
+          text: this.$t('common.plant'),
           value: 'plant',
         },
         {

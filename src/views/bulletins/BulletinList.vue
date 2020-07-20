@@ -31,7 +31,7 @@
     </div>
     <bulletins-filter
       v-model="isFilterShown"
-      @submitFilter="getItems"
+      @applyFilter="getItems"
       @hide="hideFilter"
     />
     <v-data-table

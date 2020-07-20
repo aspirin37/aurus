@@ -19,7 +19,7 @@
             value="all"
             class="adds-board-page__top__filter__item"
           >
-            {{ $t('views.bulletin_board.all') }}
+            {{ $t('common.all') }}
           </v-btn>
           <v-btn
             value="current"

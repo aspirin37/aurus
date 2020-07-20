@@ -14,7 +14,7 @@
       <div class="v-application aurus-modal__body pt-0">
         <div class="input-block input-block_white">
           <label class="input-block__label">
-            {{ $t('views.promise_list.plant') }}
+            {{ $t('common.plant') }}
           </label>
           <v-text-field
             v-model="promise.plant"

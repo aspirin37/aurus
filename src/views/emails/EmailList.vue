@@ -22,7 +22,7 @@
       :filter="filter"
       :suppliers="suppliers"
       :can-get-full-list="canGetFullList"
-      @submitFilter="submitFilter"
+      @applyFilter="applyFilter"
     />
     <v-data-table
       v-if="!preloading"
@@ -243,7 +243,7 @@ export default {
       this.isFilterShown = !this.isFilterShown;
     },
 
-    submitFilter(filter) {
+    applyFilter(filter) {
       this.isFilterShown = false;
       this.filter = { ...filter };
       this.getItems();
