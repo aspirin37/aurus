@@ -149,6 +149,26 @@
       "shipment_date": "Shipment date",
       "invoice": "Invoice"
     },
+    "shipment_notice_creation": {
+      "shipment_notice_creation": "New ASN",
+      "back_to_list": "back to asn list",
+      "carrier": "Carrier",
+      "container_number": "Container number",
+      "departure_date": "Departure date",
+      "departure_time": "Departure time",
+      "estimated_date": "Estimated date",
+      "estimated_time": "Estimated time",
+      "transportation_mode": "Transportation mode",
+      "bill_of_lading": "Bill of lading",
+      "freight_bill_number": "Freight bill number",
+      "net_weight": "Net weight, kg",
+      "gross_weight": "Gross weight, kg",
+      "contract": "Contract",
+      "invoice_date": "Invoice date",
+      "invoice_number": "Invoice number",
+      "packing_list_date": "Packing list date",
+      "packing_list_number": "Packing list number"
+    },
     "label_printing": {
       "label_printing": "Label printing",
       "step1": "Step 1",

@@ -147,7 +147,27 @@
       "start_date": "Начало периода",
       "end_date": "Конец периода",
       "shipment_date": "Дата отгрузки",
-      "invoice": "Инвойс"
+      "invoice": "Счет фактура"
+    },
+    "shipment_notice_creation": {
+      "shipment_notice_creation": "Новое уведомление отгрузки",
+      "back_to_list": "назад к списку",
+      "carrier": "Перевозчик",
+      "container_number": "Номер контейнера",
+      "departure_date": "Дата отправки",
+      "departure_time": "Время отправки",
+      "estimated_date": "Ожидаемая дата прибытия",
+      "estimated_time": "Ожидаемое время прибытия",
+      "transportation_mode": "Режим транспортировки",
+      "bill_of_lading": "Номер коносамента",
+      "freight_bill_number": "Номер накладной",
+      "net_weight": "Вес нетто, кг",
+      "gross_weight": "Вес брутто, кг",
+      "contract": "Контракт",
+      "invoice_date": "Дата счет фактуры",
+      "invoice_number": "Номер счет фактуры",
+      "packing_list_date": "Дата ТОРГ-12",
+      "packing_list_number": "Номер ТОРГ-12"
     },
     "label_printing": {
       "label_printing": "Печать этикеток",

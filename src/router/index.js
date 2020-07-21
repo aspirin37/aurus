@@ -98,6 +98,10 @@ const routes = [
       name: 'ShipmentNoticeList',
       component: () => import('@/views/asn/ShipmentNoticeList'),
     }, {
+      path: 'asn/create',
+      name: 'ShipmentNoticeCreation',
+      component: () => import('@/views/asn/ShipmentNoticeCreation')
+    }, {
       path: 'labels/print',
       name: 'LabelPrinting',
       component: () => import('@/views/labels/LabelPrinting'),

@@ -6,6 +6,18 @@
       </h1>
       <div class="ml-auto">
         <v-btn
+          to="/asn/create"
+          class="btn mr-4"
+          color="primary"
+          outlined
+          large
+        >
+          <v-icon left>
+            mdi-plus
+          </v-icon>
+          {{ $t('common.add') }}
+        </v-btn>
+        <v-btn
           outlined
           large
           @click="toggleFilter"
