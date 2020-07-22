@@ -26,7 +26,9 @@
     "vue": "^2.6.11",
     "vue-i18n": "^8.17.7",
     "vue-moment": "^4.1.0",
+    "vue-multiselect": "^2.1.6",
     "vue-router": "^3.1.6",
+    "vue-select": "^3.10.5",
     "vuetify": "^2.2.28",
     "vuex": "^3.1.3",
     "webpack": "^4.43.0",
@@ -87,7 +89,8 @@
       "vue/max-attributes-per-line": 1,
       "vue/no-v-html": "off",
       "linebreak-style": "off",
-      "import/no-cycle": "off"
+      "import/no-cycle": "off",
+      "no-param-reassign": "off"
     },
     "plugins": [
       "vue"

@@ -13,10 +13,17 @@
           <div class="header__user__modal__content">
             <router-link
               to="/profile"
-              class="header__user__modal__link"
+              class="header__user__modal__link mb-n4"
             >
               {{ $t('common.my_profile') }}
             </router-link>
+
+            <a
+              class="header__user__modal__link"
+              @click.prevent="passwordModal = true"
+            >
+              сменить пароль
+            </a>
 
             <v-btn
               color="primary"
@@ -29,18 +36,24 @@
         </div>
       </div>
     </div>
+    <password-modal v-model="passwordModal" />
   </header>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import LocaleSwitch from '@/components/common/LocaleSwitch.vue';
+import PasswordModal from '@/components/profile/PasswordModal.vue';
 
 export default {
   name: 'AppHeader',
   components: {
     LocaleSwitch,
+    PasswordModal,
   },
+  data: () => ({
+    passwordModal: false,
+  }),
   computed: {
     ...mapState(['user']),
   },

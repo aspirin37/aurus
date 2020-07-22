@@ -60,6 +60,10 @@ const routes = [
       name: 'PromiseList',
       component: () => import('@/views/PromiseList'),
     }, {
+      path: 'forecast/report',
+      name: 'ForecastReport',
+      component: () => import('@/views/ForecastReport'),
+    }, {
       path: 'bulletins/board',
       name: 'BulletinBoard',
       component: () => import('@/views/bulletins/BulletinBoard'),
@@ -111,6 +115,11 @@ const routes = [
     path: '/reset-password',
     name: 'ResetPassword',
     component: () => import('@/views/ResetPassword.vue'),
+  }, {
+    path: '/main/token-validate',
+    name: 'EmailVerification',
+    component: () => import('@/views/EmailVerification.vue'),
+    props: (route) => ({ verificationCode: route.query.token }),
   },
 ];
 

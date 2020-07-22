@@ -29,7 +29,11 @@
     "all": "All",
     "yes": "Yes",
     "no": "No",
-    "upload": "upload"
+    "upload": "upload",
+    "phone": "Phone",
+    "create_password": "Create password",
+    "confirm_password": "Confirm password",
+    "confirm": "Confirm"
   },
   "views": {
     "sign_in": {
@@ -160,6 +164,11 @@
       "template_elements": "Supported elements:",
       "template_fields": "Available part properties:",
       "template_fonts": "Supported fonts:"
+    },
+    "profile": {
+      "new_password": "New password",
+      "adding_contact": "Adding contact",
+      "editing_contact": "Editing contact"
     }
   },
   "navigation": {
@@ -180,7 +189,8 @@
     "promises": "List of order corrections",
     "labels": "Labels",
     "label_printing": "Label printing",
-    "label_template": "Label template"
+    "label_template": "Label template",
+    "forecasts": "Forecasts"
   },
   "layout": {
     "collapse": "Collapse menu"
