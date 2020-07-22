@@ -89,7 +89,8 @@
       "vue/max-attributes-per-line": 1,
       "vue/no-v-html": "off",
       "linebreak-style": "off",
-      "import/no-cycle": "off"
+      "import/no-cycle": "off",
+      "no-param-reassign": "off"
     },
     "plugins": [
       "vue"

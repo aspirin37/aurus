@@ -57,7 +57,6 @@
           type="password"
         >
       </div>
-      </div>
       <div class="actions-block">
         <button
           :disabled="false"
