@@ -22,6 +22,7 @@ export default {
   methods: {
     changeLocale(locale) {
       localStorage.setItem('locale', locale);
+      this.$moment.locale(locale);
       this.$http.defaults.headers['Accept-Language'] = locale;
       this.$vuetify.lang.current = locale;
       this.$i18n.locale = locale;

@@ -1,7 +1,7 @@
 <template>
   <div class="adds-board-page">
-    <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
+    <div class="d-flex align-items-end">
+      <h1 class="h4 primary--text">
         {{ $t('views.bulletin_board.bulletin_board') }}
       </h1>
       <div class="adds-board-page__top__filter ml-auto">
@@ -36,7 +36,8 @@
         </v-btn-toggle>
       </div>
     </div>
-    <v-container>
+    <app-loader v-if="loading" />
+    <v-container v-else>
       <v-row>
         <v-col
           cols="6"
@@ -65,22 +66,29 @@
 
 <script>
 import BulletinCard from '@/components/bulletins/BulletinCard.vue';
+import AppLoader from '@/components/common/AppLoader.vue';
 
 export default {
   name: 'BulletinBoard',
 
   components: {
     BulletinCard,
+    AppLoader,
   },
 
   data() {
     return {
       validity: 'current',
       items: [],
+      loading: false,
     };
   },
 
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
+
     oddBulletins() {
       return this.items.filter((_, i) => i % 2 === 0);
     },
@@ -91,10 +99,27 @@ export default {
   },
 
   created() {
+    this.getTimezone();
     this.getItems();
   },
 
   methods: {
+    async getTimezone() {
+      if (!this.user) {
+        this.$moment.tz.setDefault();
+        return;
+      }
+
+      try {
+        const { data } = await this.$http.get(`/suppliers/${this.user.gsdb}`);
+        if (data.timezone) {
+          this.$moment.tz(data.timezone);
+        }
+      } catch (error) {
+        this.$moment.tz.setDefault();
+      }
+    },
+
     async getItems() {
       this.loading = true;
       try {
@@ -102,6 +127,7 @@ export default {
           params: {
             validity: this.validity,
             query: { isActive: true },
+            pageSize: 0,
           },
         });
         this.items = data.rows.map((item) => ({

@@ -56,9 +56,9 @@ const routes = [
       name: 'HistoryByWeeks',
       component: () => import('@/views/HistoryByWeeks'),
     }, {
-      path: 'emails',
-      name: 'EmailList',
-      component: () => import('@/views/EmailList'),
+      path: 'orders/promises',
+      name: 'PromiseList',
+      component: () => import('@/views/PromiseList'),
     }, {
       path: 'forecast/report',
       name: 'ForecastReport',
@@ -79,12 +79,16 @@ const routes = [
     }, {
       path: 'bulletins/list/create',
       name: 'BulletinCreation',
-      component: () => import('@/views//bulletins/BulletinCreation'),
+      component: () => import('@/views/bulletins/BulletinCreation'),
+    }, {
+      path: 'emails',
+      name: 'EmailList',
+      component: () => import('@/views/emails/EmailList'),
     }, {
       path: 'emails/:id',
       name: 'Email',
       props: true,
-      component: () => import('@/views/Email'),
+      component: () => import('@/views/emails/Email'),
     }, {
       path: 'roles',
       name: 'RoleList',

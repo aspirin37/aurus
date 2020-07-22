@@ -1,7 +1,7 @@
 <template>
   <div class="labels-page">
-    <div class="mb-3">
-      <h1 class="display-1 primary--text">
+    <div>
+      <h1 class="h4 primary--text">
         {{ $t('views.label_printing.label_printing') }}
       </h1>
     </div>
@@ -12,7 +12,7 @@
           class="pl-0"
         >
           <div class="step px-10 py-6 white">
-            <h2 class="display-1 primary--text">
+            <h2 class="h4 primary--text">
               {{ $t('views.label_printing.step1') }}
             </h2>
             <h3 class="h5 step__top__description">
@@ -35,7 +35,8 @@
                 v-if="template"
                 v-show="false"
                 ref="template"
-                :href="template.path"
+                :href="template"
+                download="asn-template.xlsx"
               />
               <!-- eslint-disable max-len -->
               <button
@@ -72,7 +73,7 @@
           class="pr-0"
         >
           <div class="step px-10 py-6 white">
-            <h2 class="display-1 primary--text">
+            <h2 class="h4 primary--text">
               {{ $t('views.label_printing.step2') }}
             </h2>
             <h3 class="h5 step__top__description">
@@ -123,8 +124,13 @@ export default {
       if (!this.template) {
         this.loading = true;
         try {
-          const { data } = await this.$http.get('/labels/template');
-          this.template = data;
+          const { data } = await this.$http.get('/asn/asn-template.xlsx', {
+            headers: {
+              'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            },
+            responseType: 'blob',
+          });
+          this.template = URL.createObjectURL(data);
           await this.$nextTick();
         } finally {
           this.loading = false;

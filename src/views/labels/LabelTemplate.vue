@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="mb-9">
-      <h1 class="display-1 primary--text">
+    <div class="mb-6">
+      <h1 class="h4 primary--text">
         {{ $t('views.label_template.label_template') }}
       </h1>
     </div>
@@ -46,18 +46,55 @@
         </span>
       </div>
 
-      <div>
-        <h2 class="label-template__fields h5">
-          Шаблон может содержать следующие поля:
+      <div v-if="elements.length">
+        <h2 class="label-template__fields h5 mb-3">
+          {{ $t('views.label_template.template_elements') }}
         </h2>
-        <ul>
-          <li
+        <v-chip-group
+          column
+          class="mb-6"
+        >
+          <v-chip
+            v-for="element of elements"
+            :key="element"
+            @click="copyToClipboard(element)"
+          >
+            {{ element }}
+          </v-chip>
+        </v-chip-group>
+      </div>
+
+      <div v-if="fields.length">
+        <h2 class="label-template__fields h5 mb-3">
+          {{ $t('views.label_template.template_fields') }}
+        </h2>
+        <v-chip-group
+          column
+          class="mb-6"
+        >
+          <v-chip
             v-for="field of fields"
             :key="field"
+            @click="copyToClipboard(field)"
           >
             {{ field }}
-          </li>
-        </ul>
+          </v-chip>
+        </v-chip-group>
+      </div>
+
+      <div v-if="fonts.length">
+        <h2 class="label-template__fields h5 mb-3">
+          {{ $t('views.label_template.template_fonts') }}
+        </h2>
+        <v-chip-group column>
+          <v-chip
+            v-for="font of fonts"
+            :key="font"
+            @click="copyToClipboard(font)"
+          >
+            {{ font }}
+          </v-chip>
+        </v-chip-group>
       </div>
     </main>
   </div>
@@ -71,13 +108,18 @@ export default {
     return {
       template: null,
       file: null,
+      elements: [],
       fields: [],
+      fonts: [],
       loading: false,
     };
   },
 
   created() {
-    this.loadData();
+    this.loadTemplate();
+    this.loadElements();
+    this.loadFields();
+    this.loadFonts();
   },
 
   methods: {
@@ -86,9 +128,19 @@ export default {
       this.template = data;
     },
 
+    async loadElements() {
+      const { data: elements } = await this.$http.get('/labels/elements');
+      this.elements = elements;
+    },
+
     async loadFields() {
-      const { data } = await this.$http.get('/labels/fields');
-      this.fields = data;
+      const { data: fields } = await this.$http.get('/labels/fields');
+      this.fields = fields;
+    },
+
+    async loadFonts() {
+      const { data: fonts } = await this.$http.get('/labels/fonts');
+      this.fonts = fonts;
     },
 
     selectFile() {
@@ -98,16 +150,6 @@ export default {
 
     setFile() {
       [this.file] = this.$refs.file.files;
-    },
-
-    async loadData() {
-      this.loading = true;
-      try {
-        await this.loadTemplate();
-        await this.loadFields();
-      } finally {
-        this.loading = false;
-      }
     },
 
     async saveTemplate() {
@@ -120,6 +162,10 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+
+    copyToClipboard(field) {
+      navigator.clipboard.writeText(field);
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex mb-3">
-      <h1 class="display-1 primary--text">
+    <div class="d-flex mb-3 align-items-end">
+      <h1 class="h4 primary--text">
         {{ $t('views.bulletin_list.bulletin_list') }}
       </h1>
       <div class="ml-auto">
@@ -49,7 +49,6 @@
       <template v-slot:item.actions="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
-            v-b-modal.bulletin-modal
             class="mr-2"
             :class="hover ? '' : 'text--disabled'"
             color="primary"
@@ -61,7 +60,6 @@
         </v-hover>
         <v-hover v-slot="{hover}">
           <v-icon
-            v-b-modal.bulletin-modal
             :class="hover ? '' : 'text--disabled'"
             color="primary"
             size="20"
@@ -108,11 +106,11 @@ export default {
         },
         {
           text: this.$t('views.bulletin_list.start_date'),
-          value: 'startDate',
+          value: '_startDate',
         },
         {
           text: this.$t('views.bulletin_list.end_date'),
-          value: 'endDate',
+          value: '_endDate',
         },
         {
           text: this.$t('views.bulletin_list.edited_by'),
@@ -121,11 +119,11 @@ export default {
         },
         {
           text: this.$t('views.bulletin_list.updated_at'),
-          value: 'updatedAt',
+          value: '_updatedAt',
         },
         {
           text: this.$t('views.bulletin_list.email'),
-          value: 'isImportant',
+          value: '_isImportant',
         },
         {
           text: this.$t('common.actions'),
@@ -157,11 +155,11 @@ export default {
     bulletins() {
       return this.items.map((item) => ({
         ...item,
-        startDate: this.$d(item.startDate),
-        endDate: this.$d(item.endDate),
-        createdAt: this.$d(item.createdAt),
-        updatedAt: this.$d(item.updatedAt),
-        isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no'),
+        _startDate: this.$moment.utc(item.startDate).format('L LT'),
+        _endDate: this.$moment.utc(item.endDate).format('L'),
+        _createdAt: this.$moment.utc(item.createdAt).format('L'),
+        _updatedAt: this.$moment.utc(item.updatedAt).format('L'),
+        _isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no'),
       }));
     },
   },
@@ -183,18 +181,13 @@ export default {
       } = this.options;
 
       const params = {};
-
-      if (itemsPerPage !== -1) {
-        params.pageSize = itemsPerPage;
-        params.page = page;
-      }
-
+      params.query = { isActive: true, ...filter };
+      params.validity = 'all';
+      params.pageSize = itemsPerPage === -1 ? 0 : itemsPerPage;
+      params.page = page;
       if (sortBy && sortBy.length) {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
-
-      params.query = { isActive: true, ...filter };
-      params.validity = 'all';
 
       try {
         const { data } = await this.$http.get('bulletins', { params });

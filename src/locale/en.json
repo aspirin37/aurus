@@ -49,9 +49,16 @@
     "email_list": {
       "email_list": "E-mails",
       "event": "Event",
+      "subject": "Subject",
       "to": "To",
       "cc": "cc",
-      "subject": "Subject"
+      "suppliers": "Suppliers",
+      "supplier": "Supplier",
+      "type": "Event type"
+    },
+    "email": {
+      "email_content": "E-mail content",
+      "back": "back to list"
     },
     "user_list": {
       "adding_user": "Adding a new user",
@@ -98,11 +105,11 @@
     "bulletin_list": {
       "bulletin_list": "Bulletins",
       "subject": "Subject",
-      "start_date": "Date",
-      "start_time": "Time",
-      "end_date": "Valid till",
+      "start_date": "Date (UTC)",
+      "start_time": "Time (UTC)",
+      "end_date": "Valid till (UTC)",
       "edited_by": "Edited by",
-      "updated_at": "Updated at",
+      "updated_at": "Updated at (UTC)",
       "email": "E-mail",
       "bulletin_edit": "Edit bulletin",
       "text": "Message",
@@ -114,14 +121,31 @@
       "bulletin_creation": "New bulletin",
       "back_to_list": "back to bulletins",
       "subject": "Subject",
-      "start_date": "Date",
-      "start_time": "Time",
-      "end_date": "Valid till",
+      "start_date": "Date (UTC)",
+      "start_time": "Time (UTC)",
+      "end_date": "Valid till (UTC)",
       "text": "Message",
       "suppliers": "Supplier list",
       "attach_file": "attach file",
       "send_mails": "Send mails",
       "send_mails_true": "yes (important message)"
+    },
+    "promise_list": {
+      "promise_list": "List of order corrections",
+      "add_promise": "Add correction",
+      "supplier": "Supplier",
+      "plant": "Plant",
+      "part_number": "Part number",
+      "sent": "Sent",
+      "last_order": "Last order",
+      "last_shipment": "Last shipment",
+      "promised_shipment": "Promised shipment",
+      "promised_amount": "Promised amount",
+      "shipping_date": "Shipping date",
+      "amount": "Amount",
+      "promise_delete": "Delete record",
+      "promise_remove_answer": "Are you sure you want to delete this record?",
+      "promise_remove_confirmation": "The record will be permanently deleted."
     },
     "label_printing": {
       "label_printing": "Label printing",
@@ -135,9 +159,11 @@
     "label_template": {
       "label_template": "Update label template",
       "current_template": "Current template: ",
-      "select_file": "select template",
+      "select_template": "select template",
       "selected_file": "Selected file: ",
-      "template_fields": "Template can include fields:"
+      "template_elements": "Supported elements:",
+      "template_fields": "Available part properties:",
+      "template_fonts": "Supported fonts:"
     },
     "profile": {
       "new_password": "New password",
@@ -160,6 +186,7 @@
     "report_list_by_parts": "12 months reports by parts",
     "history_by_days": "History for a part by days with a horizon of 14 days and with a running total",
     "history_by_weeks": "History for a part by weeks with a horizon of 17 weeks and with a running total",
+    "promises": "List of order corrections",
     "labels": "Labels",
     "label_printing": "Label printing",
     "label_template": "Label template",

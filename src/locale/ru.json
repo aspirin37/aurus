@@ -49,9 +49,16 @@
     "email_list": {
       "email_list": "Архив писем",
       "event": "Событие",
+      "subject": "Тема",
       "to": "Кому",
       "cc": "Копия",
-      "subject": "Тема"
+      "suppliers": "Поставщики",
+      "supplier": "Поставщик",
+      "type": "Тип события"
+    },
+    "email": {
+      "email_content": "Содержимое письма",
+      "back": "назад к списку"
     },
     "user_list": {
       "adding_user": "Добавление нового пользователя",
@@ -98,11 +105,11 @@
     "bulletin_list": {
       "bulletin_list": "Объявления",
       "subject": "Тема",
-      "start_date": "Дата",
-      "start_time": "Время сообщения",
-      "end_date": "Истекает",
+      "start_date": "Дата (UTC)",
+      "start_time": "Время сообщения (UTC)",
+      "end_date": "Истекает (UTC)",
       "edited_by": "Редактор",
-      "updated_at": "Дата ред.",
+      "updated_at": "Дата ред. (UTC)",
       "email": "E-mail",
       "bulletin_edit": "Редактирование сообщения",
       "text": "Текст сообщения",
@@ -114,14 +121,31 @@
       "bulletin_creation": "Новое объявление",
       "back_to_list": "назад к объявлениям",
       "subject": "Тема сообщения",
-      "start_date": "Дата сообщения",
-      "start_time": "Время сообщения",
-      "end_date": "Дата окончания действия сообщения",
+      "start_date": "Дата сообщения (UTC)",
+      "start_time": "Время сообщения (UTC)",
+      "end_date": "Дата окончания действия сообщения (UTC)",
       "text": "Текст сообщения",
       "suppliers": "Список поставщиков для рассылки",
       "attach_file": "прикрепить файл",
       "send_mails": "Выполнить рассылку",
       "send_mails_true": "да (вид уведомления \"Важное сообщение \")"
+    },
+    "promise_list": {
+      "promise_list": "Список корректировок по заказам",
+      "add_promise": "добавить корректировку",
+      "supplier": "Поставщик",
+      "plant": "Завод",
+      "part_number": "№ детали",
+      "sent": "Отправлено",
+      "last_order": "Последний заказ",
+      "last_shipment": "Последняя отгрузка",
+      "promised_shipment": "Обещанная отгрузка",
+      "promised_amount": "Обещанное кол-во",
+      "shipping_date": "Дата планируемой отгрузки",
+      "amount": "Количество деталей",
+      "promise_delete": "Удаление записи",
+      "promise_remove_answer": "Уверены, что хотите удалить эту запись?",
+      "promise_remove_confirmation": "Запись будет безвозвратно удалена."
     },
     "label_printing": {
       "label_printing": "Печать этикеток",
@@ -137,7 +161,9 @@
       "current_template": "Действующий шаблон: ",
       "select_template": "выбрать шаблон",
       "selected_file": "Выбранный файл: ",
-      "template_fields": "Шаблон может содержать следующие поля:"
+      "template_elements": "Поддерживаемые элементы:",
+      "template_fields": "Возможные свойства детали:",
+      "template_fonts": "Поддерживаемые шрифты:"
     },
     "profile": {
       "new_password": "Новый пароль",
@@ -160,6 +186,7 @@
     "report_list_by_parts": "По деталям с горизонтом 12 месяцев",
     "history_by_days": "По детали по дням с горизонтом на 14 дней с накопительным итогом",
     "history_by_weeks": "По детали по неделям с горизонтом на 17 недель с накопительным итогом",
+    "promises": "Список корректировок по заказам",
     "labels": "Этикетки",
     "label_printing": "Печать этикеток",
     "label_template": "Шаблон этикетки",

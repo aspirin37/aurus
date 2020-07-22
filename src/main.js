@@ -22,6 +22,7 @@ Vue.use(BootstrapVue);
 Vue.use(VueMoment, {
   moment,
 });
+Vue.moment.locale(localStorage.getItem('locale') || 'en');
 
 Vue.component('vue-select', vSelect);
 Vue.component('multiselect', Multiselect);

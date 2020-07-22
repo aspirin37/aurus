@@ -176,15 +176,15 @@ export default {
 
   computed: {
     startDateFormatted() {
-      return this.filter.startDate && this.$d(new Date(this.filter.startDate));
+      return this.filter.startDate && this.$moment.utc(this.filter.startDate).format('L');
     },
 
     endDateFormatted() {
-      return this.filter.endDate && this.$d(new Date(this.filter.endDate));
+      return this.filter.endDate && this.$moment.utc(this.filter.endDate).format('L');
     },
 
     updatedAtFormatted() {
-      return this.filter.updatedAt && this.$d(new Date(this.filter.updatedAt));
+      return this.filter.updatedAt && this.$moment.utc(this.filter.updatedAt).format('L');
     },
   },
 
@@ -209,20 +209,17 @@ export default {
       }
       if (this.filter.startDate) {
         filter.startDate = {
-          $gte: new Date(this.filter.startDate),
-          $lte: new Date(Number(new Date(this.filter.startDate)) + 24 * 60 * 60 * 1000),
+          $gte: this.$moment.utc(this.filter.startDate),
+          $lte: this.$moment.utc(this.filter.startDate).endOf('day'),
         };
       }
       if (this.filter.endDate) {
-        filter.endDate = {
-          $gte: new Date(this.filter.endDate),
-          $lte: new Date(Number(new Date(this.filter.endDate)) + 24 * 60 * 60 * 1000),
-        };
+        filter.endDate = this.$moment.utc(this.filter.endDate);
       }
       if (this.filter.updatedAt) {
         filter.updatedAt = {
-          $gte: new Date(this.filter.updatedAt),
-          $lte: new Date(Number(new Date(this.filter.updatedAt)) + 24 * 60 * 60 * 1000),
+          $gte: this.$moment.utc(this.filter.updatedAt),
+          $lte: this.$moment.utc(this.filter.updatedAt).endOf('day'),
         };
       }
       if (this.filter.isImportant !== null) {
