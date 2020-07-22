@@ -13,13 +13,6 @@
   }
 
   &__main {
-    &__profile-info {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      min-height: calc(100vh - 280px);
-      column-gap: 20px;
-    }
-
     &__contacts {
       margin-top: 50px;
     }
@@ -37,7 +30,6 @@
 
       &__container {
         display: grid;
-        grid-template-rows: minmax(55px, auto) minmax(100px, auto) auto 1fr;
         row-gap: 10px;
       }
 
@@ -65,12 +57,11 @@
       }
 
       &__content {
-        display: grid;
-        row-gap: 20px;
 
         &__item {
           display: flex;
           flex-direction: column;
+          min-height: 105px;
 
           &__title {
             font-size: 20px;

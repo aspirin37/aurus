@@ -9,6 +9,9 @@
       hide-default-footer
       :headers="headers"
       :items="items"
+      :footer-props="{
+        itemsPerPageOptions: [10, 20, 50, 100],
+      }"
       :options.sync="options"
       :loading="loading"
       :loading-text="$t('common.loading_data')"

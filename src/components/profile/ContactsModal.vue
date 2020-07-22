@@ -18,74 +18,46 @@
           v-if="isAddModal"
           class="input-block input-block_white"
         >
-          <label class="input-block__label">E-mail</label>
-          <v-text-field
-            v-model="user.email"
-            type="email"
-            autocomplete="off"
-            hide-details
-            required
-            solo
-          />
-        </div>
-        <div
-          v-else
-          class="title primary--text"
-        >
-          {{ user.email }}
-        </div>
-        <div class="input-block input-block_white">
-          <label class="input-block__label">
-            {{ $t('common.name') }}
-          </label>
-          <v-text-field
-            v-model="user.name"
-            autocomplete="off"
-            hide-details
-            solo
-          />
-        </div>
-        <div class="input-block input-block_white">
           <label class="input-block__label">
             {{ $t('common.role') }}
           </label>
           <v-select
-            v-model="user.role"
-            :items="roles"
-            item-text="name"
+            v-model="contact.role"
+            :items="contactRoles"
             hide-details
             elevation="0"
-            autocomplete="off"
             :label="$t('common.select_role')"
             solo
           />
         </div>
         <div class="input-block input-block_white">
           <label class="input-block__label">
-            GSDB
+            {{ $t('common.name') }}
           </label>
           <v-text-field
-            v-model="user.gsdb"
+            v-model="contact.name"
             hide-details
             solo
           />
         </div>
-        <div
-          v-if="isEditModal"
-          class="input-block input-block_white"
-        >
+        <div class="input-block input-block_white">
+          <label class="input-block__label">E-mail</label>
+          <v-text-field
+            v-model="contact.email"
+            type="email"
+            hide-details
+            required
+            solo
+          />
+        </div>
+        <div class="input-block input-block_white">
           <label class="input-block__label">
-            {{ $t('common.password') }}
+            {{ $t('common.phone') }}
           </label>
           <v-text-field
-            v-model="user.password"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="showPassword ? 'text' : 'password'"
-            :placeholder="$t('common.password_placeholder')"
-            autocomplete="new-password"
+            v-model="contact.phone"
             hide-details
             solo
-            @click:append="showPassword = !showPassword"
           />
         </div>
       </div>
@@ -121,7 +93,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import { contactRoles } from '@/utils/enums';
+
 export default {
+  name: 'ContactsModal',
   props: {
     value: {
       type: Boolean,
@@ -131,29 +107,31 @@ export default {
       type: String,
       required: true,
     },
-    userSelected: {
+    contactSelected: {
       type: Object,
       default: () => ({}),
     },
   },
   data: () => ({
     loading: false,
-    showPassword: false,
-    user: {
+    contact: {
       email: '',
       name: '',
-      gsdb: '',
       role: '',
-      password: '',
+      phone: '',
     },
     roles: [],
   }),
   computed: {
+    ...mapState(['user']),
+    contactRoles() {
+      return Array.from(Object.values(contactRoles));
+    },
     title() {
-      return this.isAddModal ? this.$t('views.user_list.adding_user') : this.$t('views.user_list.editing_user');
+      return this.isAddModal ? this.$t('views.contact_list.adding_contact') : this.$t('views.contact_list.editing_contact');
     },
     submitDisabled() {
-      return false;
+      return Array.from(Object.values(this.contact)).some((it) => !it);
     },
     isAddModal() {
       return this.type === 'add';
@@ -169,44 +147,28 @@ export default {
         this.$refs.modal.show();
       } else {
         this.$emit('input', false);
+        this.$refs.modal.hide();
       }
     },
-  },
-  created() {
-    this.getRoles();
   },
   methods: {
-    updateForm() {
-      if (this.isAddModal) {
-        Object.assign(this.$data.user, this.$options.data().user);
-      } else {
-        this.user = { ...this.userSelected };
-      }
-    },
     async getRoles() {
       const { data } = await this.$http.get('roles');
       this.roles = data.rows;
     },
-    async submit() {
-      this.loading = true;
-
-      const params = { ...this.user };
-      params.role = [this.user.role];
-
-      if (!this.user.password) {
-        delete params.password;
-      }
-
+    updateForm() {
       if (this.isAddModal) {
-        await this.$http.post('users', params).finally(() => {
-          this.loading = false;
-        });
+        Object.assign(this.$data.contact, this.$options.data().contact);
       } else {
-        await this.$http.put(`users/${this.user.id}`, params).finally(() => {
-          this.loading = false;
-        });
+        this.contact = { ...this.contactSelected };
       }
-      this.$refs.modal.hide();
+    },
+    async submit() {
+      if (this.isAddModal) {
+        await this.$http.post(`suppliers/${this.user.gsdb}/contacts`, this.contact);
+      } else {
+        await this.$http.patch(`suppliers/${this.user.gsdb}/contacts/${this.contact.id}`, this.contact);
+      }
       this.$emit('submit');
     },
   },

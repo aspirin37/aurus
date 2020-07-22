@@ -29,7 +29,11 @@
     "all": "Все",
     "yes": "Да",
     "no": "Нет",
-    "upload": "загрузить"
+    "upload": "загрузить",
+    "phone": "Телефон",
+    "create_password": "Придумайте пароль",
+    "confirm_password": "Подтвердите пароль",
+    "confirm": "Подтвердить"
   },
   "views": {
     "sign_in": {
@@ -134,6 +138,11 @@
       "select_template": "выбрать шаблон",
       "selected_file": "Выбранный файл: ",
       "template_fields": "Шаблон может содержать следующие поля:"
+    },
+    "profile": {
+      "new_password": "Новый пароль",
+      "adding_contact": "Добавление контакта",
+      "editing_contact": "Редактирование контакта"
     }
   },
   "navigation": {
@@ -153,7 +162,8 @@
     "history_by_weeks": "По детали по неделям с горизонтом на 17 недель с накопительным итогом",
     "labels": "Этикетки",
     "label_printing": "Печать этикеток",
-    "label_template": "Шаблон этикетки"
+    "label_template": "Шаблон этикетки",
+    "forecasts": "Прогнозы"
   },
   "layout": {
     "collapse": "Свернуть меню"
