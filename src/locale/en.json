@@ -180,7 +180,11 @@
       "box_serial_number_level_3": "Box serial number (level 3)",
       "box_serial_number_level_2": "Box serial number (level 2)",
       "box_serial_number_level_1": "Box serial number (level 1)",
-      "unit_weight_gross_kg": "Tare unit weight gross, kg"
+      "unit_weight_gross_kg": "Tare unit weight gross, kg",
+      "add_part": "Add part",
+      "edit_part": "Edit part",
+      "add_packing": "Add packing",
+      "edit_packing": "Edit packing"
     },
     "label_printing": {
       "label_printing": "Label printing",

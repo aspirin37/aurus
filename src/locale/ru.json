@@ -180,7 +180,11 @@
       "box_serial_number_level_3": "Серийный номер коробки (уровень 3)",
       "box_serial_number_level_2": "Серийный номер коробки (уровень 2)",
       "box_serial_number_level_1": "Серийный номер коробки (уровень 1)",
-      "unit_weight_gross_kg": "Вес брутто тарной единицы, кг"
+      "unit_weight_gross_kg": "Вес брутто тарной единицы, кг",
+      "add_part": "Добавление детали",
+      "edit_part": "Редактирование детали",
+      "add_packing": "Добавление упаковки",
+      "edit_packing": "Редактирование упаковки"
     },
     "label_printing": {
       "label_printing": "Печать этикеток",

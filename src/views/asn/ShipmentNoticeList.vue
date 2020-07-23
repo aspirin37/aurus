@@ -15,7 +15,7 @@
           <v-icon left>
             mdi-plus
           </v-icon>
-          {{ $t('common.add') }}
+          {{ $t('common.create') }}
         </v-btn>
         <v-btn
           outlined

@@ -24,10 +24,11 @@
         </router-link>
       </div>
     </div>
+
     <main class="shipment-notice__main">
       <v-form
         class="create-add-form"
-        @submit.prevent="create"
+        @submit.prevent
       >
         <v-row>
           <v-col cols="4" class="pb-0">
@@ -371,8 +372,30 @@
         </v-row>
       </v-form>
     </main>
-    <shipment-notice-parts :parts="parts" />
-    <shipment-notice-packing :packing="packing" />
+
+    <shipment-notice-parts
+      :parts="parts"
+      @addPart="addPart"
+      @updatePart="updatePart"
+      @removePart="removePart"
+    />
+
+    <shipment-notice-packing
+      :packing="packing"
+      @addPacking="addPacking"
+      @updatePacking="updatePacking"
+      @removePacking="removePacking"
+    />
+
+    <div class="mt-7">
+      <button
+        :disabled="loading"
+        class="btn aurus-button aurus-button_line aurus-button_lowercase"
+        @click="create"
+      >
+        {{ $t('common.create') }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -421,6 +444,8 @@ export default {
       isInvoiceDatePickerShown: false,
       isPackingListDatePickerShown: false,
 
+      loading: false,
+
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
       },
@@ -442,6 +467,51 @@ export default {
 
     packingListDateFormatted() {
       return this.asn.packingListDate && this.$moment(this.asn.packingListDate).format('L');
+    }
+  },
+
+  methods: {
+    addPart(item) {
+      this.parts.push({ ...item });
+    },
+
+    updatePart(index, item) {
+      this.parts.splice(index, 1, { ...item });
+    },
+
+    removePart(index) {
+      this.parts.splice(index, 1);
+    },
+
+    addPacking(item) {
+      this.packing.push({ ...item });
+    },
+
+    updatePacking(index, item) {
+      this.packing.splice(index, 1, { ...item });
+    },
+
+    removePacking(index) {
+      this.packing.splice(index, 1);
+    },
+
+    async create() {
+      if (!this.validate()) {
+        return;
+      }
+
+      this.loading = true;
+      try {
+        await this.$http.post('/asn', this.asn);
+        this.$router.push('/asn');
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    validate() {
+      const required = [];
+      return required.every((key) => this.asn[key]);
     }
   }
 }
