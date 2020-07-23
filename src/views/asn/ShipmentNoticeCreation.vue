@@ -371,12 +371,22 @@
         </v-row>
       </v-form>
     </main>
+    <shipment-notice-parts :parts="parts" />
+    <shipment-notice-packing :packing="packing" />
   </div>
 </template>
 
 <script>
+import ShipmentNoticeParts from '@/components/asn/ShipmentNoticeParts.vue';
+import ShipmentNoticePacking from '@/components/asn/ShipmentNoticePacking.vue';
+
 export default {
   name: 'ShipmentNoticeCreation',
+
+  components: {
+    ShipmentNoticeParts,
+    ShipmentNoticePacking
+  },
 
   data() {
     return {
@@ -399,6 +409,10 @@ export default {
         packingListDate: null,
         packingListNumber: ''
       },
+
+      parts: [],
+
+      packing: [],
 
       isDepartureDatePickerShown: false,
       isDepartureTimePickerShown: false,
@@ -455,7 +469,6 @@ export default {
 
 .shipment-notice__main {
   padding: 25px;
-  min-height: calc(100vh - 215px);
   background-color: #fff;
 }
 </style>

@@ -167,7 +167,20 @@
       "invoice_date": "Invoice date",
       "invoice_number": "Invoice number",
       "packing_list_date": "Packing list date",
-      "packing_list_number": "Packing list number"
+      "packing_list_number": "Packing list number",
+      "parts": "Parts",
+      "part_number": "Part number",
+      "quantity_sent": "Quantity sent",
+      "previous_total": "Previous total quantity",
+      "uom": "UOM",
+      "weight_kg": "Weight, kg",
+      "origin": "Origin",
+      "packing": "Packing",
+      "quantity": "Quantity",
+      "box_serial_number_level_3": "Box serial number (level 3)",
+      "box_serial_number_level_2": "Box serial number (level 2)",
+      "box_serial_number_level_1": "Box serial number (level 1)",
+      "unit_weight_gross_kg": "Tare unit weight gross, kg"
     },
     "label_printing": {
       "label_printing": "Label printing",

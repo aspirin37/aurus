@@ -167,7 +167,20 @@
       "invoice_date": "Дата счет фактуры",
       "invoice_number": "Номер счет фактуры",
       "packing_list_date": "Дата ТОРГ-12",
-      "packing_list_number": "Номер ТОРГ-12"
+      "packing_list_number": "Номер ТОРГ-12",
+      "parts": "Детали",
+      "part_number": "Номер детали",
+      "quantity_sent": "Отправленное количество",
+      "previous_total": "Предыдущее суммарное количество",
+      "uom": "Единица измерения",
+      "weight_kg": "Вес детали, кг",
+      "origin": "Страна происхождения",
+      "quantity": "Количество",
+      "packing": "Упаковка",
+      "box_serial_number_level_3": "Серийный номер коробки (уровень 3)",
+      "box_serial_number_level_2": "Серийный номер коробки (уровень 2)",
+      "box_serial_number_level_1": "Серийный номер коробки (уровень 1)",
+      "unit_weight_gross_kg": "Вес брутто тарной единицы, кг"
     },
     "label_printing": {
       "label_printing": "Печать этикеток",
