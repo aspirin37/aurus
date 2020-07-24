@@ -127,8 +127,12 @@ const EMPTY_VALUE = {
 export default {
   name: 'PackingModal',
 
+  model: {
+    prop: 'value'
+  },
+
   props: {
-    isShown: {
+    value: {
       type: Boolean,
       default: () => false
     },
@@ -154,7 +158,8 @@ export default {
       item: { ...EMPTY_VALUE },
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
-      }
+      },
+      isShown: false
     }
   },
 
@@ -166,13 +171,19 @@ export default {
     }
   },
 
+  watch: {
+    value(val) {
+      this.isShown = val;
+    }
+  },
+
   methods: {
     getItem() {
       this.item = this.isNew ? { ...EMPTY_VALUE } : { ...this.selectedItem };
     },
 
     hideModal() {
-      this.$emit('hideModal');
+      this.$emit('input', false);
     },
 
     submit() {

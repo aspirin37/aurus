@@ -51,13 +51,12 @@
       </template>
     </v-data-table>
     <part-modal
-      :is-shown="isModalShown"
+      v-model="isModalShown"
       :selected-item="selectedItem"
       :selected-index="selectedIndex"
       :is-new="isNew"
       @addPart="addPart"
       @updatePart="updatePart"
-      @hideModal="hideModal"
     />
   </div>
 </template>
@@ -136,18 +135,14 @@ export default {
       this.isModalShown = true;
     },
 
-    hideModal() {
-      this.isModalShown = false;
-    },
-
     addPart(item) {
       this.$emit('addPart', item);
-      this.hideModal();
+      this.isModalShown = false;
     },
 
     updatePart(index, item) {
       this.$emit('updatePart', index, item);
-      this.hideModal();
+      this.isModalShown = false;
     },
 
     removePart(item) {

@@ -51,13 +51,12 @@
       </template>
     </v-data-table>
     <packing-modal
-      :is-shown="isModalShown"
+      v-model="isModalShown"
       :selected-item="selectedItem"
       :selected-index="selectedIndex"
       :is-new="isNew"
       @addPacking="addPacking"
       @updatePacking="updatePacking"
-      @hideModal="hideModal"
     />
   </div>
 </template>
@@ -136,18 +135,14 @@ export default {
       this.isModalShown = true;
     },
 
-    hideModal() {
-      this.isModalShown = false;
-    },
-
     addPacking(item) {
       this.$emit('addPacking', item);
-      this.hideModal();
+      this.isModalShown = false;
     },
 
     updatePacking(index, item) {
       this.$emit('updatePacking', index, item);
-      this.hideModal();
+      tthis.isModalShown = false;
     },
 
      removePacking(item) {

@@ -7,15 +7,27 @@
       <div class="ml-auto">
         <v-btn
           to="/asn/create"
-          class="btn mr-4"
           color="primary"
           outlined
           large
+          class="btn mr-4"
         >
           <v-icon left>
             mdi-plus
           </v-icon>
           {{ $t('common.create') }}
+        </v-btn>
+        <v-btn
+        color="primary"
+          outlined
+          large
+          class="btn mr-4"
+          @click="showLoadModal"
+        >
+          <v-icon left>
+            mdi-upload
+          </v-icon>
+          {{ $t('common.upload') }}
         </v-btn>
         <v-btn
           outlined
@@ -46,11 +58,17 @@
       :loading="loading"
       :loading-text="$t('common.loading_data')"
     />
+    <shipment-notice-load
+      v-model="isLoadModalShown"
+      @created="getItems"
+      @hideModal="hideLoadModal"
+    />
   </div>
 </template>
 
 <script>
 import ShipmentNoticesFilter from '@/components/asn/ShipmentNoticesFilter.vue';
+import ShipmentNoticeLoad from '@/components/asn/ShipmentNoticeLoad.vue';
 
 const FULL_LIST_ROLES = [
   'Security administrator',
@@ -65,6 +83,7 @@ export default {
 
   components: {
     ShipmentNoticesFilter,
+    ShipmentNoticeLoad
   },
 
   data() {
@@ -93,6 +112,7 @@ export default {
       preloading: false,
       loading: false,
       isFilterShown: false,
+      isLoadModalShown: false
     };
   },
 
@@ -204,6 +224,14 @@ export default {
       };
       return filter;
     },
+
+    showLoadModal() {
+      this.isLoadModalShown = true;
+    },
+
+    hideLoadModal() {
+      this.isLoadModalShown = false;
+    }
   },
 };
 </script>

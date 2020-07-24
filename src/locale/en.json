@@ -147,7 +147,10 @@
       "start_date": "From",
       "end_date": "Till",
       "shipment_date": "Shipment date",
-      "invoice": "Invoice"
+      "invoice": "Invoice",
+      "create_asn_from_file": "Create ASN from file",
+      "download_template": "download template",
+      "select_file": "select file"
     },
     "shipment_notice_creation": {
       "shipment_notice_creation": "New ASN",

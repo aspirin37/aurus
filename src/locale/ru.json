@@ -147,7 +147,10 @@
       "start_date": "Начало периода",
       "end_date": "Конец периода",
       "shipment_date": "Дата отгрузки",
-      "invoice": "Счет фактура"
+      "invoice": "Счет фактура",
+      "create_asn_from_file": "Создание уведомления отгрузки из файла",
+      "download_template": "скачать шаблон",
+      "select_file": "выбрать файл"
     },
     "shipment_notice_creation": {
       "shipment_notice_creation": "Новое уведомление отгрузки",
