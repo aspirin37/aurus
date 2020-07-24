@@ -116,6 +116,8 @@ export default {
         const { data } = await this.$http.get(`/suppliers/${this.user.gsdb}`);
         if (data.timezone) {
           this.$moment.tz(data.timezone);
+        } else {
+          this.$moment.tz.setDefault();
         }
       } catch (error) {
         this.$moment.tz.setDefault();

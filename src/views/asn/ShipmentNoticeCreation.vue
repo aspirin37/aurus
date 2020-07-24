@@ -95,7 +95,7 @@
                 <v-date-picker
                   v-model="asn.departureDate"
                   dark
-                  @input="isStartDatePickerShown = false"
+                  @input="isDepartureDatePickerShown = false"
                 />
               </v-menu>
             </div>
@@ -351,7 +351,7 @@
                 <v-date-picker
                   v-model="asn.packingListDate"
                   dark
-                  @input="isPackingLilstDatePickerShown = false"
+                  @input="isPackingListDatePickerShown = false"
                 />
               </v-menu>
             </div>
@@ -437,6 +437,8 @@ export default {
 
       packing: [],
 
+      supplier: {},
+
       isDepartureDatePickerShown: false,
       isDepartureTimePickerShown: false,
       isEstimatedDatePickerShown: false,
@@ -453,6 +455,10 @@ export default {
   },
 
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
+
     departureDateFormatted() {
       return this.asn.departureDate && this.$moment(this.asn.departureDate).format('L');
     },
@@ -470,7 +476,29 @@ export default {
     }
   },
 
+  created() {
+    this.init();
+  },
+
   methods: {
+    async init() {
+      if (!this.user) {
+        this.$moment.tz.setDefault();
+        return;
+      }
+
+      try {
+        this.supplier = await this.$http.get(`/suppliers/${this.user.gsdb}`);
+        if (this.supplier.timezone) {
+          this.$moment.tz(this.supplier.timezone);
+        } else {
+          this.$moment.tz.setDefault();
+        }
+      } catch (error) {
+        this.$moment.tz.setDefault();
+      }
+    },
+
     addPart(item) {
       this.parts.push({ ...item });
     },
@@ -500,9 +528,37 @@ export default {
         return;
       }
 
+      const {
+        departureDate,
+        departureTime,
+        estimatedDate,
+        estimatedTime,
+        invoiceDate,
+        invoiceNumber,
+        packingListDate,
+        packingListNumber,
+        ...header
+      } = this.asn;
+
+      const [departureHour, departureMinute] = departureTime.split(':');
+      const [estimatedHour, estimatedMinute] = estimatedTime.split(':');
+
+      const { gsdb, name } = this.supplier;
+
+      const asn = {
+        ...header,
+        shippingDate: this.$moment(departureDate).hour(departureHour).minute(departureMinute),
+        estimatedDate: this.$moment(estimatedDate).hour(estimatedHour).minute(estimatedMinute),
+        invoce: { date: this.$moment.utc(invoiceDate), number: invoiceNumber },
+        TORG12: { date: this.$moment.utc(packingListDate), number: packingListNumber },
+        supplier: { gsdb, name },
+        details: this.parts,
+        packing: this.packing
+      };
+
       this.loading = true;
       try {
-        await this.$http.post('/asn', this.asn);
+        await this.$http.post('/asn', asn);
         this.$router.push('/asn');
       } finally {
         this.loading = false;
@@ -510,8 +566,26 @@ export default {
     },
 
     validate() {
-      const required = [];
-      return required.every((key) => this.asn[key]);
+      const required = [
+        'carrier',
+        'plant',
+        'containerNumber',
+        'departureDate',
+        'departureTime',
+        'estimatedDate',
+        'estimatedTime',
+        'regime',
+        'billOfLading',
+        'freightBillNumber',
+        'netWeightKg',
+        'grossWeightKg',
+        'contract',
+        'invoiceDate',
+        'invoiceNumber',
+        'packingListDate',
+        'packingListNumber'
+      ];
+      return required.every((key) => this.asn[key]) && this.parts.length && this.packing.length;
     }
   }
 }
