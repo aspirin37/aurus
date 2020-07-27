@@ -32,7 +32,9 @@
     "upload": "upload",
     "apply": "Apply",
     "show": "Show",
-    "number": "Number"
+    "number": "Number",
+    "user": "User",
+    "comment": "Comment"
   },
   "views": {
     "sign_in": {
@@ -155,7 +157,7 @@
     },
     "shipment_notice_creation": {
       "shipment_notice_creation": "New ASN",
-      "back_to_list": "back to asn list",
+      "back_to_list": "back to ASN list",
       "carrier": "Carrier",
       "container_number": "Container number",
       "departure_date": "Departure date",
@@ -192,7 +194,7 @@
     },
     "shipment_notice_details": {
       "shipment_notice_details": "ASN details",
-      "back_to_list": "back to asn list",
+      "back_to_list": "back to ASN list",
       "supplier_name": "Supplier name",
       "carrier": "Carrier",
       "carrier_name": "Carrier name",
@@ -210,6 +212,21 @@
       "invoice_number": "Invoice number",
       "torg_12_date": "TORG-12 date",
       "torg_12_number": "TORG-12 number"
+    },
+    "track_status_history": {
+      "track_status_history": "Track status history",
+      "back_to_list": "back to ASN list",
+      "track_status": "Track status"
+    },
+    "customs_status_history": {
+      "customs_status_history": "Customs status history",
+      "back_to_list": "back to ASN list",
+      "customs_status": "Customs status"
+    },
+    "system_status_history": {
+      "system_status_history": "System status history",
+      "back_to_list": "back to ASN list",
+      "system_status": "System status"
     },
     "label_printing": {
       "label_printing": "Label printing",
