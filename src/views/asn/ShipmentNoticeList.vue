@@ -52,7 +52,7 @@
       v-if="!preloading"
       fixed-header
       :headers="headers"
-      :items="items"
+      :items="shipmentNotices"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading"
@@ -89,10 +89,10 @@ export default {
   data() {
     return {
       headers: [
-        { text: this.$t('common.supplier'), value: 'supplier' },
+        { text: this.$t('common.supplier'), value: 'supplier.gsdb' },
         { text: this.$t('common.plant'), value: 'plant' },
         { text: this.$t('common.number'), value: 'number' },
-        { text: this.$t('views.shipment_notice_list.shipment_date'), value: 'shippingDate' },
+        { text: this.$t('views.shipment_notice_list.shipment_date'), value: 'shipmentDate' },
         { text: this.$t('views.shipment_notice_list.invoice'), value: 'invoice.number' },
       ],
 
@@ -124,6 +124,13 @@ export default {
     canGetFullList() {
       return this.user.role.some((role) => FULL_LIST_ROLES.includes(role));
     },
+
+    shipmentNotices() {
+      return this.items.map((item) => ({
+        ...item,
+        shipmentDate: this.$moment(item.shippingDate).format('L')
+      }))
+    }
   },
 
   watch: {
@@ -193,7 +200,13 @@ export default {
 
       try {
         const { data } = await this.$http.get('/asn', { params });
-        this.items = data.rows;
+        this.items = data.rows.map((item) => ({
+          ...item,
+          shippingDate: new Date(item.shippingDate),
+          estimatedDate: new Date(item.estimatedDate),
+          createdAt: new Date(item.createdAt),
+          updatedAt: new Date(item.updatedAt)
+        }));
         this.total = data.total;
       } finally {
         this.loading = false;
@@ -219,8 +232,8 @@ export default {
         filter.number = this.filter.number;
       }
       filter.createdAt = {
-        $lte: this.$moment(this.filter.startDate),
-        $gte: this.$moment(this.filter.endDate).endOf('day'),
+        $gte: this.$moment(this.filter.startDate),
+        $lte: this.$moment(this.filter.endDate).endOf('day'),
       };
       return filter;
     },
