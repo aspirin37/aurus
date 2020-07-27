@@ -150,7 +150,8 @@
       "invoice": "Invoice",
       "create_asn_from_file": "Create ASN from file",
       "download_template": "download template",
-      "select_file": "select file"
+      "select_file": "select file",
+      "status_history": "Status history"
     },
     "shipment_notice_creation": {
       "shipment_notice_creation": "New ASN",
@@ -169,8 +170,8 @@
       "contract": "Contract",
       "invoice_date": "Invoice date",
       "invoice_number": "Invoice number",
-      "packing_list_date": "Packing list date",
-      "packing_list_number": "Packing list number",
+      "torg_12_date": "TORG-12 date",
+      "torg_12_number": "TORG-12 number",
       "parts": "Parts",
       "part_number": "Part number",
       "quantity_sent": "Quantity sent",
@@ -188,6 +189,27 @@
       "edit_part": "Edit part",
       "add_packing": "Add packing",
       "edit_packing": "Edit packing"
+    },
+    "shipment_notice_details": {
+      "shipment_notice_details": "ASN details",
+      "back_to_list": "back to asn list",
+      "supplier_name": "Supplier name",
+      "carrier": "Carrier",
+      "carrier_name": "Carrier name",
+      "asn_number": "ASN number",
+      "packing_list": "Packing list",
+      "shipment_date": "Shipment date",
+      "estimated_date": "Estimated date",
+      "container_number": "Container number",
+      "freight_bill_number": "Freight bill number",
+      "bill_of_lading": "Bill of lading",
+      "net_weight": "Net weight, kg",
+      "gross_weight": "Gross weight, kg",
+      "contract": "Contract",
+      "invoice_date": "Invoice date",
+      "invoice_number": "Invoice number",
+      "torg_12_date": "TORG-12 date",
+      "torg_12_number": "TORG-12 number"
     },
     "label_printing": {
       "label_printing": "Label printing",

@@ -6,6 +6,7 @@
       </h2>
       <div class="ml-auto d-flex">
         <v-btn
+          v-if="!readonly"
           class="btn"
           color="primary"
           outlined
@@ -20,13 +21,13 @@
       </div>
     </div>
     <v-data-table
-      :headers="headers"
+      :headers="availableHeaders"
       :items="packing"
       disable-pagination
       disable-sort
       hide-default-footer
     >
-      <template v-slot:item.actions="{ item }">
+      <template v-if="!readonly" v-slot:item.actions="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
             class="mr-2"
@@ -75,6 +76,11 @@ export default {
     packing: {
       type: Array,
       required: true
+    },
+
+    readonly: {
+      type: Boolean,
+      default: () => false
     }
   },
 
@@ -105,18 +111,30 @@ export default {
           text: this.$t('views.shipment_notice_creation.unit_weight_gross_kg'),
           value: 'grossUnitWeightKg'
         },
-        {
-          text: this.$t('common.actions'),
-          value: 'actions',
-          sortable: false,
-          width: 150,
-        },
       ],
 
       isModalShown: false,
       selectedItem: null,
       selectedIndex: -1,
       isNew: true
+    }
+  },
+
+  computed: {
+    availableHeaders() {
+      if (this.readonly) {
+        return this.headers;
+      }
+
+      return [
+        ...this.headers,
+        {
+          text: this.$t('common.actions'),
+          value: 'actions',
+          sortable: false,
+          width: 150,
+        },
+      ]
     }
   },
 

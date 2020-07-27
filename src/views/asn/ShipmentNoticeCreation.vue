@@ -329,10 +329,10 @@
           <v-col cols="2" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
-                {{ $t('views.shipment_notice_creation.packing_list_date') }}
+                {{ $t('views.shipment_notice_creation.torg_12_date') }}
               </label>
               <v-menu
-                v-model="isPackingListDatePickerShown"
+                v-model="isTorg12DatePickerShown"
                 :close-on-content-click="false"
                 transition="scale-transition"
                 offset-y
@@ -341,7 +341,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-model="packingListDateFormatted"
+                    v-model="torg12DateFormatted"
                     readonly
                     solo
                     :rules="[rules.required]"
@@ -349,9 +349,9 @@
                   />
                 </template>
                 <v-date-picker
-                  v-model="asn.packingListDate"
+                  v-model="asn.torg12Date"
                   dark
-                  @input="isPackingListDatePickerShown = false"
+                  @input="isTorg12DatePickerShown = false"
                 />
               </v-menu>
             </div>
@@ -360,10 +360,10 @@
           <v-col cols="2" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
-                {{ $t('views.shipment_notice_creation.packing_list_number') }}
+                {{ $t('views.shipment_notice_creation.torg_12_number') }}
               </label>
               <v-text-field
-                v-model="asn.packingListNumber"
+                v-model="asn.torg12Number"
                 solo
                 :rules="[rules.required]"
               />
@@ -429,8 +429,8 @@ export default {
         contract: '',
         invoiceDate: null,
         invoiceNumber: '',
-        packingListDate: null,
-        packingListNumber: ''
+        torg12Date: null,
+        torg12Number: ''
       },
 
       parts: [],
@@ -444,7 +444,7 @@ export default {
       isEstimatedDatePickerShown: false,
       isEstimatedTimePickerShown: false,
       isInvoiceDatePickerShown: false,
-      isPackingListDatePickerShown: false,
+      isTorg12DatePickerShown: false,
 
       loading: false,
 
@@ -471,8 +471,8 @@ export default {
       return this.asn.invoiceDate && this.$moment(this.asn.invoiceDate).format('L');
     },
 
-    packingListDateFormatted() {
-      return this.asn.packingListDate && this.$moment(this.asn.packingListDate).format('L');
+    torg12DateFormatted() {
+      return this.asn.torg12Date && this.$moment(this.asn.torg12Date).format('L');
     }
   },
 
@@ -535,8 +535,8 @@ export default {
         estimatedTime,
         invoiceDate,
         invoiceNumber,
-        packingListDate,
-        packingListNumber,
+        torg12Date,
+        torg12Number,
         ...header
       } = this.asn;
 
@@ -550,7 +550,7 @@ export default {
         shippingDate: this.$moment(departureDate).hour(departureHour).minute(departureMinute),
         estimatedDate: this.$moment(estimatedDate).hour(estimatedHour).minute(estimatedMinute),
         invoce: { date: this.$moment.utc(invoiceDate), number: invoiceNumber },
-        TORG12: { date: this.$moment.utc(packingListDate), number: packingListNumber },
+        TORG12: { date: this.$moment.utc(torg12Date), number: torg12Number },
         supplier: { gsdb, name },
         details: this.parts,
         packing: this.packing
@@ -582,8 +582,8 @@ export default {
         'contract',
         'invoiceDate',
         'invoiceNumber',
-        'packingListDate',
-        'packingListNumber'
+        'torg12Date',
+        'torg12Number'
       ];
       return required.every((key) => this.asn[key]) && this.parts.length && this.packing.length;
     }

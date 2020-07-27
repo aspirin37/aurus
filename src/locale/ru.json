@@ -150,7 +150,8 @@
       "invoice": "Счет фактура",
       "create_asn_from_file": "Создание уведомления отгрузки из файла",
       "download_template": "скачать шаблон",
-      "select_file": "выбрать файл"
+      "select_file": "выбрать файл",
+      "status_history": "История статусов"
     },
     "shipment_notice_creation": {
       "shipment_notice_creation": "Новое уведомление отгрузки",
@@ -169,8 +170,8 @@
       "contract": "Контракт",
       "invoice_date": "Дата счет фактуры",
       "invoice_number": "Номер счет фактуры",
-      "packing_list_date": "Дата ТОРГ-12",
-      "packing_list_number": "Номер ТОРГ-12",
+      "torg_12_date": "Дата ТОРГ-12",
+      "torg_12_number": "Номер ТОРГ-12",
       "parts": "Детали",
       "part_number": "Номер детали",
       "quantity_sent": "Отправленное количество",
@@ -188,6 +189,27 @@
       "edit_part": "Редактирование детали",
       "add_packing": "Добавление упаковки",
       "edit_packing": "Редактирование упаковки"
+    },
+    "shipment_notice_details": {
+      "shipment_notice_details": "Информация уведомления отгрузки",
+      "back_to_list": "назад к списку",
+      "supplier_name": "Наименование поставщика",
+      "carrier": "Перевозчик",
+      "carrier_name": "Наименование перевозчика",
+      "asn_number": "ASN номер",
+      "packing_list": "Упаковочный лист",
+      "shipment_date": "Дата и время отгрузки",
+      "estimated_date": "Ожидаемые дата и время прибытия",
+      "container_number": "Номер контейнера",
+      "freight_bill_number": "Номер накладной",
+      "bill_of_lading": "Номер коносамента",
+      "net_weight": "Вес нетто, кг",
+      "gross_weight":"Вес брутто, кг",
+      "contract": "Контракт",
+      "invoice_date": "Дата счет фактуры",
+      "invoice_number": "Номер счет фактуры",
+      "torg_12_date": "Дата ТОРГ-12",
+      "torg_12_number": "Номер ТОРГ-12"
     },
     "label_printing": {
       "label_printing": "Печать этикеток",

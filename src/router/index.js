@@ -102,6 +102,11 @@ const routes = [
       name: 'ShipmentNoticeCreation',
       component: () => import('@/views/asn/ShipmentNoticeCreation')
     }, {
+      path: 'asn/:id',
+      name: 'ShipmentNoticeDetails',
+      props: true,
+      component: () => import('@/views/asn/ShipmentNoticeDetails')
+    }, {
       path: 'labels/print',
       name: 'LabelPrinting',
       component: () => import('@/views/labels/LabelPrinting'),

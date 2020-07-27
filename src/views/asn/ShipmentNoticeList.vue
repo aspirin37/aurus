@@ -57,7 +57,45 @@
       :server-items-length="total"
       :loading="loading"
       :loading-text="$t('common.loading_data')"
-    />
+    >
+      <template v-slot:item.number="{ item }">
+        <router-link :to="`/asn/${item.id}`">{{ item.number }}</router-link>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-hover v-slot="{hover}">
+          <v-icon
+            class="mr-2"
+            :class="hover ? '' : 'text--disabled'"
+            color="primary"
+            size="20"
+            @click="$router.push(`/asn/${item.id}/track-statuses`)"
+          >
+            drive_eta
+          </v-icon>
+        </v-hover>
+        <v-hover v-slot="{hover}">
+          <v-icon
+            class="mr-2"
+            :class="hover ? '' : 'text--disabled'"
+            color="primary"
+            size="20"
+            @click="$router.push(`/asn/${item.id}/customs-statuses`)"
+          >
+            flag
+          </v-icon>
+        </v-hover>
+        <v-hover v-slot="{hover}">
+          <v-icon
+            :class="hover ? '' : 'text--disabled'"
+            color="primary"
+            size="20"
+            @click="$router.push(`/asn/${item.id}/system-statuses`)"
+          >
+            mdi-state-machine
+          </v-icon>
+        </v-hover>
+      </template>
+    </v-data-table>
     <shipment-notice-load
       v-model="isLoadModalShown"
       @created="getItems"
@@ -89,11 +127,32 @@ export default {
   data() {
     return {
       headers: [
-        { text: this.$t('common.supplier'), value: 'supplier.gsdb' },
-        { text: this.$t('common.plant'), value: 'plant' },
-        { text: this.$t('common.number'), value: 'number' },
-        { text: this.$t('views.shipment_notice_list.shipment_date'), value: 'shipmentDate' },
-        { text: this.$t('views.shipment_notice_list.invoice'), value: 'invoice.number' },
+        {
+          text: this.$t('common.supplier'),
+          value: 'supplier.gsdb'
+        },
+        {
+          text: this.$t('common.plant'),
+          value: 'plant'
+        },
+        {
+          text: this.$t('common.number'),
+          value: 'number'
+        },
+        {
+          text: this.$t('views.shipment_notice_list.shipment_date'),
+          value: 'shipmentDate'
+        },
+        {
+          text: this.$t('views.shipment_notice_list.invoice'),
+          value: 'invoice.number'
+        },
+        {
+          text: this.$t('views.shipment_notice_list.status_history'),
+          value: 'actions',
+          sortable: false,
+          width: 150
+        }
       ],
 
       items: [],
@@ -128,7 +187,7 @@ export default {
     shipmentNotices() {
       return this.items.map((item) => ({
         ...item,
-        shipmentDate: this.$moment(item.shippingDate).format('L')
+        shipmentDate: this.$moment(item.createdAt).format('L')
       }))
     }
   },
