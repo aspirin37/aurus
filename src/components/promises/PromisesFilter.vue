@@ -6,7 +6,7 @@
   >
     <v-container>
       <v-row>
-        <v-col cols="4">
+        <v-col cols="3">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('common.supplier') }}
@@ -22,7 +22,7 @@
             />
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="3">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('common.plant') }}
@@ -95,7 +95,7 @@
             </v-menu>
           </div>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="3">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.promise_list.last_shipment') }}
@@ -127,7 +127,7 @@
             </v-menu>
           </div>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="3">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.promise_list.promised_shipment') }}

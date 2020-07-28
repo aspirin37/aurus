@@ -31,7 +31,7 @@
         @submit.prevent
       >
         <v-row>
-          <v-col cols="4" class="pb-0">
+          <v-col cols="3" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.carrier') }}
@@ -44,7 +44,7 @@
             </div>
           </v-col>
 
-          <v-col cols="4" class="pb-0">
+          <v-col cols="3" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('common.plant') }}
@@ -57,13 +57,26 @@
             </div>
           </v-col>
 
-          <v-col cols="4" class="pb-0">
+          <v-col cols="3" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.container_number') }}
               </label>
               <v-text-field
                 v-model="asn.containerNumber"
+                solo
+                :rules="[rules.required]"
+              />
+            </div>
+          </v-col>
+
+          <v-col cols="3" class="pb-0">
+            <div class="input-block input-block_white">
+              <label class="input-block__label">
+                {{ $t('views.shipment_notice_creation.transportation_mode') }}
+              </label>
+              <v-text-field
+                v-model="asn.regime"
                 solo
                 :rules="[rules.required]"
               />
@@ -136,7 +149,7 @@
             </div>
           </v-col>
 
-          <v-col cols="2" class="pb-0">
+          <v-col cols="4" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.estimated_date') }}
@@ -167,7 +180,7 @@
             </div>
           </v-col>
 
-          <v-col cols="2" class="pb-0">
+          <v-col cols="4" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.estimated_time') }}
@@ -199,19 +212,6 @@
                   @click:minute="$refs.estimatedTime.save(asn.estimatedTime)"
                 />
               </v-menu>
-            </div>
-          </v-col>
-
-          <v-col cols="4" class="pb-0">
-            <div class="input-block input-block_white">
-              <label class="input-block__label">
-                {{ $t('views.shipment_notice_creation.transportation_mode') }}
-              </label>
-              <v-text-field
-                v-model="asn.regime"
-                solo
-                :rules="[rules.required]"
-              />
             </div>
           </v-col>
 
@@ -269,7 +269,7 @@
             </div>
           </v-col>
 
-          <v-col cols="4" class="pb-0">
+          <v-col cols="2" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.contract') }}
@@ -282,7 +282,7 @@
             </div>
           </v-col>
 
-          <v-col cols="2" class="pb-0">
+          <v-col cols="3" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.invoice_date') }}
@@ -313,7 +313,7 @@
             </div>
           </v-col>
 
-          <v-col cols="2" class="pb-0">
+          <v-col cols="3" class="pb-0">
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.invoice_number') }}

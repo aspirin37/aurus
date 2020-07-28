@@ -6,7 +6,7 @@
   >
     <v-container>
       <v-row>
-        <v-col cols="3">
+        <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.bulletin_list.subject') }}
@@ -108,7 +108,7 @@
             </v-menu>
           </div>
         </v-col>
-        <v-col cols="1">
+        <v-col cols="2">
           <div class="select-block select-block_white">
             <label class="select-block__label">{{ $t('views.bulletin_list.email') }}</label>
             <v-select
