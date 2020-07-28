@@ -34,7 +34,6 @@
               solo
             />
           </div>
-          </div>
         </v-col>
         <v-col cols="2">
           <div class="input-block input-block_white">
