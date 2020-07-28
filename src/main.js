@@ -2,12 +2,16 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import VueMoment from 'vue-moment';
 import moment from 'moment-timezone';
+import vSelect from 'vue-select';
+import Multiselect from 'vue-multiselect';
 
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import http from './api';
 
+import 'vue-select/dist/vue-select.css';
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 import '@/assets/styles/index.scss';
 
 import config from './utils/config';
@@ -19,6 +23,9 @@ Vue.use(VueMoment, {
   moment,
 });
 Vue.moment.locale(localStorage.getItem('locale') || 'en');
+
+Vue.component('vue-select', vSelect);
+Vue.component('multiselect', Multiselect);
 
 Vue.prototype.$config = config;
 Vue.prototype.$http = http;

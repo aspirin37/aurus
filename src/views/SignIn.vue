@@ -8,22 +8,22 @@
         <div class="input-block">
           <label
             class="input-block__label"
-            :class="{'input-block__label_error': !!login.error}"
+            :class="{'input-block__label_error': error}"
             for="login"
           >
             {{ $t('common.login') }}
             <span
-              v-if="!!login.error"
+              v-if="error"
               class="error-text"
             >
-              {{ login.error }}
+              {{ error }}
             </span>
           </label>
           <input
             id="login"
             v-model="login"
             class="input-block__input"
-            :class="{'input-block__input_error': !!login.error}"
+            :class="{'input-block__input_error': error}"
             autocomplete="username"
             type="email"
           >
@@ -31,22 +31,14 @@
         <div class="input-block">
           <label
             class="input-block__label"
-            :class="{'input-block__label_error': !!password.error}"
             for="password"
           >
             {{ $t('common.password') }}
-            <span
-              v-if="!!login.error"
-              class="error-text"
-            >
-              {{ password.error }}
-            </span>
           </label>
           <input
             id="password"
             v-model="password"
             class="input-block__input"
-            :class="{'input-block__input_error': !!password.error}"
             autocomplete="current-password"
             type="password"
           >
@@ -101,14 +93,18 @@ export default {
     login: '',
     password: '',
     rememberMe: false,
+    error: '',
   }),
   methods: {
-    async signIn() {
-      await this.$http.post('main/login', {
+    signIn() {
+      this.$http.post('main/login', {
         email: this.login,
         password: this.password,
+      }).then(() => {
+        this.$router.push('/users');
+      }).catch((e) => {
+        this.error = e.response.data.message;
       });
-      this.$router.push('/users');
     },
   },
 };

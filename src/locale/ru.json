@@ -34,7 +34,11 @@
     "show": "Показать",
     "number": "Номер",
     "user": "Пользователь",
-    "comment": "Комментарий"
+    "comment": "Комментарий",
+    "phone": "Телефон",
+    "create_password": "Придумайте пароль",
+    "confirm_password": "Подтвердите пароль",
+    "confirm": "Подтвердить"
   },
   "views": {
     "sign_in": {
@@ -246,6 +250,11 @@
       "template_elements": "Поддерживаемые элементы:",
       "template_fields": "Возможные свойства детали:",
       "template_fonts": "Поддерживаемые шрифты:"
+    },
+    "profile": {
+      "new_password": "Новый пароль",
+      "adding_contact": "Добавление контакта",
+      "editing_contact": "Редактирование контакта"
     }
   },
   "navigation": {
@@ -267,7 +276,8 @@
     "asn": "Уведомления отгрузки",
     "labels": "Этикетки",
     "label_printing": "Печать этикеток",
-    "label_template": "Шаблон этикетки"
+    "label_template": "Шаблон этикетки",
+    "forecasts": "Прогнозы"
   },
   "layout": {
     "collapse": "Свернуть меню"
