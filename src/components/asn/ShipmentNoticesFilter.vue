@@ -23,7 +23,20 @@
             />
           </div>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="2">
+          <div class="input-block input-block_white">
+            <label class="input-block__label">
+              {{ $t('common.plant') }}
+            </label>
+            <v-text-field
+              v-model="localFilter.plant"
+              hide-details
+              solo
+            />
+          </div>
+          </div>
+        </v-col>
+        <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_list.start_date') }}
@@ -53,7 +66,7 @@
             </v-menu>
           </div>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_list.end_date') }}
@@ -144,6 +157,7 @@ export default {
     return {
       localFilter: {
         supplier: '',
+        plant: '',
         startDate: this.$moment().format().substr(0, 10),
         endDate: this.$moment().format().substr(0, 10),
         number: '',

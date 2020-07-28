@@ -86,32 +86,38 @@ export default {
 
   data() {
     return {
-      headers: [
-        {
+      headers: {
+        detailNumber: {
           text: this.$t('views.shipment_notice_creation.part_number'),
           value: 'detailNumber'
         },
-        {
+        quantitySent: {
           text: this.$t('views.shipment_notice_creation.quantity_sent'),
           value: 'quantitySent'
         },
-        {
+        previousTotal: {
           text: this.$t('views.shipment_notice_creation.previous_total'),
           value: 'previousTotal'
         },
-        {
+        UOM: {
           text: this.$t('views.shipment_notice_creation.uom'),
           value: 'UOM'
         },
-        {
+        weightKg: {
           text: this.$t('views.shipment_notice_creation.weight_kg'),
           value: 'weightKg'
         },
-        {
+        origin: {
           text: this.$t('views.shipment_notice_creation.origin'),
           value: 'origin'
         },
-      ],
+        actions: {
+          text: this.$t('common.actions'),
+          value: 'actions',
+          sortable: false,
+          width: 150,
+        },
+      },
 
       isModalShown: false,
       selectedItem: null,
@@ -123,18 +129,15 @@ export default {
   computed: {
     availableHeaders() {
       if (this.readonly) {
-        return this.headers;
+        return [
+          this.headers.detailNumber,
+          this.headers.UOM,
+          this.headers.quantitySent,
+          this.headers.previousTotal
+        ];
       }
 
-      return [
-        ...this.headers,
-        {
-          text: this.$t('common.actions'),
-          value: 'actions',
-          sortable: false,
-          width: 150,
-        },
-      ]
+      return Object.values(this.headers);
     }
   },
 

@@ -161,6 +161,7 @@ export default {
 
       filter: {
         supplier: '',
+        plant: '',
         startDate: this.$moment().format().substr(0, 10),
         endDate: this.$moment().format().substr(0, 10),
         number: '',
@@ -286,6 +287,9 @@ export default {
       const filter = {};
       if (this.filter.supplier) {
         filter.supplier = this.filter.supplier;
+      }
+      if (this.filter.plant) {
+        filter.plant = this.filter.plant;
       }
       if (this.filter.number) {
         filter.number = this.filter.number;

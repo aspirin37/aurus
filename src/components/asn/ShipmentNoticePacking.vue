@@ -22,7 +22,7 @@
     </div>
     <v-data-table
       :headers="availableHeaders"
-      :items="packing"
+      :items="items"
       disable-pagination
       disable-sort
       hide-default-footer
@@ -78,6 +78,11 @@ export default {
       required: true
     },
 
+    parts: {
+      type: Array,
+      default: () => []
+    },
+
     readonly: {
       type: Boolean,
       default: () => false
@@ -86,32 +91,42 @@ export default {
 
   data() {
     return {
-      headers: [
-        {
+      headers: {
+        detailNumber: {
           text: this.$t('views.shipment_notice_creation.part_number'),
           value: 'detailNumber'
         },
-        {
+        quantity: {
           text: this.$t('views.shipment_notice_creation.quantity'),
           value: 'quantity'
         },
-        {
+        boxSerialNumberLevel3: {
           text: this.$t('views.shipment_notice_creation.box_serial_number_level_3'),
           value: 'boxSerialNumberLevel3'
         },
-        {
+        boxSerialNumberLevel2: {
           text: this.$t('views.shipment_notice_creation.box_serial_number_level_2'),
           value: 'boxSerialNumberLevel2'
         },
-        {
+        boxSerialNumberLevel1: {
           text: this.$t('views.shipment_notice_creation.box_serial_number_level_1'),
           value: 'boxSerialNumberLevel1'
         },
-        {
+        grossUnitWeightKg: {
           text: this.$t('views.shipment_notice_creation.unit_weight_gross_kg'),
           value: 'grossUnitWeightKg'
         },
-      ],
+        UOM: {
+          text: this.$t('views.shipment_notice_creation.uom'),
+          value: 'UOM'
+        },
+        actions: {
+          text: this.$t('common.actions'),
+          value: 'actions',
+          sortable: false,
+          width: 150,
+        },
+      },
 
       isModalShown: false,
       selectedItem: null,
@@ -123,18 +138,32 @@ export default {
   computed: {
     availableHeaders() {
       if (this.readonly) {
-        return this.headers;
+        return [
+          this.headers.boxSerialNumberLevel1,
+          this.headers.boxSerialNumberLevel2,
+          this.headers.boxSerialNumberLevel3,
+          this.headers.detailNumber,
+          this.headers.UOM,
+          this.headers.quantity
+        ];
       }
 
       return [
-        ...this.headers,
-        {
-          text: this.$t('common.actions'),
-          value: 'actions',
-          sortable: false,
-          width: 150,
-        },
-      ]
+        this.headers.detailNumber,
+        this.headers.quantity,
+        this.headers.boxSerialNumberLevel3,
+        this.headers.boxSerialNumberLevel2,
+        this.headers.boxSerialNumberLevel1,
+        this.headers.grossUnitWeightKg,
+        this.headers.actions
+      ];
+    },
+
+    items() {
+      return this.packing.map((item) => ({
+        ...item,
+        UOM: (this.parts.find((part) => part.detailNumber === item.detailNumber) || {}).UOM
+      }));
     }
   },
 
@@ -160,7 +189,7 @@ export default {
 
     updatePacking(index, item) {
       this.$emit('updatePacking', index, item);
-      tthis.isModalShown = false;
+      this.isModalShown = false;
     },
 
      removePacking(item) {

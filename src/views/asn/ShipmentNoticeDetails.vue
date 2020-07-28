@@ -191,7 +191,7 @@
 
       <shipment-notice-parts :parts="asn.details" readonly />
 
-      <shipment-notice-packing :packing="asn.packing" readonly />
+      <shipment-notice-packing :packing="asn.packing" :parts="asn.details" readonly />
     </div>
   </div>
 </template>

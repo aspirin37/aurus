@@ -162,9 +162,9 @@
       "container_number": "Container number",
       "departure_date": "Departure date",
       "departure_time": "Departure time",
-      "estimated_date": "Estimated date",
-      "estimated_time": "Estimated time",
-      "transportation_mode": "Transportation mode",
+      "estimated_date": "Estimated date*",
+      "estimated_time": "Estimated time*",
+      "transportation_mode": "Transportation mode*",
       "bill_of_lading": "Bill of lading",
       "freight_bill_number": "Freight bill number",
       "net_weight": "Net weight, kg",
@@ -190,7 +190,8 @@
       "add_part": "Add part",
       "edit_part": "Edit part",
       "add_packing": "Add packing",
-      "edit_packing": "Edit packing"
+      "edit_packing": "Edit packing",
+      "footnote": "* Is informational and not taken into account in the calculation"
     },
     "shipment_notice_details": {
       "shipment_notice_details": "ASN details",

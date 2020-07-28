@@ -371,6 +371,8 @@
           </v-col>
         </v-row>
       </v-form>
+
+      <p>{{ $t('views.shipment_notice_creation.footnote') }}</p>
     </main>
 
     <shipment-notice-parts

@@ -162,9 +162,9 @@
       "container_number": "Номер контейнера",
       "departure_date": "Дата отправки",
       "departure_time": "Время отправки",
-      "estimated_date": "Ожидаемая дата прибытия",
-      "estimated_time": "Ожидаемое время прибытия",
-      "transportation_mode": "Режим транспортировки",
+      "estimated_date": "Ожидаемая дата прибытия*",
+      "estimated_time": "Ожидаемое время прибытия*",
+      "transportation_mode": "Режим транспортировки*",
       "bill_of_lading": "Номер коносамента",
       "freight_bill_number": "Номер накладной",
       "net_weight": "Вес нетто, кг",
@@ -190,7 +190,8 @@
       "add_part": "Добавление детали",
       "edit_part": "Редактирование детали",
       "add_packing": "Добавление упаковки",
-      "edit_packing": "Редактирование упаковки"
+      "edit_packing": "Редактирование упаковки",
+      "footnote": "* Носит информационный характер и не учитывается в расчете"
     },
     "shipment_notice_details": {
       "shipment_notice_details": "Информация уведомления отгрузки",
