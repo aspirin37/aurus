@@ -18,7 +18,7 @@
           {{ $t('common.create') }}
         </v-btn>
         <v-btn
-        color="primary"
+          color="primary"
           outlined
           large
           class="btn mr-4"
@@ -59,7 +59,9 @@
       :loading-text="$t('common.loading_data')"
     >
       <template v-slot:item.number="{ item }">
-        <router-link :to="`/asn/${item.id}`">{{ item.number }}</router-link>
+        <router-link :to="`/asn/${item.id}`">
+          {{ item.number }}
+        </router-link>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-hover v-slot="{hover}">
@@ -121,7 +123,7 @@ export default {
 
   components: {
     ShipmentNoticesFilter,
-    ShipmentNoticeLoad
+    ShipmentNoticeLoad,
   },
 
   data() {
@@ -129,30 +131,30 @@ export default {
       headers: [
         {
           text: this.$t('common.supplier'),
-          value: 'supplier.gsdb'
+          value: 'supplier.gsdb',
         },
         {
           text: this.$t('common.plant'),
-          value: 'plant'
+          value: 'plant',
         },
         {
           text: this.$t('common.number'),
-          value: 'number'
+          value: 'number',
         },
         {
           text: this.$t('views.shipment_notice_list.shipment_date'),
-          value: 'shipmentDate'
+          value: 'shipmentDate',
         },
         {
           text: this.$t('views.shipment_notice_list.invoice'),
-          value: 'invoice.number'
+          value: 'invoice.number',
         },
         {
           text: this.$t('views.shipment_notice_list.status_history'),
           value: 'actions',
           sortable: false,
-          width: 150
-        }
+          width: 150,
+        },
       ],
 
       items: [],
@@ -172,7 +174,7 @@ export default {
       preloading: false,
       loading: false,
       isFilterShown: false,
-      isLoadModalShown: false
+      isLoadModalShown: false,
     };
   },
 
@@ -188,9 +190,9 @@ export default {
     shipmentNotices() {
       return this.items.map((item) => ({
         ...item,
-        shipmentDate: this.$moment(item.createdAt).format('L')
-      }))
-    }
+        shipmentDate: this.$moment(item.createdAt).format('L'),
+      }));
+    },
   },
 
   watch: {
@@ -265,7 +267,7 @@ export default {
           shippingDate: new Date(item.shippingDate),
           estimatedDate: new Date(item.estimatedDate),
           createdAt: new Date(item.createdAt),
-          updatedAt: new Date(item.updatedAt)
+          updatedAt: new Date(item.updatedAt),
         }));
         this.total = data.total;
       } finally {
@@ -307,7 +309,7 @@ export default {
 
     hideLoadModal() {
       this.isLoadModalShown = false;
-    }
+    },
   },
 };
 </script>

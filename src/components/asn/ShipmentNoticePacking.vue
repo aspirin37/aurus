@@ -27,7 +27,10 @@
       disable-sort
       hide-default-footer
     >
-      <template v-if="!readonly" v-slot:item.actions="{ item }">
+      <template
+        v-if="!readonly"
+        v-slot:item.actions="{ item }"
+      >
         <v-hover v-slot="{hover}">
           <v-icon
             class="mr-2"
@@ -69,24 +72,24 @@ export default {
   name: 'ShipmentNoticePacking',
 
   components: {
-    PackingModal
+    PackingModal,
   },
 
   props: {
     packing: {
       type: Array,
-      required: true
+      required: true,
     },
 
     parts: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
 
     readonly: {
       type: Boolean,
-      default: () => false
-    }
+      default: () => false,
+    },
   },
 
   data() {
@@ -94,31 +97,31 @@ export default {
       headers: {
         detailNumber: {
           text: this.$t('views.shipment_notice_creation.part_number'),
-          value: 'detailNumber'
+          value: 'detailNumber',
         },
         quantity: {
           text: this.$t('views.shipment_notice_creation.quantity'),
-          value: 'quantity'
+          value: 'quantity',
         },
         boxSerialNumberLevel3: {
           text: this.$t('views.shipment_notice_creation.box_serial_number_level_3'),
-          value: 'boxSerialNumberLevel3'
+          value: 'boxSerialNumberLevel3',
         },
         boxSerialNumberLevel2: {
           text: this.$t('views.shipment_notice_creation.box_serial_number_level_2'),
-          value: 'boxSerialNumberLevel2'
+          value: 'boxSerialNumberLevel2',
         },
         boxSerialNumberLevel1: {
           text: this.$t('views.shipment_notice_creation.box_serial_number_level_1'),
-          value: 'boxSerialNumberLevel1'
+          value: 'boxSerialNumberLevel1',
         },
         grossUnitWeightKg: {
           text: this.$t('views.shipment_notice_creation.unit_weight_gross_kg'),
-          value: 'grossUnitWeightKg'
+          value: 'grossUnitWeightKg',
         },
         UOM: {
           text: this.$t('views.shipment_notice_creation.uom'),
-          value: 'UOM'
+          value: 'UOM',
         },
         actions: {
           text: this.$t('common.actions'),
@@ -131,8 +134,8 @@ export default {
       isModalShown: false,
       selectedItem: null,
       selectedIndex: -1,
-      isNew: true
-    }
+      isNew: true,
+    };
   },
 
   computed: {
@@ -144,7 +147,7 @@ export default {
           this.headers.boxSerialNumberLevel3,
           this.headers.detailNumber,
           this.headers.UOM,
-          this.headers.quantity
+          this.headers.quantity,
         ];
       }
 
@@ -155,16 +158,16 @@ export default {
         this.headers.boxSerialNumberLevel2,
         this.headers.boxSerialNumberLevel1,
         this.headers.grossUnitWeightKg,
-        this.headers.actions
+        this.headers.actions,
       ];
     },
 
     items() {
       return this.packing.map((item) => ({
         ...item,
-        UOM: (this.parts.find((part) => part.detailNumber === item.detailNumber) || {}).UOM
+        UOM: (this.parts.find((part) => part.detailNumber === item.detailNumber) || {}).UOM,
       }));
-    }
+    },
   },
 
   methods: {
@@ -192,9 +195,9 @@ export default {
       this.isModalShown = false;
     },
 
-     removePacking(item) {
+    removePacking(item) {
       this.$emit('removePacking', this.packing.indexOf(item));
-    }
-  }
-}
+    },
+  },
+};
 </script>

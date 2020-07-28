@@ -44,8 +44,8 @@ export default {
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data() {
@@ -55,14 +55,14 @@ export default {
         { text: this.$t('views.customs_status_history.customs_status'), value: 'status' },
         { text: this.$t('common.date'), value: 'date' },
         { text: this.$t('common.user'), value: 'user' },
-        { text: this.$t('common.comment'), value: 'comment' }
+        { text: this.$t('common.comment'), value: 'comment' },
       ],
       loading: false,
-    }
+    };
   },
 
   created() {
-    this.getItems()
+    this.getItems();
   },
 
   methods: {
@@ -74,9 +74,9 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

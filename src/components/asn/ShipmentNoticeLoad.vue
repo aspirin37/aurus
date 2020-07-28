@@ -11,6 +11,7 @@
   >
     <div class="my-4">
       <div>
+        <!-- eslint-disable max-len -->
         <button
           :disabled="loading"
           class="btn aurus-button aurus-button_line aurus-button_lowercase shipment-notice-load__btn"
@@ -19,6 +20,7 @@
           <v-icon>mdi-download</v-icon>
           {{ $t('views.shipment_notice_list.download_template') }}
         </button>
+        <!-- eslint-enable max-len -->
         <a
           v-if="template"
           v-show="false"
@@ -26,6 +28,7 @@
           :href="template"
           download="asn-template.xlsx"
         />
+        <!-- eslint-disable max-len -->
         <button
           :disabled="loading"
           class="btn aurus-button aurus-button_line aurus-button_lowercase shipment-notice-load__btn"
@@ -33,7 +36,11 @@
         >
           {{ $t('views.shipment_notice_list.select_file') }}
         </button>
-        <span v-if="file" class="shipment-notice-load__filename">{{ file.name }}</span>
+        <!-- eslint-enable max-len -->
+        <span
+          v-if="file"
+          class="shipment-notice-load__filename"
+        >{{ file.name }}</span>
         <input
           v-show="false"
           ref="file"
@@ -63,7 +70,7 @@
         @click="uploadFile()"
       >
         <v-icon>mdi-upload</v-icon>
-      {{ $t('common.upload') }}
+        {{ $t('common.upload') }}
       </v-btn>
     </div>
   </b-modal>
@@ -74,7 +81,7 @@ export default {
   name: 'ShipmentNoticeLoad',
 
   model: {
-    prop: 'value'
+    prop: 'value',
   },
 
   props: {
@@ -89,8 +96,8 @@ export default {
       isShown: false,
       template: null,
       file: null,
-      loading: false
-    }
+      loading: false,
+    };
   },
 
   watch: {
@@ -143,9 +150,9 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

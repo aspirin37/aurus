@@ -189,9 +189,16 @@
         </b-row>
       </main>
 
-      <shipment-notice-parts :parts="asn.details" readonly />
+      <shipment-notice-parts
+        :parts="asn.details"
+        readonly
+      />
 
-      <shipment-notice-packing :packing="asn.packing" :parts="asn.details" readonly />
+      <shipment-notice-packing
+        :packing="asn.packing"
+        :parts="asn.details"
+        readonly
+      />
     </div>
   </div>
 </template>
@@ -207,27 +214,27 @@ export default {
   components: {
     AppLoader,
     ShipmentNoticeParts,
-    ShipmentNoticePacking
+    ShipmentNoticePacking,
   },
 
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data() {
     return {
       asn: {},
-      loading: false
-    }
+      loading: false,
+    };
   },
 
   computed: {
     user() {
       return this.$store.state.user;
-    }
+    },
   },
 
   created() {
@@ -263,14 +270,14 @@ export default {
           shippingDate: this.$moment(data.shippingDate),
           estimatedDate: this.$moment(data.estimatedDate),
           createdAt: this.$moment(data.createdAt),
-          updatedAt: this.$moment(data.updatedAt)
+          updatedAt: this.$moment(data.updatedAt),
         };
       } finally {
         this.loading = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

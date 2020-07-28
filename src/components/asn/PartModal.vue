@@ -11,9 +11,15 @@
     @shown="getItem"
     @hidden="hideModal"
   >
-    <v-form @submit.prevent="submit" class="mt-3">
+    <v-form
+      class="mt-3"
+      @submit.prevent="submit"
+    >
       <b-row class="v-application">
-        <b-col cols="12" class="pb-0">
+        <b-col
+          cols="12"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.part_number') }}
@@ -26,7 +32,10 @@
           </div>
         </b-col>
 
-        <b-col cols="6" class="pb-0">
+        <b-col
+          cols="6"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.quantity_sent') }}
@@ -40,7 +49,10 @@
           </div>
         </b-col>
 
-        <b-col cols="6" class="pb-0">
+        <b-col
+          cols="6"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.previous_total') }}
@@ -53,7 +65,10 @@
           </div>
         </b-col>
 
-        <b-col cols="6" class="pb-0">
+        <b-col
+          cols="6"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.uom') }}
@@ -66,7 +81,10 @@
           </div>
         </b-col>
 
-        <b-col cols="6" class="pb-0">
+        <b-col
+          cols="6"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.weight_kg') }}
@@ -124,35 +142,35 @@ const EMPTY_VALUE = {
   previousTotal: 0,
   UOM: '',
   weightKg: 0,
-  origin: ''
+  origin: '',
 };
 
 export default {
   name: 'PartModal',
 
   model: {
-    prop: 'value'
+    prop: 'value',
   },
 
   props: {
     value: {
       type: Boolean,
-      default: () => false
+      default: () => false,
     },
 
     selectedItem: {
       type: Object,
-      default: () => null
+      default: () => null,
     },
 
     selectedIndex: {
       type: Number,
-      default: () => -1
+      default: () => -1,
     },
 
     isNew: {
       type: Boolean,
-      required: true
+      required: true,
     },
   },
 
@@ -162,22 +180,22 @@ export default {
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
       },
-      isShown: false
-    }
+      isShown: false,
+    };
   },
 
   computed: {
     title() {
-      return this.isNew ?
-        this.$t('views.shipment_notice_creation.add_part') :
-        this.$t('views.shipment_notice_creation.edit_part');
-    }
+      return this.isNew
+        ? this.$t('views.shipment_notice_creation.add_part')
+        : this.$t('views.shipment_notice_creation.edit_part');
+    },
   },
 
   watch: {
     value(val) {
       this.isShown = val;
-    }
+    },
   },
 
   methods: {
@@ -203,7 +221,7 @@ export default {
     validate() {
       const required = ['detailNumber', 'quantitySent', 'UOM', 'weightKg', 'origin'];
       return required.every((key) => this.item[key]);
-    }
-  }
-}
+    },
+  },
+};
 </script>

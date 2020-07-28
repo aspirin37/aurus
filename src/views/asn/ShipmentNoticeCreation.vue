@@ -31,7 +31,10 @@
         @submit.prevent
       >
         <v-row>
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.carrier') }}
@@ -44,7 +47,10 @@
             </div>
           </v-col>
 
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('common.plant') }}
@@ -57,7 +63,10 @@
             </div>
           </v-col>
 
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.container_number') }}
@@ -70,7 +79,10 @@
             </div>
           </v-col>
 
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.transportation_mode') }}
@@ -83,7 +95,10 @@
             </div>
           </v-col>
 
-          <v-col cols="2" class="pb-0">
+          <v-col
+            cols="2"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.departure_date') }}
@@ -114,7 +129,10 @@
             </div>
           </v-col>
 
-          <v-col cols="2" class="pb-0">
+          <v-col
+            cols="2"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.departure_time') }}
@@ -149,7 +167,10 @@
             </div>
           </v-col>
 
-          <v-col cols="4" class="pb-0">
+          <v-col
+            cols="4"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.estimated_date') }}
@@ -180,7 +201,10 @@
             </div>
           </v-col>
 
-          <v-col cols="4" class="pb-0">
+          <v-col
+            cols="4"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.estimated_time') }}
@@ -215,7 +239,10 @@
             </div>
           </v-col>
 
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.bill_of_lading') }}
@@ -228,7 +255,10 @@
             </div>
           </v-col>
 
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.freight_bill_number') }}
@@ -241,7 +271,10 @@
             </div>
           </v-col>
 
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.net_weight') }}
@@ -255,7 +288,10 @@
             </div>
           </v-col>
 
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.gross_weight') }}
@@ -269,7 +305,10 @@
             </div>
           </v-col>
 
-          <v-col cols="2" class="pb-0">
+          <v-col
+            cols="2"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.contract') }}
@@ -282,7 +321,10 @@
             </div>
           </v-col>
 
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.invoice_date') }}
@@ -313,7 +355,10 @@
             </div>
           </v-col>
 
-          <v-col cols="3" class="pb-0">
+          <v-col
+            cols="3"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.invoice_number') }}
@@ -326,7 +371,10 @@
             </div>
           </v-col>
 
-          <v-col cols="2" class="pb-0">
+          <v-col
+            cols="2"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.torg_12_date') }}
@@ -357,7 +405,10 @@
             </div>
           </v-col>
 
-          <v-col cols="2" class="pb-0">
+          <v-col
+            cols="2"
+            class="pb-0"
+          >
             <div class="input-block input-block_white">
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.torg_12_number') }}
@@ -410,7 +461,7 @@ export default {
 
   components: {
     ShipmentNoticeParts,
-    ShipmentNoticePacking
+    ShipmentNoticePacking,
   },
 
   data() {
@@ -432,7 +483,7 @@ export default {
         invoiceDate: null,
         invoiceNumber: '',
         torg12Date: null,
-        torg12Number: ''
+        torg12Number: '',
       },
 
       parts: [],
@@ -453,7 +504,7 @@ export default {
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
       },
-    }
+    };
   },
 
   computed: {
@@ -475,7 +526,7 @@ export default {
 
     torg12DateFormatted() {
       return this.asn.torg12Date && this.$moment(this.asn.torg12Date).format('L');
-    }
+    },
   },
 
   created() {
@@ -555,7 +606,7 @@ export default {
         TORG12: { date: this.$moment.utc(torg12Date), number: torg12Number },
         supplier: { gsdb, name },
         details: this.parts,
-        packing: this.packing
+        packing: this.packing,
       };
 
       this.loading = true;
@@ -585,12 +636,12 @@ export default {
         'invoiceDate',
         'invoiceNumber',
         'torg12Date',
-        'torg12Number'
+        'torg12Number',
       ];
       return required.every((key) => this.asn[key]) && this.parts.length && this.packing.length;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

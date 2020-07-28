@@ -27,7 +27,10 @@
       disable-sort
       hide-default-footer
     >
-      <template v-if="!readonly" v-slot:item.actions="{ item }">
+      <template
+        v-if="!readonly"
+        v-slot:item.actions="{ item }"
+      >
         <v-hover v-slot="{hover}">
           <v-icon
             class="mr-2"
@@ -69,19 +72,19 @@ export default {
   name: 'ShipmentNoticeParts',
 
   components: {
-    PartModal
+    PartModal,
   },
 
   props: {
     parts: {
       type: Array,
-      required: true
+      required: true,
     },
 
     readonly: {
       type: Boolean,
-      default: () => false
-    }
+      default: () => false,
+    },
   },
 
   data() {
@@ -89,27 +92,27 @@ export default {
       headers: {
         detailNumber: {
           text: this.$t('views.shipment_notice_creation.part_number'),
-          value: 'detailNumber'
+          value: 'detailNumber',
         },
         quantitySent: {
           text: this.$t('views.shipment_notice_creation.quantity_sent'),
-          value: 'quantitySent'
+          value: 'quantitySent',
         },
         previousTotal: {
           text: this.$t('views.shipment_notice_creation.previous_total'),
-          value: 'previousTotal'
+          value: 'previousTotal',
         },
         UOM: {
           text: this.$t('views.shipment_notice_creation.uom'),
-          value: 'UOM'
+          value: 'UOM',
         },
         weightKg: {
           text: this.$t('views.shipment_notice_creation.weight_kg'),
-          value: 'weightKg'
+          value: 'weightKg',
         },
         origin: {
           text: this.$t('views.shipment_notice_creation.origin'),
-          value: 'origin'
+          value: 'origin',
         },
         actions: {
           text: this.$t('common.actions'),
@@ -122,8 +125,8 @@ export default {
       isModalShown: false,
       selectedItem: null,
       selectedIndex: -1,
-      isNew: true
-    }
+      isNew: true,
+    };
   },
 
   computed: {
@@ -133,12 +136,12 @@ export default {
           this.headers.detailNumber,
           this.headers.UOM,
           this.headers.quantitySent,
-          this.headers.previousTotal
+          this.headers.previousTotal,
         ];
       }
 
       return Object.values(this.headers);
-    }
+    },
   },
 
   methods: {
@@ -168,7 +171,7 @@ export default {
 
     removePart(item) {
       this.$emit('removePart', this.parts.indexOf(item));
-    }
-  }
-}
+    },
+  },
+};
 </script>

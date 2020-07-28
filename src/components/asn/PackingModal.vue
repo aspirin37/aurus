@@ -11,9 +11,15 @@
     @shown="getItem"
     @hidden="hideModal"
   >
-    <v-form @submit.prevent="submit" class="mt-3">
+    <v-form
+      class="mt-3"
+      @submit.prevent="submit"
+    >
       <b-row class="v-application">
-        <b-col cols="6" class="pb-0">
+        <b-col
+          cols="6"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.part_number') }}
@@ -26,7 +32,10 @@
           </div>
         </b-col>
 
-        <b-col cols="6" class="pb-0">
+        <b-col
+          cols="6"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.quantity') }}
@@ -40,7 +49,10 @@
           </div>
         </b-col>
 
-        <b-col cols="6" class="pb-0">
+        <b-col
+          cols="6"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.box_serial_number_level_3') }}
@@ -52,7 +64,10 @@
           </div>
         </b-col>
 
-        <b-col cols="6" class="pb-0">
+        <b-col
+          cols="6"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.box_serial_number_level_2') }}
@@ -64,7 +79,10 @@
           </div>
         </b-col>
 
-        <b-col cols="6" class="pb-0">
+        <b-col
+          cols="6"
+          class="pb-0"
+        >
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.shipment_notice_creation.box_serial_number_level_1') }}
@@ -121,35 +139,35 @@ const EMPTY_VALUE = {
   boxSerialNumberLevel3: '',
   boxSerialNumberLevel2: '',
   boxSerialNumberLevel1: '',
-  grossUnitWeightKg: 0
+  grossUnitWeightKg: 0,
 };
 
 export default {
   name: 'PackingModal',
 
   model: {
-    prop: 'value'
+    prop: 'value',
   },
 
   props: {
     value: {
       type: Boolean,
-      default: () => false
+      default: () => false,
     },
 
     selectedItem: {
       type: Object,
-      default: () => null
+      default: () => null,
     },
 
     selectedIndex: {
       type: Number,
-      default: () => -1
+      default: () => -1,
     },
 
     isNew: {
       type: Boolean,
-      required: true
+      required: true,
     },
   },
 
@@ -159,22 +177,22 @@ export default {
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
       },
-      isShown: false
-    }
+      isShown: false,
+    };
   },
 
   computed: {
     title() {
-      return this.isNew ?
-        this.$t('views.shipment_notice_creation.add_packing') :
-        this.$t('views.shipment_notice_creation.edit_packing');
-    }
+      return this.isNew
+        ? this.$t('views.shipment_notice_creation.add_packing')
+        : this.$t('views.shipment_notice_creation.edit_packing');
+    },
   },
 
   watch: {
     value(val) {
       this.isShown = val;
-    }
+    },
   },
 
   methods: {
@@ -200,7 +218,7 @@ export default {
     validate() {
       const required = ['detailNumber', 'quantity', 'grossUnitWeightKg'];
       return required.every((key) => this.item[key]);
-    }
-  }
-}
+    },
+  },
+};
 </script>
