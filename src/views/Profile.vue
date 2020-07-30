@@ -244,8 +244,9 @@ export default {
       this.modalType = type;
       this.contactsModal = true;
     },
-    removeContact(id) {
-      this.$http.delete(`suppliers/${this.user.gsdb}/contacts/${id}`);
+    async removeContact(id) {
+      const { data } = await this.$http.delete(`suppliers/${this.user.gsdb}/contacts/${id}`);
+      this.contacts = data;
     },
     async contactsModalSubmit() {
       await this.getContacts();
