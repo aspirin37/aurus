@@ -90,7 +90,7 @@ export default {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
 
-      const { data } = await this.$http.get('/order-groups', { params }).finally(() => {
+      const { data } = await this.$http.get('/orders', { params }).finally(() => {
         this.loading = false;
       });
 

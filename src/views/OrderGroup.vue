@@ -14,7 +14,7 @@
             large
             class="mr-2"
             :loading="statusLoading"
-            :disabled="isViewed"
+            :disabled="!isPosted"
             @click="confirmView"
           >
             <v-icon left>
@@ -27,7 +27,7 @@
             }}
           </v-btn>
           <download-excel
-            :url="`/order-groups/${id}/forecast-xlsx`"
+            :url="`/orders/${id}/forecast-xlsx`"
             file-name="order-forecast.xlsx"
           />
         </div>
@@ -87,6 +87,9 @@ export default {
     isViewed() {
       return this.status === 'viewed';
     },
+    isPosted() {
+      return this.status === 'posted';
+    },
   },
   mounted() {
     Promise.all([
@@ -98,13 +101,13 @@ export default {
   },
   methods: {
     async getOrderGroupStatus() {
-      const { data: { status } } = await this.$http.get(`/order-groups/${this.id}`);
+      const { data: { status } } = await this.$http.get(`/orders/${this.id}`);
       this.status = status;
 
       return Promise.resolve();
     },
     async getItems() {
-      const { data } = await this.$http.get(`/order-groups/${this.id}/forecast`);
+      const { data } = await this.$http.get(`/orders/${this.id}/forecast`);
 
       this.headers = data.headers.slice(2).map((it) => ({
         ...it, sortable: false,
@@ -116,7 +119,7 @@ export default {
     },
     async confirmView() {
       this.statusLoading = true;
-      await this.$http.post(`/order-groups/${this.id}/view`).finally(() => {
+      await this.$http.post(`/orders/${this.id}/view`).finally(() => {
         this.statusLoading = false;
       });
       this.status = 'viewed';

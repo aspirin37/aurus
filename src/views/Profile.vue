@@ -20,8 +20,7 @@
             <v-row>
               <v-col
                 cols="12"
-                lg="6"
-                xl="4"
+                lg="4"
                 class="profile-page__main__item__content"
               >
                 <div class="profile-page__main__item__content__item">
@@ -85,8 +84,7 @@
               </v-col>
               <v-col
                 cols="12"
-                lg="6"
-                xl="4"
+                lg="4"
                 class="profile-page__main__item__content"
               >
                 <div class="profile-page__main__item__content__item">
@@ -112,6 +110,24 @@
                   <span class="profile-page__main__item__content__item__text">
                     {{ supplier.analystAurus }}
                   </span>
+                </div>
+              </v-col>
+              <v-col
+                cols="12"
+                lg="4"
+                class="profile-page__main__item__content"
+              >
+                <div class="profile-page__main__item__content__item">
+                  <v-btn
+                    class="ml-auto"
+                    color="primary"
+                    :loading="sftpLoader"
+                    outlined
+                    large
+                    @click="changeSFTP"
+                  >
+                    Смена пароля SFTP
+                  </v-btn>
                 </div>
               </v-col>
             </v-row>
@@ -179,6 +195,10 @@
         :type="modalType"
         @submit="contactsModalSubmit"
       />
+      <sftp-modal
+        v-model="sftpModal"
+        :sftp="sftp"
+      />
     </template>
   </div>
 </template>
@@ -186,11 +206,13 @@
 <script>
 import { mapState } from 'vuex';
 import ContactsModal from '@/components/profile/ContactsModal.vue';
+import SftpModal from '@/components/profile/SftpModal.vue';
 
 export default {
   name: 'Profile',
   components: {
     ContactsModal,
+    SftpModal,
   },
   data: (vm) => ({
     supplier: null,
@@ -208,6 +230,9 @@ export default {
     contactsModal: false,
     contactSelected: null,
     modalType: 'add',
+    sftp: null,
+    sftpModal: false,
+    sftpLoader: false,
   }),
   computed: {
     ...mapState(['user']),
@@ -251,6 +276,14 @@ export default {
     async contactsModalSubmit() {
       await this.getContacts();
       this.contactsModal = false;
+    },
+    async changeSFTP() {
+      this.sftpLoader = true;
+      const { data } = await this.$http.post(`suppliers/${this.user.gsdb}/sftp-password`).finally(() => {
+        this.sftpLoader = false;
+      });
+      this.sftp = data;
+      this.sftpModal = true;
     },
   },
 };

@@ -89,7 +89,6 @@ export default {
     async submit() {
       this.loading = true;
       const params = {
-        ...this.user,
         password: this.password,
       };
 

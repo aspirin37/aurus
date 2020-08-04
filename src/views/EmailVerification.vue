@@ -25,37 +25,36 @@
         >
           Не удалось подтвердить e-mail. Повторите попытку позже или обратитесь к администратору.
         </div>
-        <div
-          v-if="isEmailVerified"
-          class="input-block"
-        >
+        <template v-if="isEmailVerified">
+          <div class="input-block">
+            <label
+              class="input-block__label"
+              for="password"
+            >
+              {{ $t('common.create_password') }}
+            </label>
+            <input
+              id="password"
+              v-model="password"
+              class="input-block__input"
+              autocomplete="new-password"
+              type="password"
+            >
+          </div>
           <label
             class="input-block__label"
             for="password"
           >
-            {{ $t('common.create_password') }}
+            {{ $t('common.confirm_password') }}
           </label>
           <input
             id="password"
-            v-model="password"
+            v-model="confirmPassword"
             class="input-block__input"
             autocomplete="new-password"
             type="password"
           >
-        </div>
-        <label
-          class="input-block__label"
-          for="password"
-        >
-          {{ $t('common.confirm_password') }}
-        </label>
-        <input
-          id="password"
-          v-model="confirmPassword"
-          class="input-block__input"
-          autocomplete="new-password"
-          type="password"
-        >
+        </template>
       </div>
       <div class="actions-block">
         <button
@@ -150,18 +149,23 @@ export default {
 
       return isFormValid;
     },
-    async changePassword() {
-      // if (this.validateForm()) {
-      //   this.processing = true;
-      //   try {
-      //     await this.$http.post('user/1.0/set-password', {
-      //       password: this.password,
-      //     });
-      //     this.$router.push('/user-list');
-      //   } finally {
-      //     this.processing = false;
-      //   }
-      // }
+    async signIn() {
+      if (this.validateForm()) {
+        this.processing = true;
+        try {
+          const params = {
+            password: this.password,
+          };
+
+          await this.$http.put(`users/${this.user.id}`, params).finally(() => {
+            this.loading = false;
+          });
+
+          this.$router.push('/users');
+        } finally {
+          this.processing = false;
+        }
+      }
     },
   },
 };
