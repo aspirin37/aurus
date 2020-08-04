@@ -12,6 +12,7 @@
         <div class="header__user__modal">
           <div class="header__user__modal__content">
             <router-link
+              v-if="user.gsdb"
               to="/profile"
               class="header__user__modal__link mb-n4"
             >

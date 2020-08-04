@@ -33,7 +33,8 @@
     "phone": "Телефон",
     "create_password": "Придумайте пароль",
     "confirm_password": "Подтвердите пароль",
-    "confirm": "Подтвердить"
+    "confirm": "Подтвердить",
+    "close": "Закрыть"
   },
   "views": {
     "sign_in": {

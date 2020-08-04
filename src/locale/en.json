@@ -33,7 +33,8 @@
     "phone": "Phone",
     "create_password": "Create password",
     "confirm_password": "Confirm password",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "close": "Close"
   },
   "views": {
     "sign_in": {
