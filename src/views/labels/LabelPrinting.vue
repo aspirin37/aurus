@@ -115,7 +115,6 @@ export default {
       file: null,
       pdf: null,
       loading: false,
-      copyAmount: 0,
     };
   },
 

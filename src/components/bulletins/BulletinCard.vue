@@ -2,11 +2,11 @@
   <v-card class="adds-board-page__main__add">
     <v-card-text class="p-0">
       <v-row>
-        <v-col cols="4">
+        <v-col cols="6">
           <span>{{ $t('views.bulletin_board.start_date') }}: </span>
           <span>{{ bulletin.startDate | moment('L LT') }}</span>
         </v-col>
-        <v-col cols="8">
+        <v-col cols="6">
           <span>{{ $t('views.bulletin_board.end_date') }}: </span>
           <span>{{ bulletin.endDate | moment('L') }}</span>
         </v-col>

@@ -19,7 +19,7 @@
             value="all"
             class="adds-board-page__top__filter__item"
           >
-            {{ $t('views.bulletin_board.all') }}
+            {{ $t('common.all') }}
           </v-btn>
           <v-btn
             value="current"
@@ -114,6 +114,8 @@ export default {
         const { data } = await this.$http.get(`/suppliers/${this.user.gsdb}`);
         if (data.timezone) {
           this.$moment.tz(data.timezone);
+        } else {
+          this.$moment.tz.setDefault();
         }
       } catch (error) {
         this.$moment.tz.setDefault();

@@ -2,13 +2,14 @@
   <v-form
     v-if="isShown"
     class="promise-list__filter white mb-5"
+    @submit.prevent="submit"
   >
     <v-container>
       <v-row>
-        <v-col cols="4">
+        <v-col cols="3">
           <div class="input-block input-block_white">
             <label class="input-block__label">
-              {{ $t('views.promise_list.supplier') }}
+              {{ $t('common.supplier') }}
             </label>
             <v-autocomplete
               v-model="filter.gsdb"
@@ -21,10 +22,10 @@
             />
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="3">
           <div class="input-block input-block_white">
             <label class="input-block__label">
-              {{ $t('views.promise_list.plant') }}
+              {{ $t('common.plant') }}
             </label>
             <v-text-field
               v-model="filter.plant"
@@ -94,7 +95,7 @@
             </v-menu>
           </div>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="3">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.promise_list.last_shipment') }}
@@ -126,7 +127,7 @@
             </v-menu>
           </div>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="3">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.promise_list.promised_shipment') }}
@@ -173,16 +174,16 @@
         </v-col>
         <v-col
           cols="2"
-          class="promise-list__filter-submit"
+          class="promise-list__filter-apply"
         >
           <v-btn
+            type="submit"
             color="primary"
             outlined
             large
-            class="promise-list__filter-submit-button"
-            @click="submit"
+            class="promise-list__filter-apply-button"
           >
-            Применить
+            {{ $t('common.apply') }}
           </v-btn>
         </v-col>
       </v-row>
@@ -256,7 +257,7 @@ export default {
     submit() {
       this.hide();
       const filter = this.mapFilter();
-      this.$emit('submitFilter', filter);
+      this.$emit('applyFilter', filter);
     },
 
     mapFilter() {
@@ -296,7 +297,7 @@ export default {
   box-shadow: none !important;
 }
 
-.promise-list__filter-submit {
+.promise-list__filter-apply {
   align-self: flex-end;
 
   &-button {
