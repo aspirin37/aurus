@@ -29,10 +29,17 @@
                   </span>
                   <div class="input-block input-block_white mt-1">
                     <v-text-field
+                      v-if="isEditable"
                       v-model="supplier.shippingAddress"
                       dense
                       solo
                     />
+                    <span
+                      v-else
+                      class="profile-page__main__item__content__item__text"
+                    >
+                      {{ supplier.shippingAddress || $t('common.no_data') }}
+                    </span>
                   </div>
                 </div>
                 <div class="profile-page__main__item__content__item">
@@ -41,6 +48,7 @@
                   </span>
                   <div class="input-block input-block_white mt-1">
                     <multiselect
+                      v-if="isEditable"
                       v-model="supplier.timezone"
                       :options="timezones"
                       placeholder=""
@@ -48,6 +56,12 @@
                       select-label=""
                       deselect-label=""
                     />
+                    <span
+                      v-else
+                      class="profile-page__main__item__content__item__text"
+                    >
+                      {{ supplier.timezone || $t('common.no_data') }}
+                    </span>
                   </div>
                 </div>
                 <div class="profile-page__main__item__content__item">
@@ -56,10 +70,17 @@
                   </span>
                   <div class="input-block input-block_white mt-1">
                     <v-text-field
+                      v-if="isEditable"
                       v-model="supplier.physicalAddress"
                       dense
                       solo
                     />
+                    <span
+                      v-else
+                      class="profile-page__main__item__content__item__text"
+                    >
+                      {{ supplier.physicalAddress || $t('common.no_data') }}
+                    </span>
                   </div>
                 </div>
                 <div class="profile-page__main__item__content__item">
@@ -68,13 +89,21 @@
                   </span>
                   <div class="input-block input-block_white mt-1">
                     <v-text-field
+                      v-if="isEditable"
                       v-model="supplier.legalAddress"
                       dense
                       solo
                     />
+                    <span
+                      v-else
+                      class="profile-page__main__item__content__item__text"
+                    >
+                      {{ supplier.legalAddress || $t('common.no_data') }}
+                    </span>
                   </div>
                 </div>
                 <v-btn
+                  v-if="isEditable"
                   color="primary"
                   outlined
                   type="submit"
@@ -92,7 +121,7 @@
                     Частота отгрузки
                   </span>
                   <span class="profile-page__main__item__content__item__text">
-                    {{ supplier.shippingFrequency }}
+                    {{ supplier.shippingFrequency || $t('common.no_data') }}
                   </span>
                 </div>
                 <div class="profile-page__main__item__content__item">
@@ -100,7 +129,9 @@
                     Транзитное время
                   </span>
                   <span class="profile-page__main__item__content__item__text">
-                    {{ supplier.transitTime }} дней
+                    {{ supplier.transitTime ?
+                      supplier.transitTime + ' дней' :
+                      $t('common.no_data') }}
                   </span>
                 </div>
                 <div class="profile-page__main__item__content__item">
@@ -108,7 +139,7 @@
                     Ответственный аналитик
                   </span>
                   <span class="profile-page__main__item__content__item__text">
-                    {{ supplier.analystAurus }}
+                    {{ supplier.analystAurus || $t('common.no_data') }}
                   </span>
                 </div>
               </v-col>
@@ -119,6 +150,7 @@
               >
                 <div class="profile-page__main__item__content__item">
                   <v-btn
+                    v-if="isEditable"
                     class="ml-auto"
                     color="primary"
                     :loading="sftpLoader"
@@ -138,10 +170,11 @@
     <template v-if="supplier">
       <div class="d-flex mb-3 align-items-end">
         <h1 class="h4 primary--text">
-          {{ $t('views.user_list.title') }}
+          {{ $t('common.contacts') }}
         </h1>
         <div class="ml-auto">
           <v-btn
+            v-if="isEditable"
             class="mr-4"
             color="primary"
             outlined
@@ -155,7 +188,7 @@
           </v-btn>
         </div>
       </div>
-      <v-card>
+      <v-card class="mb-5">
         <v-data-table
           :headers="headers"
           :items="contacts"
@@ -164,7 +197,10 @@
           }"
           class="px-5"
         >
-          <template v-slot:item.actions="{ item }">
+          <template
+            v-if="isEditable"
+            v-slot:item.actions="{ item }"
+          >
             <v-hover v-slot="{hover}">
               <v-icon
                 class="mr-2"
@@ -189,6 +225,21 @@
           </template>
         </v-data-table>
       </v-card>
+      <div class="d-flex mb-3 align-items-end">
+        <h1 class="h4 primary--text">
+          {{ $t('common.plants') }}
+        </h1>
+      </div>
+      <v-card class="mb-5">
+        <v-data-table
+          :headers="plantHeaders"
+          :items="supplier.plants"
+          :footer-props="{
+            itemsPerPageOptions: [10, 20, 50, 100],
+          }"
+          class="px-5"
+        />
+      </v-card>
       <contacts-modal
         v-model="contactsModal"
         :contact-selected="contactSelected"
@@ -209,23 +260,20 @@ import ContactsModal from '@/components/profile/ContactsModal.vue';
 import SftpModal from '@/components/profile/SftpModal.vue';
 
 export default {
-  name: 'Profile',
+  name: 'Supplier',
   components: {
     ContactsModal,
     SftpModal,
   },
-  data: (vm) => ({
+  props: {
+    gsdb: {
+      type: [String, Object],
+      default: null,
+    },
+  },
+  data: () => ({
     supplier: null,
     contacts: [],
-    headers: [
-      { text: vm.$t('common.role'), value: 'role' },
-      { text: vm.$t('common.name'), value: 'name' },
-      { text: vm.$t('common.phone'), value: 'phone' },
-      { text: 'E-mail', value: 'email' },
-      {
-        text: vm.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
-      },
-    ],
     passwordModal: false,
     contactsModal: false,
     contactSelected: null,
@@ -239,6 +287,34 @@ export default {
     timezones() {
       return this.$moment.tz.names();
     },
+    isEditable() {
+      return this.gsdb === this.user.gsdb || !this.gsdb;
+    },
+    headers() {
+      const headers = [
+        { text: this.$t('common.role'), value: 'role' },
+        { text: this.$t('common.name'), value: 'name' },
+        { text: this.$t('common.phone'), value: 'phone' },
+        { text: 'E-mail', value: 'email' },
+      ];
+
+      if (this.isEditable) {
+        headers.push({
+          text: this.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
+        });
+      }
+
+      return headers;
+    },
+    plantHeaders() {
+      return [
+        { text: 'Завод', value: 'plant' },
+        { text: 'Частота отгрузки', value: 'shippingFrequency' },
+        { text: 'Транзитное время (дней)', value: 'transitTime' },
+        { text: 'Аналитик', value: 'analyst' },
+        { text: 'Консолидатор', value: 'consolidator' },
+      ];
+    },
   },
   created() {
     this.getSupplier();
@@ -246,11 +322,11 @@ export default {
   },
   methods: {
     async getSupplier() {
-      const { data } = await this.$http.get(`suppliers/${this.user.gsdb}`);
+      const { data } = await this.$http.get(`suppliers/${this.gsdb || this.user.gsdb}`);
       this.supplier = data;
     },
     async getContacts() {
-      const { data: { rows } } = await this.$http.get(`suppliers/${this.user.gsdb}/contacts`);
+      const { data: { rows } } = await this.$http.get(`suppliers/${this.gsdb || this.user.gsdb}/contacts`);
       this.contacts = rows;
       return Promise.resolve();
     },
@@ -262,7 +338,7 @@ export default {
         timezone: this.supplier.timezone,
       };
 
-      this.$http.patch(`suppliers/${this.user.gsdb}`, params);
+      this.$http.patch(`suppliers/${this.gsdb || this.user.gsdb}`, params);
     },
     showContactsModal(type, contact) {
       this.contactSelected = contact;
@@ -270,7 +346,7 @@ export default {
       this.contactsModal = true;
     },
     async removeContact(id) {
-      const { data } = await this.$http.delete(`suppliers/${this.user.gsdb}/contacts/${id}`);
+      const { data } = await this.$http.delete(`suppliers/${this.gsdb || this.user.gsdb}/contacts/${id}`);
       this.contacts = data;
     },
     async contactsModalSubmit() {
@@ -279,7 +355,7 @@ export default {
     },
     async changeSFTP() {
       this.sftpLoader = true;
-      const { data } = await this.$http.post(`suppliers/${this.user.gsdb}/sftp-password`).finally(() => {
+      const { data } = await this.$http.post(`suppliers/${this.gsdb || this.user.gsdb}/sftp-password`).finally(() => {
         this.sftpLoader = false;
       });
       this.sftp = data;

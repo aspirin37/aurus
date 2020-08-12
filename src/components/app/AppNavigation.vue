@@ -81,6 +81,11 @@ export default {
         icon: 'mdi-account-multiple',
       },
       {
+        name: vm.$t('navigation.suppliers'),
+        link: '/suppliers',
+        icon: 'mdi-truck-outline',
+      },
+      {
         name: vm.$t('navigation.roles'),
         link: '/roles',
         icon: 'mdi-shield-account',

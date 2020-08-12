@@ -27,6 +27,15 @@ const routes = [
       name: 'UserList',
       component: () => import('@/views/UserList'),
     }, {
+      path: 'suppliers',
+      name: 'SupplierList',
+      component: () => import('@/views/SupplierList'),
+    }, {
+      path: 'supplier/:gsdb?',
+      name: 'SupplierItem',
+      component: () => import('@/views/SupplierItem'),
+      props: true,
+    }, {
       path: 'orders/order-groups',
       name: 'OrderGroupList',
       component: () => import('@/views/OrderGroupList'),
@@ -93,10 +102,6 @@ const routes = [
       path: 'roles',
       name: 'RoleList',
       component: () => import('@/views/RoleList'),
-    }, {
-      path: 'profile',
-      name: 'Profile',
-      component: () => import('@/views/Profile'),
     }, {
       path: 'asn',
       name: 'ShipmentNoticeList',
