@@ -34,7 +34,10 @@
     "create_password": "Придумайте пароль",
     "confirm_password": "Подтвердите пароль",
     "confirm": "Подтвердить",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "contacts": "Контакты",
+    "no_data": "Нет данных",
+    "plants": "Заводы"
   },
   "views": {
     "sign_in": {
@@ -170,6 +173,9 @@
       "new_password": "Новый пароль",
       "adding_contact": "Добавление контакта",
       "editing_contact": "Редактирование контакта"
+    },
+    "supplier_list": {
+      "title": "Поставщики"
     }
   },
   "navigation": {
@@ -191,7 +197,8 @@
     "labels": "Этикетки",
     "label_printing": "Печать этикеток",
     "label_template": "Шаблон этикетки",
-    "forecasts": "Прогнозы"
+    "forecasts": "Прогнозы",
+    "suppliers": "Поставщики"
   },
   "layout": {
     "collapse": "Свернуть меню"

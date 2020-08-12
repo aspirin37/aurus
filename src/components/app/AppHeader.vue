@@ -13,7 +13,7 @@
           <div class="header__user__modal__content">
             <router-link
               v-if="user.gsdb"
-              to="/profile"
+              to="/supplier"
               class="header__user__modal__link mb-n4"
             >
               {{ $t('common.my_profile') }}

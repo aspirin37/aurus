@@ -34,7 +34,10 @@
     "create_password": "Create password",
     "confirm_password": "Confirm password",
     "confirm": "Confirm",
-    "close": "Close"
+    "close": "Close",
+    "contacts": "Contacts",
+    "no_data": "No data",
+    "plants": "Plants"
   },
   "views": {
     "sign_in": {
@@ -170,6 +173,9 @@
       "new_password": "New password",
       "adding_contact": "Adding contact",
       "editing_contact": "Editing contact"
+    },
+    "supplier_list": {
+      "title": "Suppliers"
     }
   },
   "navigation": {
@@ -191,7 +197,8 @@
     "labels": "Labels",
     "label_printing": "Label printing",
     "label_template": "Label template",
-    "forecasts": "Forecasts"
+    "forecasts": "Forecasts",
+    "suppliers": "Suppliers"
   },
   "layout": {
     "collapse": "Collapse menu"
