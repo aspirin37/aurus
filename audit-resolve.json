@@ -23137,6 +23137,26 @@
       "decision": "ignore",
       "madeAt": 1594098546681,
       "expiresAt": 1596690476583
+    },
+    "1548|webpack>terser-webpack-plugin>serialize-javascript": {
+      "decision": "postpone",
+      "madeAt": 1597217710233
+    },
+    "1548|@vue/cli-plugin-babel>webpack>terser-webpack-plugin>serialize-javascript": {
+      "decision": "postpone",
+      "madeAt": 1597217718509
+    },
+    "1548|@vue/cli-plugin-eslint>webpack>terser-webpack-plugin>serialize-javascript": {
+      "decision": "postpone",
+      "madeAt": 1597217718509
+    },
+    "1548|@vue/cli-service>webpack>terser-webpack-plugin>serialize-javascript": {
+      "decision": "postpone",
+      "madeAt": 1597217718509
+    },
+    "1548|@vue/cli-service>copy-webpack-plugin>serialize-javascript": {
+      "decision": "postpone",
+      "madeAt": 1597217726374
     }
   },
   "rules": {},

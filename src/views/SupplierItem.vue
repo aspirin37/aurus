@@ -129,7 +129,9 @@
                     Транзитное время
                   </span>
                   <span class="profile-page__main__item__content__item__text">
-                    {{ supplier.transitTime ? supplier.transitTime + ' дней' : $t('common.no_data') }}
+                    {{ supplier.transitTime ?
+                      supplier.transitTime + ' дней' :
+                      $t('common.no_data') }}
                   </span>
                 </div>
                 <div class="profile-page__main__item__content__item">
