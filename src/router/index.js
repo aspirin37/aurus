@@ -103,6 +103,34 @@ const routes = [
       name: 'RoleList',
       component: () => import('@/views/RoleList'),
     }, {
+      path: 'asn',
+      name: 'ShipmentNoticeList',
+      component: () => import('@/views/asn/ShipmentNoticeList'),
+    }, {
+      path: 'asn/create',
+      name: 'ShipmentNoticeCreation',
+      component: () => import('@/views/asn/ShipmentNoticeCreation'),
+    }, {
+      path: 'asn/:id',
+      name: 'ShipmentNoticeDetails',
+      props: true,
+      component: () => import('@/views/asn/ShipmentNoticeDetails'),
+    }, {
+      path: 'asn/:id/track-statuses',
+      name: 'TrackStatusHistory',
+      props: true,
+      component: () => import('@/views/asn/TrackStatusHistory'),
+    }, {
+      path: 'asn/:id/customs-statuses',
+      name: 'CustomsStatusHistory',
+      props: true,
+      component: () => import('@/views/asn/CustomsStatusHistory'),
+    }, {
+      path: 'asn/:id/system-statuses',
+      name: 'SystemStatusHistory',
+      props: true,
+      component: () => import('@/views/asn/SystemStatusHistory'),
+    }, {
       path: 'labels/print',
       name: 'LabelPrinting',
       component: () => import('@/views/labels/LabelPrinting'),

@@ -22,7 +22,7 @@
       :filter="filter"
       :suppliers="suppliers"
       :can-get-full-list="canGetFullList"
-      @submitFilter="submitFilter"
+      @applyFilter="applyFilter"
     />
     <v-data-table
       v-if="!preloading"
@@ -200,6 +200,8 @@ export default {
         const { data } = await this.$http.get(`/suppliers/${this.user.gsdb}`);
         if (data.timezone) {
           this.$moment.tz(data.timezone);
+        } else {
+          this.$moment.tz.setDefault();
         }
       } catch (error) {
         this.$moment.tz.setDefault();
@@ -243,7 +245,7 @@ export default {
       this.isFilterShown = !this.isFilterShown;
     },
 
-    submitFilter(filter) {
+    applyFilter(filter) {
       this.isFilterShown = false;
       this.filter = { ...filter };
       this.getItems();

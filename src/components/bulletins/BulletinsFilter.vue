@@ -2,10 +2,11 @@
   <v-form
     v-if="isShown"
     class="bulletin-list__filter white mb-5"
+    @submit.prevent="submit"
   >
     <v-container>
       <v-row>
-        <v-col cols="3">
+        <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">
               {{ $t('views.bulletin_list.subject') }}
@@ -107,7 +108,7 @@
             </v-menu>
           </div>
         </v-col>
-        <v-col cols="1">
+        <v-col cols="2">
           <div class="select-block select-block_white">
             <label class="select-block__label">{{ $t('views.bulletin_list.email') }}</label>
             <v-select
@@ -120,16 +121,16 @@
         </v-col>
         <v-col
           cols="2"
-          class="bulletin-list__filter-submit"
+          class="bulletin-list__filter-apply"
         >
           <v-btn
+            type="submit"
             color="primary"
             outlined
             large
-            class="bulletin-list__filter-submit-button"
-            @click="submit"
+            class="bulletin-list__filter-apply-button"
           >
-            Применить
+            {{ $t('common.apply') }}
           </v-btn>
         </v-col>
       </v-row>
@@ -196,7 +197,7 @@ export default {
     submit() {
       this.hide();
       const filter = this.mapFilter();
-      this.$emit('submitFilter', filter);
+      this.$emit('applyFilter', filter);
     },
 
     mapFilter() {
@@ -236,7 +237,7 @@ export default {
   box-shadow: none !important;
 }
 
-.bulletin-list__filter-submit {
+.bulletin-list__filter-apply {
   align-self: flex-end;
 
   &-button {

@@ -138,6 +138,12 @@ export default {
         ],
       },
       {
+        id: 4,
+        name: vm.$t('navigation.asn'),
+        link: '/asn',
+        icon: 'mdi-truck-delivery-outline',
+      },
+      {
         id: 5,
         name: vm.$t('navigation.labels'),
         link: '/labels',
