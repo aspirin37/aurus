@@ -40,4 +40,4 @@ steps:
       kubernetesServiceEndpoint: 'ya-${{ parameters.k8ns }}'
       namespace: ${{ parameters.k8ns }}
       command: logs
-      arguments: '-l app=$(System.DefinitionName) --field-selector=status.phase=Running --tail 1000'
+      arguments: '-l app=$(System.DefinitionName) --ignore-errors=true --tail 1000'
