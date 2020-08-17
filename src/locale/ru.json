@@ -248,6 +248,8 @@
     },
     "label_template": {
       "label_template": "Редактирование шаблона этикетки",
+      "type_label": "Шаблон этикетки",
+      "type_packing_list": "Шаблон упаковочного листа",
       "current_template": "Действующий шаблон: ",
       "select_template": "выбрать шаблон",
       "selected_file": "Выбранный файл: ",

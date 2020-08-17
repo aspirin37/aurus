@@ -248,6 +248,8 @@
     },
     "label_template": {
       "label_template": "Update label template",
+      "type_label": "Label template",
+      "type_packing_list": "Packing list template",
       "current_template": "Current template: ",
       "select_template": "select template",
       "selected_file": "Selected file: ",

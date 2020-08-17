@@ -135,9 +135,9 @@ const routes = [
       name: 'LabelPrinting',
       component: () => import('@/views/labels/LabelPrinting'),
     }, {
-      path: 'labels/template',
-      name: 'LabelTemplate',
-      component: () => import('@/views/labels/LabelTemplate'),
+      path: 'labels/templates',
+      name: 'LabelTemplates',
+      component: () => import('@/views/labels/LabelTemplates'),
     }],
   },
   {
