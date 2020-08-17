@@ -161,7 +161,10 @@
       "create_asn_from_file": "Создание уведомления отгрузки из файла",
       "download_template": "скачать шаблон",
       "select_file": "выбрать файл",
-      "status_history": "История статусов"
+      "track_status_history": "История изменения путевых статусов",
+      "customs_status_history": "История изменения таможенных статусов",
+      "system_status_history": "История изменения системных статусов",
+      "print_labels": "Печать этикеток"
     },
     "shipment_notice_creation": {
       "shipment_notice_creation": "Новое уведомление отгрузки",

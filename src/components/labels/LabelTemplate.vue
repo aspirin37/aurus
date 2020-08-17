@@ -1,6 +1,8 @@
 <template>
   <div class="label-template">
-    <h2 class="label-template__fields h5 mb-5">{{ header }}</h2>
+    <h2 class="label-template__fields h5 mb-5">
+      {{ header }}
+    </h2>
     <div
       v-if="template"
       class="mb-5 ml-1"
@@ -50,20 +52,20 @@ export default {
   props: {
     labelType: {
       type: String,
-      required: true
+      required: true,
     },
 
     header: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data() {
     return {
       template: null,
       file: null,
-      loading: false
+      loading: false,
     };
   },
 
@@ -92,7 +94,7 @@ export default {
         const formData = new FormData();
         formData.append('file', this.file);
         await this.$http.post('/labels/template', formData, {
-          headers: { 'label-type': this.labelType }
+          headers: { 'label-type': this.labelType },
         });
         await this.loadTemplate();
       } finally {

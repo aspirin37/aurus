@@ -64,44 +64,90 @@
         </router-link>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-hover v-slot="{hover}">
-          <v-icon
-            class="mr-2"
-            :class="hover ? '' : 'text--disabled'"
-            color="primary"
-            size="20"
-            @click="$router.push(`/asn/${item.id}/track-statuses`)"
-          >
-            drive_eta
-          </v-icon>
-        </v-hover>
-        <v-hover v-slot="{hover}">
-          <v-icon
-            class="mr-2"
-            :class="hover ? '' : 'text--disabled'"
-            color="primary"
-            size="20"
-            @click="$router.push(`/asn/${item.id}/customs-statuses`)"
-          >
-            flag
-          </v-icon>
-        </v-hover>
-        <v-hover v-slot="{hover}">
-          <v-icon
-            :class="hover ? '' : 'text--disabled'"
-            color="primary"
-            size="20"
-            @click="$router.push(`/asn/${item.id}/system-statuses`)"
-          >
-            mdi-state-machine
-          </v-icon>
-        </v-hover>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-hover v-slot="{hover}">
+              <v-icon
+                class="mr-2"
+                :class="hover ? '' : 'text--disabled'"
+                color="primary"
+                size="20"
+                v-bind="attrs"
+                v-on="on"
+                @click="$router.push(`/asn/${item.id}/track-statuses`)"
+              >
+                drive_eta
+              </v-icon>
+            </v-hover>
+          </template>
+          <span>{{ $t('views.shipment_notice_list.track_status_history') }}</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-hover v-slot="{hover}">
+              <v-icon
+                class="mr-2"
+                :class="hover ? '' : 'text--disabled'"
+                color="primary"
+                size="20"
+                v-bind="attrs"
+                v-on="on"
+                @click="$router.push(`/asn/${item.id}/customs-statuses`)"
+              >
+                flag
+              </v-icon>
+            </v-hover>
+          </template>
+          <span>{{ $t('views.shipment_notice_list.customs_status_history') }}</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-hover v-slot="{hover}">
+              <v-icon
+                class="mr-2"
+                :class="hover ? '' : 'text--disabled'"
+                color="primary"
+                size="20"
+                v-bind="attrs"
+                v-on="on"
+                @click="$router.push(`/asn/${item.id}/system-statuses`)"
+              >
+                mdi-state-machine
+              </v-icon>
+            </v-hover>
+          </template>
+          <span>{{ $t('views.shipment_notice_list.system_status_history') }}</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-hover v-slot="{hover}">
+              <v-icon
+                :class="hover ? '' : 'text--disabled'"
+                color="primary"
+                size="20"
+                v-bind="attrs"
+                v-on="on"
+                @click="getLabels(item.id)"
+              >
+                mdi-label
+              </v-icon>
+            </v-hover>
+          </template>
+          <span>{{ $t('views.shipment_notice_list.print_labels') }}</span>
+        </v-tooltip>
       </template>
     </v-data-table>
     <shipment-notice-load
       v-model="isLoadModalShown"
       @created="getItems"
       @hideModal="hideLoadModal"
+    />
+    <a
+      v-if="pdf"
+      v-show="false"
+      ref="pdf"
+      :href="pdf"
+      download="labels.pdf"
     />
   </div>
 </template>
@@ -150,7 +196,7 @@ export default {
           value: 'invoice.number',
         },
         {
-          text: this.$t('views.shipment_notice_list.status_history'),
+          text: this.$t('common.actions'),
           value: 'actions',
           sortable: false,
           width: 150,
@@ -170,6 +216,8 @@ export default {
       },
 
       suppliers: [],
+
+      pdf: null,
 
       preloading: false,
       loading: false,
@@ -309,6 +357,15 @@ export default {
 
     hideLoadModal() {
       this.isLoadModalShown = false;
+    },
+
+    async getLabels(id) {
+      const { data } = await this.$http.get(`/labels/${id}`, {
+        responseType: 'blob',
+      });
+      this.pdf = URL.createObjectURL(data);
+      await this.$nextTick();
+      this.$refs.pdf.click();
     },
   },
 };

@@ -83,7 +83,7 @@ export default {
   name: 'LabelTemplates',
 
   components: {
-    LabelTemplate
+    LabelTemplate,
   },
 
   data() {
