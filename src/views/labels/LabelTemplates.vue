@@ -20,7 +20,7 @@
           />
         </b-col>
       </b-row>
-      <div class="label_template">
+      <div class="label-template">
         <div v-if="elements.length">
           <h2 class="label-template__fields h5 mb-3">
             {{ $t('views.label_template.template_elements') }}
