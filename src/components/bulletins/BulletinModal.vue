@@ -244,7 +244,7 @@ export default {
     async submit() {
       const { subject, text } = this.bulletin;
 
-      const [hour, minute] = this.startTime.split(':');
+      const [hour, minute] = this.bulletin.startTime.split(':');
       const startDate = this.$moment.utc(this.bulletin.startDate).hour(hour).minute(minute);
       const endDate = this.$moment.utc(this.bulletin.endDate);
 
