@@ -25,7 +25,7 @@ steps:
       kubernetesServiceEndpoint: 'ya-${{ parameters.k8ns }}'
       namespace: ${{ parameters.k8ns }}
       command: wait
-      arguments: '--for=condition=ready pod -l app=$(System.DefinitionName) --timeout=60s'
+      arguments: '--for=condition=ready pod -l app=$(System.DefinitionName) --timeout=120s'
 
   - task: Bash@3
     displayName: 'Delay 10s'
@@ -40,4 +40,4 @@ steps:
       kubernetesServiceEndpoint: 'ya-${{ parameters.k8ns }}'
       namespace: ${{ parameters.k8ns }}
       command: logs
-      arguments: '-l app=$(System.DefinitionName) --tail 1000'
+      arguments: '-l app=$(System.DefinitionName) --field-selector=status.phase=Running --tail 1000'
