@@ -161,7 +161,10 @@
       "create_asn_from_file": "Create ASN from file",
       "download_template": "download template",
       "select_file": "select file",
-      "status_history": "Status history"
+      "track_status_history": "Track status history",
+      "customs_status_history": "Customs status history",
+      "system_status_history": "System status history",
+      "print_labels": "Print labels"
     },
     "shipment_notice_creation": {
       "shipment_notice_creation": "New ASN",
@@ -248,6 +251,8 @@
     },
     "label_template": {
       "label_template": "Update label template",
+      "type_label": "Label template",
+      "type_packing_list": "Packing list template",
       "current_template": "Current template: ",
       "select_template": "select template",
       "selected_file": "Selected file: ",
