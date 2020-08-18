@@ -18,28 +18,3 @@ steps:
       namespace: ${{ parameters.k8ns }}
       command: rollout
       arguments: 'status deployment/$(System.DefinitionName)'
-
-  - task: Kubernetes@1
-    displayName: '${{ parameters.k8ns }} kubectl wait for pod'
-    inputs:
-      kubernetesServiceEndpoint: 'ya-${{ parameters.k8ns }}'
-      namespace: ${{ parameters.k8ns }}
-      command: wait
-      arguments: '--for=condition=Ready pod -l app=$(System.DefinitionName) --timeout=120s'
-
-  - task: Bash@3
-    displayName: 'Delay 10s'
-    inputs:
-      targetType: inline
-      script: |
-        sleep 10
-        export
-        ls -lR
-
-  - task: Kubernetes@1
-    displayName: '${{ parameters.k8ns }} kubectl logs'
-    inputs:
-      kubernetesServiceEndpoint: 'ya-${{ parameters.k8ns }}'
-      namespace: ${{ parameters.k8ns }}
-      command: logs
-      arguments: '-l app=$(System.DefinitionName) --ignore-errors=true --tail 1000'
