@@ -25,9 +25,10 @@ steps:
       dockerfile: "Dockerfile"
       repository: "$(dockerRepository)/$(System.TeamProject)/$(Build.DefinitionName)"
       tags: |
-        $(PACKAGE_VERSION)
         dev
+        dev-$(PACKAGE_VERSION)
         test
+        test-$(PACKAGE_VERSION)
 
   - task: Docker@2
     condition: and(succeeded(), eq(variables['IS_BUILD_DEVELOP'], true))
@@ -38,8 +39,8 @@ steps:
       repository: "$(dockerRepository)/$(System.TeamProject)/$(Build.DefinitionName)"
       containerRegistry: $(dockerRegistry)
       tags: |
-        $(PACKAGE_VERSION)
         dev
+        dev-$(PACKAGE_VERSION)
 
   - task: Docker@2
     condition: and(succeeded(), eq(variables['IS_BUILD_RELEASE'], true))
@@ -50,6 +51,6 @@ steps:
       repository: "$(dockerRepository)/$(System.TeamProject)/$(Build.DefinitionName)"
       containerRegistry: $(dockerRegistry)
       tags: |
-        $(PACKAGE_VERSION)
         test
+        test-$(PACKAGE_VERSION)
 
