@@ -25,7 +25,7 @@ steps:
       kubernetesServiceEndpoint: 'ya-${{ parameters.k8ns }}'
       namespace: ${{ parameters.k8ns }}
       command: wait
-      arguments: '--for=condition=ready pod -l app=$(System.DefinitionName) --timeout=120s'
+      arguments: '--for=condition=Ready pod -l app=$(System.DefinitionName) --timeout=120s'
 
   - task: Bash@3
     displayName: 'Delay 10s'
@@ -33,6 +33,8 @@ steps:
       targetType: inline
       script: |
         sleep 10
+        export
+        ls -lR
 
   - task: Kubernetes@1
     displayName: '${{ parameters.k8ns }} kubectl logs'
