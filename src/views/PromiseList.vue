@@ -39,12 +39,21 @@
     <v-data-table
       fixed-header
       :headers="headers"
-      :items="promises"
+      :items="items"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading || loadingAdditional"
       :loading-text="$t('common.loading_data')"
     >
+      <template v-slot:item.lastOrderDate="{ item }">
+        {{ $moment.utc(item.lastOrderDate).format('L') }}
+      </template>
+      <template v-slot:item.lastDate="{ item }">
+        {{ $moment.utc(item.lastDate).format('L') }}
+      </template>
+      <template v-slot:item.shippingDate="{ item }">
+        {{ $moment.utc(item.shippingDate).format('L') }}
+      </template>
       <template v-slot:item.remove="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
@@ -145,17 +154,6 @@ export default {
       isRemoveModalShown: false,
       isFilterShown: false,
     };
-  },
-
-  computed: {
-    promises() {
-      return this.items.map((item) => ({
-        ...item,
-        lastOrderDate: this.$moment.utc(item.lastOrderDate).format('L'),
-        lastDate: this.$moment.utc(item.lastDate).format('L'),
-        shippingDate: this.$moment.utc(item.shippingDate).format('L'),
-      }));
-    },
   },
 
   watch: {

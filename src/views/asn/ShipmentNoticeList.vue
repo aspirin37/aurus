@@ -52,7 +52,7 @@
       v-if="!preloading"
       fixed-header
       :headers="headers"
-      :items="shipmentNotices"
+      :items="items"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading"
@@ -62,6 +62,9 @@
         <router-link :to="`/asn/${item.id}`">
           {{ item.number }}
         </router-link>
+      </template>
+      <template v-slot:item.createdAt="{ item }">
+        {{ $moment(item.createdAt).format('L') }}
       </template>
       <template v-slot:item.actions="{ item }">
         <v-tooltip top>
@@ -189,7 +192,7 @@ export default {
         },
         {
           text: this.$t('views.shipment_notice_list.shipment_date'),
-          value: 'shipmentDate',
+          value: 'createdAt',
         },
         {
           text: this.$t('views.shipment_notice_list.invoice'),
@@ -233,13 +236,6 @@ export default {
 
     canGetFullList() {
       return this.user.role.some((role) => FULL_LIST_ROLES.includes(role));
-    },
-
-    shipmentNotices() {
-      return this.items.map((item) => ({
-        ...item,
-        shipmentDate: this.$moment(item.createdAt).format('L'),
-      }));
     },
   },
 
