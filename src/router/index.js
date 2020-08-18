@@ -67,7 +67,7 @@ const routes = [
     }, {
       path: 'orders/promises',
       name: 'PromiseList',
-      component: () => import('@/views/PromiseList'),
+      component: () => import('@/views/promises/PromiseList'),
     }, {
       path: 'forecast/report',
       name: 'ForecastReport',

@@ -31,13 +31,13 @@
     </div>
     <bulletins-filter
       v-model="isFilterShown"
-      @applyFilter="getItems"
-      @hide="hideFilter"
+      :filter="filter"
+      @applyFilter="applyFilter"
     />
     <v-data-table
       fixed-header
       :headers="headers"
-      :items="bulletins"
+      :items="items"
       :footer-props="{
         itemsPerPageOptions: [10, 20, 50, 100],
       }"
@@ -46,6 +46,18 @@
       :loading="loading"
       :loading-text="$t('common.loading_data')"
     >
+      <template v-slot:item.startDate="{ item }">
+        {{ $moment.utc(item.startDate).format('L LT') }}
+      </template>
+      <template v-slot:item.endDate="{ item }">
+        {{ $moment.utc(item.endDate).format('L LT') }}
+      </template>
+      <template v-slot:item.updatedAt="{ item }">
+        {{ $moment.utc(item.updatedAt).format('L LT') }}
+      </template>
+      <template v-slot:item.isImportant="{ item }">
+        {{ item.isImportant ? $t('common.yes') : $t('common.no') }}
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
@@ -106,11 +118,11 @@ export default {
         },
         {
           text: this.$t('views.bulletin_list.start_date'),
-          value: '_startDate',
+          value: 'startDate',
         },
         {
           text: this.$t('views.bulletin_list.end_date'),
-          value: '_endDate',
+          value: 'endDate',
         },
         {
           text: this.$t('views.bulletin_list.edited_by'),
@@ -119,11 +131,11 @@ export default {
         },
         {
           text: this.$t('views.bulletin_list.updated_at'),
-          value: '_updatedAt',
+          value: 'updatedAt',
         },
         {
           text: this.$t('views.bulletin_list.email'),
-          value: '_isImportant',
+          value: 'isImportant',
         },
         {
           text: this.$t('common.actions'),
@@ -134,34 +146,24 @@ export default {
       ],
 
       items: [],
-
       options: {},
-
       total: 0,
 
+      filter: {
+        subject: '',
+        startDate: null,
+        endDate: null,
+        updateAt: null,
+        isImportant: null,
+      },
+
       loading: false,
+      isBulletinModalShown: false,
+      isRemoveModalShown: false,
+      isFilterShown: false,
 
       selectedBulletin: null,
-
-      isBulletinModalShown: false,
-
-      isRemoveModalShown: false,
-
-      isFilterShown: false,
     };
-  },
-
-  computed: {
-    bulletins() {
-      return this.items.map((item) => ({
-        ...item,
-        _startDate: this.$moment.utc(item.startDate).format('L LT'),
-        _endDate: this.$moment.utc(item.endDate).format('L'),
-        _createdAt: this.$moment.utc(item.createdAt).format('L'),
-        _updatedAt: this.$moment.utc(item.updatedAt).format('L'),
-        _isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no'),
-      }));
-    },
   },
 
   watch: {
@@ -174,11 +176,13 @@ export default {
   },
 
   methods: {
-    async getItems(filter = {}) {
+    async getItems() {
       this.loading = true;
       const {
         sortBy, sortDesc, page, itemsPerPage,
       } = this.options;
+
+      const filter = this.mapFilter();
 
       const params = {};
       params.query = { isActive: true, ...filter };
@@ -186,7 +190,7 @@ export default {
       params.pageSize = itemsPerPage === -1 ? 0 : itemsPerPage;
       params.page = page;
       if (sortBy && sortBy.length) {
-        params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
+        params.sort = `${sortDesc[0] ? '-' : ''}${sortBy[0]}`;
       }
 
       try {
@@ -218,8 +222,39 @@ export default {
       this.isFilterShown = !this.isFilterShown;
     },
 
-    hideFilter() {
+    applyFilter(filter) {
       this.isFilterShown = false;
+      this.filter = { ...filter };
+      this.getItems();
+    },
+
+    mapFilter() {
+      const filter = {};
+      if (this.filter.subject) {
+        filter.subject = {
+          $regex: `.*${this.filter.subject}.*`,
+          $options: 'i',
+        };
+      }
+      if (this.filter.startDate) {
+        filter.startDate = {
+          $gte: this.$moment.utc(this.filter.startDate),
+          $lte: this.$moment.utc(this.filter.startDate).endOf('day'),
+        };
+      }
+      if (this.filter.endDate) {
+        filter.endDate = this.$moment.utc(this.filter.endDate);
+      }
+      if (this.filter.updatedAt) {
+        filter.updatedAt = {
+          $gte: this.$moment.utc(this.filter.updatedAt),
+          $lte: this.$moment.utc(this.filter.updatedAt).endOf('day'),
+        };
+      }
+      if (this.filter.isImportant !== null) {
+        filter.isImportant = this.filter.isImportant;
+      }
+      return filter;
     },
   },
 };

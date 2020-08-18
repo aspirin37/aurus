@@ -12,7 +12,7 @@
               {{ $t('common.supplier') }}
             </label>
             <v-autocomplete
-              v-model="filter.gsdb"
+              v-model="localFilter.gsdb"
               :items="suppliers"
               item-text="gsdb"
               value="gsdb"
@@ -28,7 +28,7 @@
               {{ $t('common.plant') }}
             </label>
             <v-text-field
-              v-model="filter.plant"
+              v-model="localFilter.plant"
               hide-details
               solo
             />
@@ -40,7 +40,7 @@
               {{ $t('views.promise_list.part_number') }}
             </label>
             <v-autocomplete
-              v-model="filter.partNumber"
+              v-model="localFilter.partNumber"
               :items="parts"
               item-text="number"
               item-value="number"
@@ -56,7 +56,7 @@
               {{ $t('views.promise_list.sent') }}
             </label>
             <v-text-field
-              v-model.number="filter.totalQty"
+              v-model.number="localFilter.totalQty"
               type="number"
               hide-details
               solo
@@ -84,11 +84,11 @@
                   solo
                   clearable
                   v-on="on"
-                  @click:clear="filter.lastOrderDate = null"
+                  @click:clear="localFilter.lastOrderDate = null"
                 />
               </template>
               <v-date-picker
-                v-model="filter.lastOrderDate"
+                v-model="localFilter.lastOrderDate"
                 dark
                 @input="isLastOrderDatePickerShown = false"
               />
@@ -116,11 +116,11 @@
                   solo
                   clearable
                   v-on="on"
-                  @click:clear="filter.lastDate = null"
+                  @click:clear="localFilter.lastDate = null"
                 />
               </template>
               <v-date-picker
-                v-model="filter.lastDate"
+                v-model="localFilter.lastDate"
                 dark
                 @input="isLastDatePickerShown = false"
               />
@@ -148,11 +148,11 @@
                   solo
                   clearable
                   v-on="on"
-                  @click:clear="filter.shippingDate = null"
+                  @click:clear="localFilter.shippingDate = null"
                 />
               </template>
               <v-date-picker
-                v-model="filter.shippingDate"
+                v-model="localFilter.shippingDate"
                 dark
                 @input="isShippingDatePickerShown = false"
               />
@@ -165,7 +165,7 @@
               {{ $t('views.promise_list.promised_amount') }}
             </label>
             <v-text-field
-              v-model.number="filter.amount"
+              v-model.number="localFilter.amount"
               type="number"
               hide-details
               solo
@@ -205,6 +205,11 @@ export default {
       required: true,
     },
 
+    filter: {
+      type: Object,
+      required: true,
+    },
+
     suppliers: {
       type: Array,
       default: () => [],
@@ -218,7 +223,7 @@ export default {
 
   data() {
     return {
-      filter: {
+      localFilter: {
         gsdb: '',
         plant: '',
         partNumber: '',
@@ -237,56 +242,36 @@ export default {
 
   computed: {
     lastOrderDateFormatted() {
-      return this.filter.lastOrderDate && this.$moment.utc(this.filter.lastOrderDate).format('L');
+      return this.localFilter.lastOrderDate
+        && this.$moment.utc(this.localFilter.lastOrderDate).format('L');
     },
 
     lastDateFormatted() {
-      return this.filter.lastDate && this.$moment.utc(this.filter.lastDate).format('L');
+      return this.localFilter.lastDate
+        && this.$moment.utc(this.localFilter.lastDate).format('L');
     },
 
     shippingDateFormatted() {
-      return this.filter.shippingDate && this.$moment.utc(this.filter.shippingDate).format('L');
+      return this.localFilter.shippingDate
+        && this.$moment.utc(this.localFilter.shippingDate).format('L');
+    },
+  },
+
+  watch: {
+    isShown(value) {
+      if (value) {
+        this.init();
+      }
     },
   },
 
   methods: {
-    hide() {
-      this.$emit('input', false);
+    init() {
+      this.localFilter = { ...this.filter };
     },
 
     submit() {
-      this.hide();
-      const filter = this.mapFilter();
-      this.$emit('applyFilter', filter);
-    },
-
-    mapFilter() {
-      const filter = {};
-      if (this.filter.gsdb) {
-        filter.gsdb = this.filter.gsdb;
-      }
-      if (this.filter.plant) {
-        filter.plant = this.filter.plant;
-      }
-      if (this.filter.partNumber) {
-        filter.part = { number: this.filter.partNumber };
-      }
-      if (typeof this.filter.totalQty === 'number') {
-        filter.totalQty = this.filter.totalQty;
-      }
-      if (this.filter.lastOrderDate) {
-        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate);
-      }
-      if (this.filter.lastDate) {
-        filter.lastDate = this.$moment.utc(this.filter.lastDate);
-      }
-      if (this.filter.shippingDate) {
-        filter.shippingDate = this.$moment.utc(this.filter.shippingDate);
-      }
-      if (typeof this.filter.amount === 'number') {
-        filter.amount = this.filter.amount;
-      }
-      return filter;
+      this.$emit('applyFilter', this.localFilter);
     },
   },
 };

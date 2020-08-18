@@ -31,20 +31,29 @@
     </div>
     <promises-filter
       v-model="isFilterShown"
+      :filter="filter"
       :suppliers="suppliers"
       :parts="parts"
-      @applyFilter="getItems"
-      @hide="hideFilter"
+      @applyFilter="applyFilter"
     />
     <v-data-table
       fixed-header
       :headers="headers"
-      :items="promises"
+      :items="items"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading || loadingAdditional"
       :loading-text="$t('common.loading_data')"
     >
+      <template v-slot:item.lastOrderDate="{ item }">
+        {{ $moment.utc(item.lastOrderDate).format('L') }}
+      </template>
+      <template v-slot:item.lastDate="{ item }">
+        {{ $moment.utc(item.lastDate).format('L') }}
+      </template>
+      <template v-slot:item.shippingDate="{ item }">
+        {{ $moment.utc(item.shippingDate).format('L') }}
+      </template>
       <template v-slot:item.remove="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
@@ -133,6 +142,17 @@ export default {
       options: {},
       total: 0,
 
+      filter: {
+        gsdb: '',
+        plant: '',
+        partNumber: '',
+        totalQty: null,
+        lastOrderDate: null,
+        lastDate: null,
+        shippingDate: null,
+        amount: null,
+      },
+
       loading: false,
       loadingAdditional: false,
 
@@ -145,17 +165,6 @@ export default {
       isRemoveModalShown: false,
       isFilterShown: false,
     };
-  },
-
-  computed: {
-    promises() {
-      return this.items.map((item) => ({
-        ...item,
-        lastOrderDate: this.$moment.utc(item.lastOrderDate).format('L'),
-        lastDate: this.$moment.utc(item.lastDate).format('L'),
-        shippingDate: this.$moment.utc(item.shippingDate).format('L'),
-      }));
-    },
   },
 
   watch: {
@@ -172,19 +181,21 @@ export default {
   },
 
   methods: {
-    async getItems(filter = {}) {
+    async getItems() {
       this.loading = true;
 
       const {
         sortBy, sortDesc, page, itemsPerPage,
       } = this.options;
 
+      const filter = this.mapFilter();
+
       const params = {};
       params.pageSize = itemsPerPage === -1 ? 0 : itemsPerPage;
       params.page = page;
       params.query = filter;
       if (sortBy && sortBy.length) {
-        params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
+        params.sort = `${sortDesc[0] ? '-' : ''}${sortBy[0]}`;
       }
 
       try {
@@ -239,8 +250,39 @@ export default {
       this.isFilterShown = !this.isFilterShown;
     },
 
-    hideFilter() {
+    applyFilter(filter) {
       this.isFilterShown = false;
+      this.filter = { ...filter };
+      this.getItems();
+    },
+
+    mapFilter() {
+      const filter = {};
+      if (this.filter.gsdb) {
+        filter.gsdb = this.filter.gsdb;
+      }
+      if (this.filter.plant) {
+        filter.plant = this.filter.plant;
+      }
+      if (this.filter.partNumber) {
+        filter.part = { number: this.filter.partNumber };
+      }
+      if (typeof this.filter.totalQty === 'number') {
+        filter.totalQty = this.filter.totalQty;
+      }
+      if (this.filter.lastOrderDate) {
+        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate);
+      }
+      if (this.filter.lastDate) {
+        filter.lastDate = this.$moment.utc(this.filter.lastDate);
+      }
+      if (this.filter.shippingDate) {
+        filter.shippingDate = this.$moment.utc(this.filter.shippingDate);
+      }
+      if (typeof this.filter.amount === 'number') {
+        filter.amount = this.filter.amount;
+      }
+      return filter;
     },
   },
 };

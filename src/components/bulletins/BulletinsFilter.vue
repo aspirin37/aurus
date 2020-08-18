@@ -12,7 +12,7 @@
               {{ $t('views.bulletin_list.subject') }}
             </label>
             <v-text-field
-              v-model="filter.subject"
+              v-model="localFilter.subject"
               hide-details
               solo
             />
@@ -37,11 +37,11 @@
                   solo
                   clearable
                   v-on="on"
-                  @click:clear="filter.startDate = null"
+                  @click:clear="localFilter.startDate = null"
                 />
               </template>
               <v-date-picker
-                v-model="filter.startDate"
+                v-model="localFilter.startDate"
                 dark
                 @input="isStartDatePickerShown = false"
               />
@@ -67,11 +67,11 @@
                   solo
                   clearable
                   v-on="on"
-                  @click:clear="filter.endDate = null"
+                  @click:clear="localFilter.endDate = null"
                 />
               </template>
               <v-date-picker
-                v-model="filter.endDate"
+                v-model="localFilter.endDate"
                 dark
                 @input="isEndDatePickerShown = false"
               />
@@ -97,11 +97,11 @@
                   solo
                   clearable
                   v-on="on"
-                  @click:clear="filter.updatedAt = null"
+                  @click:clear="localFilter.updatedAt = null"
                 />
               </template>
               <v-date-picker
-                v-model="filter.updatedAt"
+                v-model="localFilter.updatedAt"
                 dark
                 @input="isUpdatedAtPickerShown = false"
               />
@@ -112,7 +112,7 @@
           <div class="select-block select-block_white">
             <label class="select-block__label">{{ $t('views.bulletin_list.email') }}</label>
             <v-select
-              v-model="filter.isImportant"
+              v-model="localFilter.isImportant"
               :items="emailOptions"
               solo
               hide-details
@@ -151,11 +151,16 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    filter: {
+      type: Object,
+      required: true,
+    },
   },
 
   data() {
     return {
-      filter: {
+      localFilter: {
         subject: '',
         startDate: null,
         endDate: null,
@@ -177,56 +182,33 @@ export default {
 
   computed: {
     startDateFormatted() {
-      return this.filter.startDate && this.$moment.utc(this.filter.startDate).format('L');
+      return this.localFilter.startDate && this.$moment.utc(this.localFilter.startDate).format('L');
     },
 
     endDateFormatted() {
-      return this.filter.endDate && this.$moment.utc(this.filter.endDate).format('L');
+      return this.localFilter.endDate && this.$moment.utc(this.localFilter.endDate).format('L');
     },
 
     updatedAtFormatted() {
-      return this.filter.updatedAt && this.$moment.utc(this.filter.updatedAt).format('L');
+      return this.localFilter.updatedAt && this.$moment.utc(this.localFilter.updatedAt).format('L');
+    },
+  },
+
+  watch: {
+    isShown(value) {
+      if (value) {
+        this.init();
+      }
     },
   },
 
   methods: {
-    hide() {
-      this.$emit('input', false);
+    init() {
+      this.localFilter = { ...this.filter };
     },
 
     submit() {
-      this.hide();
-      const filter = this.mapFilter();
-      this.$emit('applyFilter', filter);
-    },
-
-    mapFilter() {
-      const filter = {};
-      if (this.filter.subject) {
-        filter.subject = {
-          $regex: `.*${this.filter.subject}.*`,
-          $options: 'i',
-        };
-      }
-      if (this.filter.startDate) {
-        filter.startDate = {
-          $gte: this.$moment.utc(this.filter.startDate),
-          $lte: this.$moment.utc(this.filter.startDate).endOf('day'),
-        };
-      }
-      if (this.filter.endDate) {
-        filter.endDate = this.$moment.utc(this.filter.endDate);
-      }
-      if (this.filter.updatedAt) {
-        filter.updatedAt = {
-          $gte: this.$moment.utc(this.filter.updatedAt),
-          $lte: this.$moment.utc(this.filter.updatedAt).endOf('day'),
-        };
-      }
-      if (this.filter.isImportant !== null) {
-        filter.isImportant = this.filter.isImportant;
-      }
-      return filter;
+      this.$emit('applyFilter', this.localFilter);
     },
   },
 };

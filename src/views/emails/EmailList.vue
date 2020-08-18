@@ -28,13 +28,25 @@
       v-if="!preloading"
       fixed-header
       :headers="headers"
-      :items="emails"
+      :items="items"
       :options.sync="options"
       :server-items-length="total"
       :footer-props="{ itemsPerPageOptions: [5, 10, 15, 100] }"
       :loading="loading"
       :loading-text="$t('common.loading_data')"
     >
+      <template v-slot:item.timestamp="{ item }">
+        {{ item.timestamp && $moment(item.timestamp).format('L LT') }}
+      </template>
+      <template v-slot:item.to="{ item }">
+        {{ item.to.join(', ') }}
+      </template>
+      <template v-slot:item.cc="{ item }">
+        {{ item.cc.join(', ') }}
+      </template>
+      <template v-slot:item.suppliers="{ item }">
+        {{ item.suppliers.join(', ') }}
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-hover v-slot="{ hover }">
           <v-icon
@@ -140,16 +152,6 @@ export default {
   },
 
   computed: {
-    emails() {
-      return this.items.map((email) => ({
-        ...email,
-        to: email.to.join(', '),
-        cc: email.cc.join(', '),
-        suppliers: email.suppliers.join(', '),
-        timestamp: email.timestamp && this.$moment(email.timestamp).format('L LT'),
-      }));
-    },
-
     user() {
       return this.$store.state.user;
     },
@@ -224,7 +226,7 @@ export default {
       params.pageSize = itemsPerPage;
       params.page = page;
       if (sortBy.length) {
-        params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
+        params.sort = `${sortDesc[0] ? '-' : ''}${sortBy[0]}`;
       }
 
       this.loading = true;
