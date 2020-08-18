@@ -37,7 +37,7 @@
     <v-data-table
       fixed-header
       :headers="headers"
-      :items="bulletins"
+      :items="items"
       :footer-props="{
         itemsPerPageOptions: [10, 20, 50, 100],
       }"
@@ -46,6 +46,18 @@
       :loading="loading"
       :loading-text="$t('common.loading_data')"
     >
+      <template v-slot:item.startDate="{ item }">
+        {{ $moment.utc(item.startDate).format('L LT') }}
+      </template>
+      <template v-slot:item.endDate="{ item }">
+        {{ $moment.utc(item.endDate).format('L LT') }}
+      </template>
+      <template v-slot:item.updatedAt="{ item }">
+        {{ $moment.utc(item.updatedAt).format('L LT') }}
+      </template>
+      <template v-slot:item.isImportant="{ item }">
+        {{ item.isImportant ? $t('common.yes') : $t('common.no') }}
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
@@ -106,11 +118,11 @@ export default {
         },
         {
           text: this.$t('views.bulletin_list.start_date'),
-          value: '_startDate',
+          value: 'startDate',
         },
         {
           text: this.$t('views.bulletin_list.end_date'),
-          value: '_endDate',
+          value: 'endDate',
         },
         {
           text: this.$t('views.bulletin_list.edited_by'),
@@ -119,11 +131,11 @@ export default {
         },
         {
           text: this.$t('views.bulletin_list.updated_at'),
-          value: '_updatedAt',
+          value: 'updatedAt',
         },
         {
           text: this.$t('views.bulletin_list.email'),
-          value: '_isImportant',
+          value: 'isImportant',
         },
         {
           text: this.$t('common.actions'),
@@ -151,19 +163,6 @@ export default {
     };
   },
 
-  computed: {
-    bulletins() {
-      return this.items.map((item) => ({
-        ...item,
-        _startDate: this.$moment.utc(item.startDate).format('L LT'),
-        _endDate: this.$moment.utc(item.endDate).format('L'),
-        _createdAt: this.$moment.utc(item.createdAt).format('L'),
-        _updatedAt: this.$moment.utc(item.updatedAt).format('L'),
-        _isImportant: item.isImportant ? this.$t('common.yes') : this.$t('common.no'),
-      }));
-    },
-  },
-
   watch: {
     options: {
       handler() {
@@ -186,7 +185,7 @@ export default {
       params.pageSize = itemsPerPage === -1 ? 0 : itemsPerPage;
       params.page = page;
       if (sortBy && sortBy.length) {
-        params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
+        params.sort = `${sortDesc[0] ? '-' : ''}${sortBy[0]}`;
       }
 
       try {

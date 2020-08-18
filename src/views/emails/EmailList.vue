@@ -224,7 +224,7 @@ export default {
       params.pageSize = itemsPerPage;
       params.page = page;
       if (sortBy.length) {
-        params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
+        params.sort = `${sortDesc[0] ? '-' : ''}${sortBy[0]}`;
       }
 
       this.loading = true;

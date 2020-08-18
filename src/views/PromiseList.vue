@@ -184,7 +184,7 @@ export default {
       params.page = page;
       params.query = filter;
       if (sortBy && sortBy.length) {
-        params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
+        params.sort = `${sortDesc[0] ? '-' : ''}${sortBy[0]}`;
       }
 
       try {
