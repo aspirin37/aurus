@@ -31,10 +31,10 @@
     </div>
     <promises-filter
       v-model="isFilterShown"
+      :filter="filter"
       :suppliers="suppliers"
       :parts="parts"
-      @applyFilter="getItems"
-      @hide="hideFilter"
+      @applyFilter="applyFilter"
     />
     <v-data-table
       fixed-header
@@ -142,6 +142,17 @@ export default {
       options: {},
       total: 0,
 
+      filter: {
+        gsdb: '',
+        plant: '',
+        partNumber: '',
+        totalQty: null,
+        lastOrderDate: null,
+        lastDate: null,
+        shippingDate: null,
+        amount: null,
+      },
+
       loading: false,
       loadingAdditional: false,
 
@@ -170,12 +181,14 @@ export default {
   },
 
   methods: {
-    async getItems(filter = {}) {
+    async getItems() {
       this.loading = true;
 
       const {
         sortBy, sortDesc, page, itemsPerPage,
       } = this.options;
+
+      const filter = this.mapFilter();
 
       const params = {};
       params.pageSize = itemsPerPage === -1 ? 0 : itemsPerPage;
@@ -237,8 +250,39 @@ export default {
       this.isFilterShown = !this.isFilterShown;
     },
 
-    hideFilter() {
+    applyFilter(filter) {
       this.isFilterShown = false;
+      this.filter = { ...filter };
+      this.getItems();
+    },
+
+    mapFilter() {
+      const filter = {};
+      if (this.filter.gsdb) {
+        filter.gsdb = this.filter.gsdb;
+      }
+      if (this.filter.plant) {
+        filter.plant = this.filter.plant;
+      }
+      if (this.filter.partNumber) {
+        filter.part = { number: this.filter.partNumber };
+      }
+      if (typeof this.filter.totalQty === 'number') {
+        filter.totalQty = this.filter.totalQty;
+      }
+      if (this.filter.lastOrderDate) {
+        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate);
+      }
+      if (this.filter.lastDate) {
+        filter.lastDate = this.$moment.utc(this.filter.lastDate);
+      }
+      if (this.filter.shippingDate) {
+        filter.shippingDate = this.$moment.utc(this.filter.shippingDate);
+      }
+      if (typeof this.filter.amount === 'number') {
+        filter.amount = this.filter.amount;
+      }
+      return filter;
     },
   },
 };

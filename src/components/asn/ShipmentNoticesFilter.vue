@@ -178,8 +178,10 @@ export default {
   },
 
   watch: {
-    isShown() {
-      this.init();
+    isShown(value) {
+      if (value) {
+        this.init();
+      }
     },
   },
 
