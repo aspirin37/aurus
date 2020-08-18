@@ -27,7 +27,9 @@ steps:
       tags: |
         $(PACKAGE_VERSION)
         dev
+        dev-$(PACKAGE_VERSION)
         test
+        test-$(PACKAGE_VERSION)
 
   - task: Docker@2
     condition: and(succeeded(), eq(variables['IS_BUILD_DEVELOP'], true))
@@ -40,6 +42,7 @@ steps:
       tags: |
         $(PACKAGE_VERSION)
         dev
+        dev-$(PACKAGE_VERSION)
 
   - task: Docker@2
     condition: and(succeeded(), eq(variables['IS_BUILD_RELEASE'], true))
@@ -52,4 +55,5 @@ steps:
       tags: |
         $(PACKAGE_VERSION)
         test
+        test-$(PACKAGE_VERSION)
 
