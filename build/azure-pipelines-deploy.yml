@@ -27,7 +27,7 @@ steps:
       tags: |
         $(PACKAGE_VERSION)
         dev
-        latest
+        test
 
   - task: Docker@2
     condition: and(succeeded(), eq(variables['IS_BUILD_DEVELOP'], true))
@@ -51,5 +51,5 @@ steps:
       containerRegistry: $(dockerRegistry)
       tags: |
         $(PACKAGE_VERSION)
-        latest
+        test
 
