@@ -298,7 +298,7 @@ export default {
       params.query = filter;
       params.pageSize = itemsPerPage;
       params.page = page;
-      if (sortBy.length) {
+      if (sortBy && sortBy.length) {
         params.sort = `${sortDesc[0] ? '-' : ''}${sortBy[0]}`;
       }
 

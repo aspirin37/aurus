@@ -31,8 +31,8 @@
     </div>
     <bulletins-filter
       v-model="isFilterShown"
-      @applyFilter="getItems"
-      @hide="hideFilter"
+      :filter="filter"
+      @applyFilter="applyFilter"
     />
     <v-data-table
       fixed-header
@@ -146,20 +146,23 @@ export default {
       ],
 
       items: [],
-
       options: {},
-
       total: 0,
 
+      filter: {
+        subject: '',
+        startDate: null,
+        endDate: null,
+        updateAt: null,
+        isImportant: null,
+      },
+
       loading: false,
+      isBulletinModalShown: false,
+      isRemoveModalShown: false,
+      isFilterShown: false,
 
       selectedBulletin: null,
-
-      isBulletinModalShown: false,
-
-      isRemoveModalShown: false,
-
-      isFilterShown: false,
     };
   },
 
@@ -173,11 +176,13 @@ export default {
   },
 
   methods: {
-    async getItems(filter = {}) {
+    async getItems() {
       this.loading = true;
       const {
         sortBy, sortDesc, page, itemsPerPage,
       } = this.options;
+
+      const filter = this.mapFilter();
 
       const params = {};
       params.query = { isActive: true, ...filter };
@@ -217,8 +222,39 @@ export default {
       this.isFilterShown = !this.isFilterShown;
     },
 
-    hideFilter() {
+    applyFilter(filter) {
       this.isFilterShown = false;
+      this.filter = { ...filter };
+      this.getItems();
+    },
+
+    mapFilter() {
+      const filter = {};
+      if (this.filter.subject) {
+        filter.subject = {
+          $regex: `.*${this.filter.subject}.*`,
+          $options: 'i',
+        };
+      }
+      if (this.filter.startDate) {
+        filter.startDate = {
+          $gte: this.$moment.utc(this.filter.startDate),
+          $lte: this.$moment.utc(this.filter.startDate).endOf('day'),
+        };
+      }
+      if (this.filter.endDate) {
+        filter.endDate = this.$moment.utc(this.filter.endDate);
+      }
+      if (this.filter.updatedAt) {
+        filter.updatedAt = {
+          $gte: this.$moment.utc(this.filter.updatedAt),
+          $lte: this.$moment.utc(this.filter.updatedAt).endOf('day'),
+        };
+      }
+      if (this.filter.isImportant !== null) {
+        filter.isImportant = this.filter.isImportant;
+      }
+      return filter;
     },
   },
 };
