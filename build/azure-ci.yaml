@@ -17,7 +17,10 @@ stages:
           displayName: 'Debug Env variables'
           inputs:
             targetType: inline
-            script: env | sort
+            script: |
+              AGENT_NAME_ID=`echo $AGENT_NAME | grep -o "[0-9]" || echo 0 | tail -n 1`
+              echo '##vso[task.setvariable variable=AGENT_NAME_ID]'$AGENT_NAME_ID
+              env | sort
 
         - task: Bash@3
           displayName: 'Set git credentials'
@@ -33,6 +36,7 @@ stages:
 
         - task: Bash@3
           displayName: 'Clear git credentials'
+          condition: always()
           inputs:
             targetType: inline
             script: |
@@ -44,6 +48,6 @@ stages:
           inputs:
             targetType: inline
             script: |
-              docker ps -a -q | xargs -r docker stop
-              docker ps -a -q -f status=exited | xargs -r docker container rm --volumes -f
-              docker image prune -f
+              docker ps -a | grep -e "\-$BUILD_BUILDID\b" | awk '{ print $1 }' | xargs -r docker stop
+              docker ps -a -f status=exited | grep -e "\-$BUILD_BUILDID\b" | awk '{ print $1 }' | xargs -r docker container rm --volumes -f
+
