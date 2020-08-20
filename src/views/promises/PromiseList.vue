@@ -167,6 +167,12 @@ export default {
     };
   },
 
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+  },
+
   watch: {
     options: {
       handler() {
@@ -232,8 +238,11 @@ export default {
     },
 
     async getParts() {
-      const params = { pageSize: 0 };
-      const { data } = await this.$http.get('/parts', { params });
+      const params = {
+        pageSize: 0,
+        query: { supplierGsdb: this.user.gsdb },
+      };
+      const { data } = await this.$http.get('/partsProperties', { params });
       this.parts = data.rows;
     },
 

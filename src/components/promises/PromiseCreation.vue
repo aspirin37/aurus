@@ -16,10 +16,12 @@
           <label class="input-block__label">
             {{ $t('common.plant') }}
           </label>
-          <v-text-field
+          <v-autocomplete
             v-model="promise.plant"
+            :items="plants"
             solo
             :rules="[rules.required]"
+            @change="promise.partNumber = ''"
           />
         </div>
 
@@ -29,7 +31,7 @@
           </label>
           <v-autocomplete
             v-model="promise.partNumber"
-            :items="parts"
+            :items="availableParts"
             item-text="number"
             item-value="number"
             solo
@@ -108,6 +110,13 @@
 </template>
 
 <script>
+const EMPTY_VALUE = {
+  plant: '',
+  partNumber: '',
+  shippingDate: null,
+  amount: 0,
+};
+
 export default {
   name: 'PromiseCreation',
 
@@ -129,12 +138,7 @@ export default {
 
   data() {
     return {
-      promise: {
-        plant: '',
-        partNumber: '',
-        shippingDate: null,
-        amount: 0,
-      },
+      promise: { ...EMPTY_VALUE },
 
       loading: false,
 
@@ -153,6 +157,17 @@ export default {
       return this.$store.state.user;
     },
 
+    plants() {
+      return this.parts.reduce(
+        (acc, item) => (acc.includes(item.plant) ? acc : [...acc, item.plant]),
+        [],
+      );
+    },
+
+    availableParts() {
+      return this.parts.filter((part) => part.plant === this.promise.plant);
+    },
+
     shippingDateFormatted() {
       return this.promise.shippingDate && this.$moment.utc(this.promise.shippingDate).format('L');
     },
@@ -161,6 +176,9 @@ export default {
   watch: {
     value(val) {
       this.isShown = val;
+      if (val) {
+        this.promise = { ...EMPTY_VALUE };
+      }
     },
   },
 
