@@ -42,12 +42,12 @@ stages:
             script: |
               git config --global --unset-all http.extraheader
 
-          - task: Bash@3
-            displayName: 'Clean-up docker'
-            condition: always()
-            inputs:
-              targetType: inline
-              script: |
-                docker ps -a | grep -e "\-$BUILD_BUILDID\b" | awk '{ print $1 }' | xargs -r docker stop
-                docker ps -a -f status=exited | grep -e "\-$BUILD_BUILDID\b" | awk '{ print $1 }' | xargs -r docker container rm --volumes -f
+        - task: Bash@3
+          displayName: 'Clean-up docker'
+          condition: always()
+          inputs:
+            targetType: inline
+            script: |
+              docker ps -a | grep -e "\-$BUILD_BUILDID\b" | awk '{ print $1 }' | xargs -r docker stop
+              docker ps -a -f status=exited | grep -e "\-$BUILD_BUILDID\b" | awk '{ print $1 }' | xargs -r docker container rm --volumes -f
 
