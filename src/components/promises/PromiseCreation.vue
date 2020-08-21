@@ -43,7 +43,11 @@
           <v-col cols="6">
             <div class="input-block input-block_white">
               <label class="input-block__label">{{ $t('views.promise_list.shipping_date') }}</label>
-              <date-picker v-model="promise.shippingDate" />
+              <date-picker
+                v-model="promise.shippingDate"
+                :config="dateConfig"
+                required
+              />
             </div>
           </v-col>
 
@@ -125,12 +129,15 @@ export default {
       promise: { ...EMPTY_VALUE },
 
       loading: false,
-
       isShown: false,
 
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
       },
+
+      dateConfig: {
+        minDate: this.$moment.utc().startOf('day').toDate()
+      }
     };
   },
 

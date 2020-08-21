@@ -1,6 +1,11 @@
 <template>
   <div class="date-picker">
-    <flat-pickr :value="value" :config="config" class="date-picker__input" @input="onInput" />
+    <flat-pickr
+      :value="value"
+      :config="finalConfig"
+      class="date-picker__input"
+      @input="onInput"
+    />
     <div class="date-picker__details"></div>
   </div>
 </template>
@@ -33,16 +38,32 @@ export default {
     value: {
       type: String,
       required: true
+    },
+
+    config: {
+      type: Object,
+      default: () => ({})
+    },
+
+    required: {
+      type: Boolean,
+      default: () => false
     }
   },
 
   data() {
     return {
-      config: {
+      baseConfig: {
         allowInput: true,
         locale: locales[this.$i18n.locale],
         dateFormat: formatters[this.$i18n.locale]
       }
+    }
+  },
+
+  computed: {
+    finalConfig() {
+      return { ...this.baseConfig, ...this.config };
     }
   },
 
