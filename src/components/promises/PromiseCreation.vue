@@ -43,29 +43,7 @@
           <v-col cols="6">
             <div class="input-block input-block_white">
               <label class="input-block__label">{{ $t('views.promise_list.shipping_date') }}</label>
-              <v-menu
-                v-model="isShippingDatePickerShown"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="shippingDateFormatted"
-                    readonly
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-date-picker
-                  v-model="promise.shippingDate"
-                  dark
-                  @input="isShippingDatePickerShown = false"
-                />
-              </v-menu>
+              <date-picker v-model="promise.shippingDate" />
             </div>
           </v-col>
 
@@ -110,15 +88,21 @@
 </template>
 
 <script>
+import DatePicker from '@/components/common/DatePicker.vue';;
+
 const EMPTY_VALUE = {
   plant: '',
   partNumber: '',
-  shippingDate: null,
+  shippingDate: '',
   amount: 0,
 };
 
 export default {
   name: 'PromiseCreation',
+
+  components: {
+    DatePicker
+  },
 
   model: {
     prop: 'value',
@@ -144,8 +128,6 @@ export default {
 
       isShown: false,
 
-      isShippingDatePickerShown: false,
-
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
       },
@@ -166,10 +148,6 @@ export default {
 
     availableParts() {
       return this.parts.filter((part) => part.plant === this.promise.plant);
-    },
-
-    shippingDateFormatted() {
-      return this.promise.shippingDate && this.$moment.utc(this.promise.shippingDate).format('L');
     },
   },
 
@@ -200,7 +178,7 @@ export default {
         plant,
         amount,
         part: { number: this.promise.partNumber },
-        shippingDate: this.$moment.utc(this.promise.shippingDate),
+        shippingDate: this.$moment.utc(this.promise.shippingDate, 'L'),
         gsdb: this.user.gsdb,
       };
 
