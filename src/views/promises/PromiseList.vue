@@ -147,9 +147,9 @@ export default {
         plant: '',
         partNumber: '',
         totalQty: null,
-        lastOrderDate: null,
-        lastDate: null,
-        shippingDate: null,
+        lastOrderDate: '',
+        lastDate: '',
+        shippingDate: '',
         amount: null,
       },
 
@@ -242,7 +242,7 @@ export default {
         pageSize: 0,
         query: { supplierGsdb: this.user.gsdb },
       };
-      const { data } = await this.$http.get('/partsProperties', { params });
+      const { data } = await this.$http.get('/partsSuppliers', { params });
       this.parts = data.rows;
     },
 
@@ -280,13 +280,13 @@ export default {
         filter.totalQty = this.filter.totalQty;
       }
       if (this.filter.lastOrderDate) {
-        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate);
+        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate, 'L');
       }
       if (this.filter.lastDate) {
-        filter.lastDate = this.$moment.utc(this.filter.lastDate);
+        filter.lastDate = this.$moment.utc(this.filter.lastDate, 'L');
       }
       if (this.filter.shippingDate) {
-        filter.shippingDate = this.$moment.utc(this.filter.shippingDate);
+        filter.shippingDate = this.$moment.utc(this.filter.shippingDate, 'L');
       }
       if (typeof this.filter.amount === 'number') {
         filter.amount = this.filter.amount;

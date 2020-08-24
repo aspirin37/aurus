@@ -7,7 +7,7 @@
       @on-close="wasActivated = true"
       @input="onChange"
     />
-    <div class="date-picker__details">
+    <div v-if="!hideDetails" class="date-picker__details">
       <div
         v-if="required && wasActivated && !value"
         class="date-picker__details-error"
@@ -21,6 +21,7 @@
 <script>
 import FlatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
+import 'flatpickr/dist/themes/dark.css';
 import { english as en } from 'flatpickr/dist/l10n/default';
 import { Russian as ru } from 'flatpickr/dist/l10n/ru';
 
@@ -51,6 +52,11 @@ export default {
     config: {
       type: Object,
       default: () => ({}),
+    },
+
+    hideDetails: {
+      type: Boolean,
+      default: () => false
     },
 
     required: {
@@ -95,7 +101,6 @@ export default {
     border: 1px solid var(--platinum);
     border-radius: 4px;
     padding: 8px 6px !important;
-    margin-bottom: 8px;
 
     &:focus {
       border-color: var(--aurum) !important;
@@ -109,6 +114,7 @@ export default {
 
   &__details {
     min-height: 14px;
+    margin-top: 8px;
     margin-bottom: 8px;
     padding: 0 12px;
   }
