@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import DatePicker from '@/components/common/DatePicker.vue';;
+import DatePicker from '@/components/common/DatePicker.vue';
 
 const EMPTY_VALUE = {
   plant: '',
@@ -105,7 +105,7 @@ export default {
   name: 'PromiseCreation',
 
   components: {
-    DatePicker
+    DatePicker,
   },
 
   model: {
@@ -136,8 +136,8 @@ export default {
       },
 
       dateConfig: {
-        minDate: this.$moment.utc().startOf('day').toDate()
-      }
+        minDate: this.$moment.utc().startOf('day').toDate(),
+      },
     };
   },
 

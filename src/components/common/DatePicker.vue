@@ -4,51 +4,59 @@
       :value="value"
       :config="finalConfig"
       class="date-picker__input"
-      @input="onInput"
+      @on-close="wasActivated = true"
+      @input="onChange"
     />
-    <div class="date-picker__details"></div>
+    <div class="date-picker__details">
+      <div
+        v-if="required && wasActivated && !value"
+        class="date-picker__details-error"
+      >
+        {{ $t('validation.required') }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import FlatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
-import { english as en } from 'flatpickr/dist/l10n/default.js';
-import { Russian as ru } from 'flatpickr/dist/l10n/ru.js';
+import { english as en } from 'flatpickr/dist/l10n/default';
+import { Russian as ru } from 'flatpickr/dist/l10n/ru';
 
 const locales = { en, ru };
 
-const formatters = {
+const dateFormats = {
   en: 'm/d/Y',
-  ru: 'd.m.Y'
-}
+  ru: 'd.m.Y',
+};
 
 export default {
   name: 'DatePicker',
 
   components: {
-    FlatPickr
+    FlatPickr,
   },
 
   model: {
-    prop: 'value'
+    prop: 'value',
   },
 
   props: {
     value: {
       type: String,
-      required: true
+      required: true,
     },
 
     config: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
 
     required: {
       type: Boolean,
-      default: () => false
-    }
+      default: () => false,
+    },
   },
 
   data() {
@@ -56,23 +64,25 @@ export default {
       baseConfig: {
         allowInput: true,
         locale: locales[this.$i18n.locale],
-        dateFormat: formatters[this.$i18n.locale]
-      }
-    }
+        dateFormat: dateFormats[this.$i18n.locale],
+      },
+
+      wasActivated: false,
+    };
   },
 
   computed: {
     finalConfig() {
       return { ...this.baseConfig, ...this.config };
-    }
+    },
   },
 
   methods: {
-    onInput(date) {
+    onChange(date) {
       this.$emit('input', date);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -98,7 +108,14 @@ export default {
   }
 
   &__details {
+    min-height: 14px;
     margin-bottom: 8px;
+    padding: 0 12px;
+  }
+
+  &__details-error {
+    font-size: 12px;
+    color: var(--v-error-base);
   }
 }
 </style>

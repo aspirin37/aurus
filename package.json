@@ -19,6 +19,7 @@
     "bootstrap-vue": "^2.14.0",
     "core-js": "^3.6.4",
     "dotenv": "^8.2.0",
+    "flatpickr": "^4.6.6",
     "html-webpack-plugin": "^4.3.0",
     "material-design-icons-iconfont": "^5.0.1",
     "moment-timezone": "^0.5.31",
