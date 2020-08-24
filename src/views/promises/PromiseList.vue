@@ -46,13 +46,13 @@
       :loading-text="$t('common.loading_data')"
     >
       <template v-slot:item.lastOrderDate="{ item }">
-        {{ $moment.utc(item.lastOrderDate).format('L') }}
+        {{ item.lastOrderDate && $moment.utc(item.lastOrderDate).format('L') }}
       </template>
       <template v-slot:item.lastDate="{ item }">
-        {{ $moment.utc(item.lastDate).format('L') }}
+        {{ item.lastDate && $moment.utc(item.lastDate).format('L') }}
       </template>
       <template v-slot:item.shippingDate="{ item }">
-        {{ $moment.utc(item.shippingDate).format('L') }}
+        {{ item.shippingDate && $moment.utc(item.shippingDate).format('L') }}
       </template>
       <template v-slot:item.remove="{ item }">
         <v-hover v-slot="{hover}">
@@ -208,9 +208,9 @@ export default {
         const { data } = await this.$http.get('/promises', { params });
         this.items = data.rows.map((item) => ({
           ...item,
-          lastOrderDate: new Date(item.lastOrderDate),
-          lastDate: new Date(item.lastDate),
-          shippingDate: new Date(item.shippingDate),
+          lastOrderDate: item.lastOrderDate && new Date(item.lastOrderDate),
+          lastDate: item.lastDate && new Date(item.lastDate),
+          shippingDate: item.shippingDate && new Date(item.shippingDate),
         }));
         this.total = data.total;
       } finally {
