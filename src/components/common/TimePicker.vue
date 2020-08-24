@@ -1,16 +1,16 @@
 <template>
-  <div class="date-picker">
+  <div class="time-picker">
     <flat-pickr
       :value="value"
       :config="finalConfig"
-      class="date-picker__input"
+      class="time-picker__input"
       @on-close="wasActivated = true"
       @input="onChange"
     />
-    <div v-if="!hideDetails" class="date-picker__details">
+    <div v-if="!hideDetails" class="time-picker__details">
       <div
         v-if="required && wasActivated && !value"
-        class="date-picker__details-error"
+        class="time-picker__details-error"
       >
         {{ $t('validation.required') }}
       </div>
@@ -27,13 +27,8 @@ import { Russian as ru } from 'flatpickr/dist/l10n/ru';
 
 const locales = { en, ru };
 
-const dateFormats = {
-  en: 'm/d/Y',
-  ru: 'd.m.Y',
-};
-
 export default {
-  name: 'DatePicker',
+  name: 'TimePicker',
 
   components: {
     FlatPickr,
@@ -70,7 +65,10 @@ export default {
       baseConfig: {
         allowInput: true,
         locale: locales[this.$i18n.locale],
-        dateFormat: dateFormats[this.$i18n.locale],
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
       },
 
       wasActivated: false,
@@ -88,11 +86,11 @@ export default {
       this.$emit('input', date);
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
-.date-picker {
+.time-picker {
   display: flex;
   flex-direction: column;
 
