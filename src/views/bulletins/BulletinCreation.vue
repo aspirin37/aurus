@@ -247,22 +247,17 @@ export default {
     },
 
     async postAttachment(attachment) {
-      let { blobName } = attachment.blobName;
+      let { blobName } = attachment;
       if (!blobName) {
         const uuid = uuidv4();
-        const { path } = await this.$http.get(
-          `/containers/${this.$configBULLETINS_CONTAINER}/${uuid}`,
-          {
-            params: {
-              type: attachment.file.type,
-              operation: 'write',
-            },
-          },
-        );
-        await this.$http.post(path, attachment);
+        const formData = new FormData();
+        formData.append('file', attachment.file);
+        await this.$http.post('/containers/file', formData, {
+          headers: { container: this.$config.BULLETINS_CONTAINER, file: uuid }
+        });
         blobName = uuid;
       }
-      const { type, name } = attachment;
+      const { type, name } = attachment.file;
       return { type, name, blobName };
     },
 

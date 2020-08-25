@@ -59,6 +59,19 @@
             :rules="[rules.required]"
           />
         </div>
+
+        <div class="attach">
+          <div class="attach-block">
+            <div
+              v-for="(attachment, index) of bulletin.attachments"
+              :key="index"
+              class="attach-block__element"
+            >
+              <span class="attach-block__title">{{ attachment.name }}</span>
+              <v-icon @click="removeAttachment(index)">delete</v-icon>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="v-application d-flex">
@@ -122,6 +135,7 @@ export default {
         startDate: '',
         startTime: '',
         endDate: '',
+        attachments: []
       },
 
       loading: false,
@@ -146,6 +160,7 @@ export default {
         text,
         startDate,
         endDate,
+        attachments
       } = this.selectedBulletin;
 
       this.bulletin = {
@@ -154,6 +169,7 @@ export default {
         startDate: this.$moment.utc(startDate).format('L'),
         startTime: this.$moment.utc(startDate).format('HH:mm'),
         endDate: this.$moment.utc(endDate).format('L'),
+        attachments: [...attachments]
       };
     },
 
