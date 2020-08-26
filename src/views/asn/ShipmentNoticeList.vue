@@ -262,7 +262,8 @@ export default {
       }
 
       try {
-        const { data } = await this.$http.get('/suppliers', { pageSize: 0 });
+        const params = { pageSize: 0 };
+        const { data } = await this.$http.get('/suppliers', { params });
         this.suppliers = data.rows;
       } finally {
         this.preloading = false;

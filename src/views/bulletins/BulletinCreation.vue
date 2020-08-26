@@ -251,7 +251,8 @@ export default {
     },
 
     async getSuppliers() {
-      const { data } = await this.$http.get('suppliers');
+      const params = { pageSize: 0 };
+      const { data } = await this.$http.get('suppliers', { params });
       this.suppliers = data.rows.map((item) => item.gsdb);
     },
 
