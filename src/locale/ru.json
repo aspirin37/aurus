@@ -120,6 +120,7 @@
       "email": "E-mail",
       "bulletin_edit": "Редактирование сообщения",
       "text": "Текст сообщения",
+      "attach_file": "attach file",
       "bulletin_delete": "Удаление сообщения",
       "bulletin_remove_answer": "Уверены, что хотите удалить это сообщение?",
       "bulletin_remove_confirmation": "Сообщение будет безвозвратно удалено."

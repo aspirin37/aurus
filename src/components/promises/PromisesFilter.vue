@@ -68,7 +68,10 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.last_order') }}
             </label>
-            <date-picker v-model="localFilter.lastOrderDate" hide-details />
+            <date-picker
+              v-model="localFilter.lastOrderDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="3">
@@ -76,7 +79,10 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.last_shipment') }}
             </label>
-            <date-picker v-model="localFilter.lastDate" hide-details />
+            <date-picker
+              v-model="localFilter.lastDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="3">
@@ -84,7 +90,10 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.promised_shipment') }}
             </label>
-            <date-picker v-model="localFilter.shippingDate" hide-details />
+            <date-picker
+              v-model="localFilter.shippingDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
@@ -126,7 +135,7 @@ export default {
   name: 'PromisesFilter',
 
   components: {
-    DatePicker
+    DatePicker,
   },
 
   model: {

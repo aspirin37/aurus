@@ -40,7 +40,10 @@
             <label class="input-block__label">
               {{ $t('views.shipment_notice_list.start_date') }}
             </label>
-            <date-picker v-model="localFilter.startDate" hide-details />
+            <date-picker
+              v-model="localFilter.startDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
@@ -48,7 +51,10 @@
             <label class="input-block__label">
               {{ $t('views.shipment_notice_list.end_date') }}
             </label>
-            <date-picker v-model="localFilter.endDate" hide-details />
+            <date-picker
+              v-model="localFilter.endDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
@@ -84,14 +90,12 @@
 
 <script>
 import DatePicker from '@/components/common/DatePicker.vue';
-import TimePicker from '@/components/common/TimePicker.vue'
 
 export default {
   name: 'ShipmentNoticesFilter',
 
   components: {
     DatePicker,
-    TimePicker,
   },
 
   props: {

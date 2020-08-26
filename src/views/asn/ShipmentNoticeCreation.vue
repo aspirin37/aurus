@@ -103,7 +103,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.shipping_date') }}
               </label>
-              <date-picker v-model="asn.shippingDate" required />
+              <date-picker
+                v-model="asn.shippingDate"
+                required
+              />
             </div>
           </v-col>
 
@@ -115,7 +118,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.shipping_time') }}
               </label>
-              <time-picker v-model="asn.shippingTime" required />
+              <time-picker
+                v-model="asn.shippingTime"
+                required
+              />
             </div>
           </v-col>
 
@@ -127,7 +133,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.estimated_date') }}
               </label>
-              <date-picker v-model="asn.estimatedDate" required />
+              <date-picker
+                v-model="asn.estimatedDate"
+                required
+              />
             </div>
           </v-col>
 
@@ -139,7 +148,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.estimated_time') }}
               </label>
-              <time-picker v-model="asn.estimatedTime" required />
+              <time-picker
+                v-model="asn.estimatedTime"
+                required
+              />
             </div>
           </v-col>
 
@@ -233,7 +245,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.invoice_date') }}
               </label>
-              <date-picker v-model="asn.invoiceDate" required />
+              <date-picker
+                v-model="asn.invoiceDate"
+                required
+              />
             </div>
           </v-col>
 
@@ -261,7 +276,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.torg_12_date') }}
               </label>
-              <date-picker v-model="asn.torg12Date" required />
+              <date-picker
+                v-model="asn.torg12Date"
+                required
+              />
             </div>
           </v-col>
 

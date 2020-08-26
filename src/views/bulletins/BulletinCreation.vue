@@ -41,17 +41,26 @@
         <div class="create-add-form__item create-add-form__item_three">
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_creation.start_date') }}</label>
-            <date-picker v-model="startDate" required />
+            <date-picker
+              v-model="startDate"
+              required
+            />
           </div>
 
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_creation.start_time') }}</label>
-            <time-picker v-model="startTime" required />
+            <time-picker
+              v-model="startTime"
+              required
+            />
           </div>
 
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_creation.end_date') }}</label>
-            <date-picker v-model="endDate" required />
+            <date-picker
+              v-model="endDate"
+              required
+            />
           </div>
         </div>
 
@@ -253,7 +262,7 @@ export default {
         const formData = new FormData();
         formData.append('file', attachment.file);
         await this.$http.post('/containers/file', formData, {
-          headers: { container: this.$config.BULLETINS_CONTAINER, file: uuid }
+          headers: { container: this.$config.BULLETINS_CONTAINER, file: uuid },
         });
         blobName = uuid;
       }

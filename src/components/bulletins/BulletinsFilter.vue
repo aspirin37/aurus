@@ -21,19 +21,28 @@
         <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_list.start_date') }}</label>
-            <date-picker v-model="localFilter.startDate" hide-details />
+            <date-picker
+              v-model="localFilter.startDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_list.end_date') }}</label>
-            <date-picker v-model="localFilter.endDate" hide-details />
+            <date-picker
+              v-model="localFilter.endDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_list.updated_at') }}</label>
-            <date-picker v-model="localFilter.updatedAt" hide-details />
+            <date-picker
+              v-model="localFilter.updatedAt"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
@@ -73,7 +82,7 @@ export default {
   name: 'BulletinsFilter',
 
   components: {
-    DatePicker
+    DatePicker,
   },
 
   model: {

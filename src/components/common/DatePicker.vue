@@ -7,7 +7,10 @@
       @on-close="wasActivated = true"
       @input="onChange"
     />
-    <div v-if="!hideDetails" class="date-picker__details">
+    <div
+      v-if="!hideDetails"
+      class="date-picker__details"
+    >
       <div
         v-if="required && wasActivated && !value"
         class="date-picker__details-error"
@@ -56,7 +59,7 @@ export default {
 
     hideDetails: {
       type: Boolean,
-      default: () => false
+      default: () => false,
     },
 
     required: {

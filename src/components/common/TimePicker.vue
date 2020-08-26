@@ -7,7 +7,10 @@
       @on-close="wasActivated = true"
       @input="onChange"
     />
-    <div v-if="!hideDetails" class="time-picker__details">
+    <div
+      v-if="!hideDetails"
+      class="time-picker__details"
+    >
       <div
         v-if="required && wasActivated && !value"
         class="time-picker__details-error"
@@ -51,7 +54,7 @@ export default {
 
     hideDetails: {
       type: Boolean,
-      default: () => false
+      default: () => false,
     },
 
     required: {
@@ -67,7 +70,7 @@ export default {
         locale: locales[this.$i18n.locale],
         enableTime: true,
         noCalendar: true,
-        dateFormat: "H:i",
+        dateFormat: 'H:i',
         time_24hr: true,
       },
 
@@ -86,7 +89,7 @@ export default {
       this.$emit('input', date);
     },
   },
-}
+};
 </script>
 
 <style lang="scss">

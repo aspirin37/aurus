@@ -30,21 +30,30 @@
           <v-col cols="4">
             <div class="input-block input-block_white">
               <label class="input-block__label">{{ $t('views.bulletin_list.start_date') }}</label>
-              <date-picker v-model="bulletin.startDate" required />
+              <date-picker
+                v-model="bulletin.startDate"
+                required
+              />
             </div>
           </v-col>
 
           <v-col cols="4">
             <div class="input-block input-block_white">
               <label class="input-block__label">{{ $t('views.bulletin_list.start_time') }}</label>
-              <time-picker v-model="bulletin.startTime" required />
+              <time-picker
+                v-model="bulletin.startTime"
+                required
+              />
             </div>
           </v-col>
 
           <v-col cols="4">
             <div class="input-block input-block_white">
               <label class="input-block__label">{{ $t('views.bulletin_list.end_date') }}</label>
-              <date-picker v-model="bulletin.endDate" required />
+              <date-picker
+                v-model="bulletin.endDate"
+                required
+              />
             </div>
           </v-col>
         </v-row>
@@ -60,17 +69,51 @@
           />
         </div>
 
-        <div class="attach">
-          <div class="attach-block">
-            <div
-              v-for="(attachment, index) of bulletin.attachments"
-              :key="index"
-              class="attach-block__element"
+        <div class="bulletin-modal__attachments">
+          <div
+            v-for="(attachment, index) of bulletin.attachments"
+            :key="index"
+            class="bulletin-modal__attachment"
+          >
+            <a
+              v-if="attachment.path"
+              :href="attachment.path"
+              :download="attachment.name"
+              class="bulletin-modal__attachment-link bulletin-modal__attachment-name"
             >
-              <span class="attach-block__title">{{ attachment.name }}</span>
-              <v-icon @click="removeAttachment(index)">delete</v-icon>
-            </div>
+              {{ attachment.name }}
+            </a>
+            <span
+              v-else
+              class="bulletin-modal__attachment-name"
+            >{{ attachment.file.name }}</span>
+            <v-icon
+              class="bulletin-modal__attachment-delete"
+              @click="removeAttachment(index)"
+            >
+              delete
+            </v-icon>
           </div>
+        </div>
+
+        <div>
+          <input
+            ref="attachments"
+            type="file"
+            class="d-none"
+            @change="addAttachments"
+          >
+          <!-- eslint-disable max-len -->
+          <button
+            type="button"
+            class="btn aurus-button aurus-button_line aurus-button_lowercase bulletin-modal__attach-file"
+            :disabled="loading"
+            @click.prevent="selectAttachments"
+          >
+            <v-icon>mdi-paperclip</v-icon>
+            {{ $t('views.bulletin_list.attach_file') }}
+          </button>
+          <!-- eslint-enable max-len -->
         </div>
       </div>
 
@@ -100,6 +143,7 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
 import DatePicker from '@/components/common/DatePicker.vue';
 import TimePicker from '@/components/common/TimePicker.vue';
 
@@ -108,7 +152,7 @@ export default {
 
   components: {
     DatePicker,
-    TimePicker
+    TimePicker,
   },
 
   model: {
@@ -135,7 +179,7 @@ export default {
         startDate: '',
         startTime: '',
         endDate: '',
-        attachments: []
+        attachments: [],
       },
 
       loading: false,
@@ -160,7 +204,7 @@ export default {
         text,
         startDate,
         endDate,
-        attachments
+        attachments,
       } = this.selectedBulletin;
 
       this.bulletin = {
@@ -169,12 +213,39 @@ export default {
         startDate: this.$moment.utc(startDate).format('L'),
         startTime: this.$moment.utc(startDate).format('HH:mm'),
         endDate: this.$moment.utc(endDate).format('L'),
-        attachments: [...attachments]
+        attachments: [...attachments],
       };
     },
 
     hideModal() {
       this.$emit('input', false);
+    },
+
+    async postAttachment(attachment) {
+      let { blobName } = attachment;
+
+      if (blobName) {
+        return { ...attachment };
+      }
+
+      const uuid = uuidv4();
+      const formData = new FormData();
+      formData.append('file', attachment.file);
+      await this.$http.post('/containers/file', formData, {
+        headers: { container: this.$config.BULLETINS_CONTAINER, file: uuid },
+      });
+      blobName = uuid;
+      const { type, name } = attachment.file;
+
+      return { type, name, blobName };
+    },
+
+    async postAttachments() {
+      const uploaders = this.bulletin.attachments.map(
+        (attachment) => this.postAttachment(attachment),
+      );
+      const attachments = await Promise.all(uploaders);
+      return attachments;
     },
 
     async submit() {
@@ -191,11 +262,13 @@ export default {
       this.loading = true;
 
       try {
+        const attachments = await this.postAttachments();
         await this.$http.patch(`/bulletins/${this.selectedBulletin.id}`, {
           subject,
           text,
           startDate,
           endDate,
+          attachments,
         });
         this.hideModal();
         this.$emit('submit');
@@ -208,6 +281,75 @@ export default {
       const required = ['subject', 'startDate', 'endDate', 'text'];
       return required.every((field) => this.bulletin[field]);
     },
+
+    selectAttachments() {
+      this.$refs.attachments.value = '';
+      this.$refs.attachments.click();
+    },
+
+    addAttachments() {
+      const attachments = [...this.$refs.attachments.files].map((item) => ({
+        file: item,
+        blobName: '',
+      }));
+      this.bulletin.attachments.push(...attachments);
+    },
+
+    removeAttachment(index) {
+      this.bulletin.attachments.splice(index, 1);
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.bulletin-modal__attachments {
+  background-color: #f8f6f5;
+}
+
+.bulletin-modal__attachment {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+
+  &-name {
+    color: var(--v-anchor-base);
+  }
+
+  &-link {
+    text-decoration: none;
+    transition: color 0.3s ease-in-out 0s;
+
+    &:hover {
+      color: var(--margaritas);
+    }
+  }
+
+  &-delete {
+    color: var(--margaritas);
+    transition: fill 0.3s ease-in-out;
+    font-size: 16px;
+
+    &:hover {
+      color: var(--platinum);
+    }
+  }
+}
+
+.bulletin-modal__attach-file {
+  padding: 10px 40px;
+
+  i {
+    color: var(--black);
+    font-size: 16px;
+  }
+
+  &:hover i {
+    color: var(--aurum);
+  }
+
+  &:active i {
+    color: var(--aurum);
+  }
+}
+</style>
