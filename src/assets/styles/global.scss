@@ -417,6 +417,22 @@ img {
   row-gap: 16px;
 }
 
+.modal-content {
+  max-height: 80vh;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--amber);
+    border-radius: 10px;
+  }
+}
+
 .report-table {
   white-space: nowrap;
 }

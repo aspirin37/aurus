@@ -96,6 +96,11 @@ export default {
         icon: 'mdi-email-outline',
       },
       {
+        name: vm.$t('navigation.logs'),
+        link: '/logs',
+        icon: 'mdi-cog-outline',
+      },
+      {
         name: vm.$t('navigation.forecasts'),
         link: '/forecast/report',
         icon: 'mdi-chart-bar',

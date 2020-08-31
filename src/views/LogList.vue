@@ -24,31 +24,40 @@
             :class="hover ? '' : 'text--disabled'"
             color="primary"
             size="20"
-            @click="$router.push(`/emails/${item.id}`)"
+            @click="showDetailInfoModal(item)"
           >
-            mdi-info-outline
+            mdi-information-outline
           </v-icon>
         </v-hover>
       </template>
     </v-data-table>
+    <detail-info-modal
+      v-model="isDetailInfoModalShown"
+      :detail-info="detailInfo"
+    />
   </div>
 </template>
 
 <script>
+import DetailInfoModal from '@/components/logs/DetailInfoModal.vue';
 
 export default {
-  name: 'EmailList',
+  name: 'LogList',
+  components: {
+    DetailInfoModal,
+  },
   data() {
     return {
+      isDetailInfoModalShown: false,
+      detailInfo: null,
       total: 0,
       items: [],
       loading: false,
       options: {},
       headers: [
-        { text: this.$t('views.email_list.event'), value: 'event' },
-        { text: this.$t('views.email_list.to'), value: 'to' },
-        { text: this.$t('views.email_list.cc'), value: 'cc' },
-        { text: this.$t('views.email_list.subject'), value: 'subject' },
+        { text: 'createdAt', value: 'createdAt' },
+        { text: 'name', value: 'name' },
+        { text: 'severity', value: 'severity' },
         {
           text: this.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
         },
@@ -84,12 +93,19 @@ export default {
         params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
       }
 
-      const { data } = await this.$http.get('mails', { params }).finally(() => {
+      const { data } = await this.$http.get('log-event', { params }).finally(() => {
         this.loading = false;
       });
 
-      this.items = data.rows;
+      this.items = data.rows.map((it) => ({
+        ...it,
+        createdAt: it.createdAt && this.$moment(it.createdAt).format('L LT'),
+      }));
       this.total = data.total;
+    },
+    showDetailInfoModal(detailInfo) {
+      this.isDetailInfoModalShown = true;
+      this.detailInfo = detailInfo;
     },
   },
 };

@@ -27,6 +27,10 @@ const routes = [
       name: 'UserList',
       component: () => import('@/views/UserList'),
     }, {
+      path: 'logs',
+      name: 'LogList',
+      component: () => import('@/views/LogList'),
+    }, {
       path: 'suppliers',
       name: 'SupplierList',
       component: () => import('@/views/SupplierList'),

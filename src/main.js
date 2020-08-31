@@ -4,6 +4,7 @@ import VueMoment from 'vue-moment';
 import moment from 'moment-timezone';
 import vSelect from 'vue-select';
 import Multiselect from 'vue-multiselect';
+import VueJsonPretty from 'vue-json-pretty';
 
 import App from './App.vue';
 import router from './router';
@@ -26,6 +27,7 @@ Vue.moment.locale(localStorage.getItem('locale') || 'en');
 
 Vue.component('vue-select', vSelect);
 Vue.component('multiselect', Multiselect);
+Vue.component('vue-json-pretty', VueJsonPretty);
 
 Vue.prototype.$config = config;
 Vue.prototype.$http = http;
