@@ -21,91 +21,28 @@
         <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_list.start_date') }}</label>
-            <v-menu
-              v-model="isStartDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="startDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  clearable
-                  v-on="on"
-                  @click:clear="localFilter.startDate = null"
-                />
-              </template>
-              <v-date-picker
-                v-model="localFilter.startDate"
-                dark
-                @input="isStartDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.startDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_list.end_date') }}</label>
-            <v-menu
-              v-model="isEndDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="endDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  clearable
-                  v-on="on"
-                  @click:clear="localFilter.endDate = null"
-                />
-              </template>
-              <v-date-picker
-                v-model="localFilter.endDate"
-                dark
-                @input="isEndDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.endDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_list.updated_at') }}</label>
-            <v-menu
-              v-model="isUpdatedAtPickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="updatedAtFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  clearable
-                  v-on="on"
-                  @click:clear="localFilter.updatedAt = null"
-                />
-              </template>
-              <v-date-picker
-                v-model="localFilter.updatedAt"
-                dark
-                @input="isUpdatedAtPickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.updatedAt"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
@@ -139,8 +76,14 @@
 </template>
 
 <script>
+import DatePicker from '@/components/common/DatePicker.vue';
+
 export default {
   name: 'BulletinsFilter',
+
+  components: {
+    DatePicker,
+  },
 
   model: {
     prop: 'isShown',
@@ -162,15 +105,11 @@ export default {
     return {
       localFilter: {
         subject: '',
-        startDate: null,
-        endDate: null,
-        updatedAt: null,
+        startDate: '',
+        endDate: '',
+        updatedAt: '',
         isImportant: null,
       },
-
-      isStartDatePickerShown: false,
-      isEndDatePickerShown: false,
-      isUpdatedAtPickerShown: false,
 
       emailOptions: [
         { value: null, text: '' },
@@ -178,20 +117,6 @@ export default {
         { value: true, text: this.$t('common.yes') },
       ],
     };
-  },
-
-  computed: {
-    startDateFormatted() {
-      return this.localFilter.startDate && this.$moment.utc(this.localFilter.startDate).format('L');
-    },
-
-    endDateFormatted() {
-      return this.localFilter.endDate && this.$moment.utc(this.localFilter.endDate).format('L');
-    },
-
-    updatedAtFormatted() {
-      return this.localFilter.updatedAt && this.$moment.utc(this.localFilter.updatedAt).format('L');
-    },
   },
 
   watch: {

@@ -41,87 +41,26 @@
         <div class="create-add-form__item create-add-form__item_three">
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_creation.start_date') }}</label>
-            <v-menu
-              v-model="isStartDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="startDateFormatted"
-                  readonly
-                  solo
-                  :rules="[rules.required]"
-                  v-on="on"
-                />
-              </template>
-              <v-date-picker
-                v-model="startDate"
-                dark
-                @input="isStartDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="startDate"
+              required
+            />
           </div>
 
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_creation.start_time') }}</label>
-            <v-menu
-              ref="startTime"
-              v-model="isStartTimePickerShown"
-              :close-on-content-click="false"
-              :return-value.sync="startTime"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              max-width="290px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="startTime"
-                  readonly
-                  solo
-                  :rules="[rules.required]"
-                  v-on="on"
-                />
-              </template>
-              <v-time-picker
-                v-if="isStartTimePickerShown"
-                v-model="startTime"
-                dark
-                @click:minute="$refs.startTime.save(startTime)"
-              />
-            </v-menu>
+            <time-picker
+              v-model="startTime"
+              required
+            />
           </div>
 
           <div class="input-block input-block_white">
             <label class="input-block__label">{{ $t('views.bulletin_creation.end_date') }}</label>
-            <v-menu
-              v-model="isEndDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="endDateFormatted"
-                  readonly
-                  solo
-                  :rules="[rules.required]"
-                  v-on="on"
-                />
-              </template>
-              <v-date-picker
-                v-model="endDate"
-                dark
-                @input="isEndDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="endDate"
+              required
+            />
           </div>
         </div>
 
@@ -250,9 +189,16 @@
 
 <script>
 import { v4 as uuidv4 } from 'uuid';
+import DatePicker from '@/components/common/DatePicker.vue';
+import TimePicker from '@/components/common/TimePicker.vue';
 
 export default {
   name: 'BulletinCreation',
+
+  components: {
+    DatePicker,
+    TimePicker,
+  },
 
   data() {
     return {
@@ -266,15 +212,11 @@ export default {
         attachments: [],
       },
 
-      startDate: new Date().toISOString().substr(0, 10),
+      startDate: this.$moment.utc().format('L'),
       startTime: '00:00',
-      endDate: new Date().toISOString().substr(0, 10),
+      endDate: this.$moment.utc().format('L'),
 
       attachments: [],
-
-      isStartDatePickerShown: false,
-      isStartTimePickerShown: false,
-      isEndDatePickerShown: false,
 
       suppliers: [],
 
@@ -284,16 +226,6 @@ export default {
         required: (value) => Boolean(value) || this.$t('validation.required'),
       },
     };
-  },
-
-  computed: {
-    startDateFormatted() {
-      return this.$moment.utc(this.startDate).format('L');
-    },
-
-    endDateFormatted() {
-      return this.$moment.utc(this.endDate).format('L');
-    },
   },
 
   created() {
@@ -319,27 +251,23 @@ export default {
     },
 
     async getSuppliers() {
-      const { data } = await this.$http.get('suppliers');
+      const params = { pageSize: 0 };
+      const { data } = await this.$http.get('suppliers', { params });
       this.suppliers = data.rows.map((item) => item.gsdb);
     },
 
     async postAttachment(attachment) {
-      let { blobName } = attachment.blobName;
+      let { blobName } = attachment;
       if (!blobName) {
         const uuid = uuidv4();
-        const { path } = await this.$http.get(
-          `/containers/${this.$configBULLETINS_CONTAINER}/${uuid}`,
-          {
-            params: {
-              type: attachment.file.type,
-              operation: 'write',
-            },
-          },
-        );
-        await this.$http.post(path, attachment);
+        const formData = new FormData();
+        formData.append('file', attachment.file);
+        await this.$http.post('/containers/file', formData, {
+          headers: { container: this.$config.BULLETINS_CONTAINER, file: uuid },
+        });
         blobName = uuid;
       }
-      const { type, name } = attachment;
+      const { type, name } = attachment.file;
       return { type, name, blobName };
     },
 
@@ -351,8 +279,8 @@ export default {
 
     async create() {
       const [hour, minute] = this.startTime.split(':');
-      this.bulletin.startDate = this.$moment.utc(this.startDate).hour(hour).minute(minute);
-      this.bulletin.endDate = this.$moment.utc(this.endDate);
+      this.bulletin.startDate = this.$moment.utc(this.startDate, 'L').hour(hour).minute(minute);
+      this.bulletin.endDate = this.$moment.utc(this.endDate, 'L');
 
       if (!this.validate()) {
         return;

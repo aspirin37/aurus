@@ -46,13 +46,13 @@
       :loading-text="$t('common.loading_data')"
     >
       <template v-slot:item.lastOrderDate="{ item }">
-        {{ $moment.utc(item.lastOrderDate).format('L') }}
+        {{ item.lastOrderDate && $moment.utc(item.lastOrderDate).format('L') }}
       </template>
       <template v-slot:item.lastDate="{ item }">
-        {{ $moment.utc(item.lastDate).format('L') }}
+        {{ item.lastDate && $moment.utc(item.lastDate).format('L') }}
       </template>
       <template v-slot:item.shippingDate="{ item }">
-        {{ $moment.utc(item.shippingDate).format('L') }}
+        {{ item.shippingDate && $moment.utc(item.shippingDate).format('L') }}
       </template>
       <template v-slot:item.remove="{ item }">
         <v-hover v-slot="{hover}">
@@ -147,9 +147,9 @@ export default {
         plant: '',
         partNumber: '',
         totalQty: null,
-        lastOrderDate: null,
-        lastDate: null,
-        shippingDate: null,
+        lastOrderDate: '',
+        lastDate: '',
+        shippingDate: '',
         amount: null,
       },
 
@@ -165,6 +165,12 @@ export default {
       isRemoveModalShown: false,
       isFilterShown: false,
     };
+  },
+
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
   },
 
   watch: {
@@ -202,9 +208,9 @@ export default {
         const { data } = await this.$http.get('/promises', { params });
         this.items = data.rows.map((item) => ({
           ...item,
-          lastOrderDate: new Date(item.lastOrderDate),
-          lastDate: new Date(item.lastDate),
-          shippingDate: new Date(item.shippingDate),
+          lastOrderDate: item.lastOrderDate && new Date(item.lastOrderDate),
+          lastDate: item.lastDate && new Date(item.lastDate),
+          shippingDate: item.shippingDate && new Date(item.shippingDate),
         }));
         this.total = data.total;
       } finally {
@@ -232,8 +238,11 @@ export default {
     },
 
     async getParts() {
-      const params = { pageSize: 0 };
-      const { data } = await this.$http.get('/parts', { params });
+      const params = {
+        pageSize: 0,
+        query: { supplierGsdb: this.user.gsdb },
+      };
+      const { data } = await this.$http.get('/partsSuppliers', { params });
       this.parts = data.rows;
     },
 
@@ -271,13 +280,13 @@ export default {
         filter.totalQty = this.filter.totalQty;
       }
       if (this.filter.lastOrderDate) {
-        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate);
+        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate, 'L');
       }
       if (this.filter.lastDate) {
-        filter.lastDate = this.$moment.utc(this.filter.lastDate);
+        filter.lastDate = this.$moment.utc(this.filter.lastDate, 'L');
       }
       if (this.filter.shippingDate) {
-        filter.shippingDate = this.$moment.utc(this.filter.shippingDate);
+        filter.shippingDate = this.$moment.utc(this.filter.shippingDate, 'L');
       }
       if (typeof this.filter.amount === 'number') {
         filter.amount = this.filter.amount;

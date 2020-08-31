@@ -68,31 +68,10 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.last_order') }}
             </label>
-            <v-menu
-              v-model="isLastOrderDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="lastOrderDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  clearable
-                  v-on="on"
-                  @click:clear="localFilter.lastOrderDate = null"
-                />
-              </template>
-              <v-date-picker
-                v-model="localFilter.lastOrderDate"
-                dark
-                @input="isLastOrderDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.lastOrderDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="3">
@@ -100,31 +79,10 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.last_shipment') }}
             </label>
-            <v-menu
-              v-model="isLastDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="lastDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  clearable
-                  v-on="on"
-                  @click:clear="localFilter.lastDate = null"
-                />
-              </template>
-              <v-date-picker
-                v-model="localFilter.lastDate"
-                dark
-                @input="isLastDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.lastDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="3">
@@ -132,31 +90,10 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.promised_shipment') }}
             </label>
-            <v-menu
-              v-model="isShippingDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="shippingDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  clearable
-                  v-on="on"
-                  @click:clear="localFilter.shippingDate = null"
-                />
-              </template>
-              <v-date-picker
-                v-model="localFilter.shippingDate"
-                dark
-                @input="isShippingDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.shippingDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
@@ -192,8 +129,14 @@
 </template>
 
 <script>
+import DatePicker from '@/components/common/DatePicker.vue';
+
 export default {
   name: 'PromisesFilter',
+
+  components: {
+    DatePicker,
+  },
 
   model: {
     prop: 'isShown',
@@ -228,33 +171,12 @@ export default {
         plant: '',
         partNumber: '',
         totalQty: null,
-        lastOrderDate: null,
-        lastDate: null,
-        shippingDate: null,
+        lastOrderDate: '',
+        lastDate: '',
+        shippingDate: '',
         amount: null,
       },
-
-      isLastOrderDatePickerShown: false,
-      isLastDatePickerShown: false,
-      isShippingDatePickerShown: false,
     };
-  },
-
-  computed: {
-    lastOrderDateFormatted() {
-      return this.localFilter.lastOrderDate
-        && this.$moment.utc(this.localFilter.lastOrderDate).format('L');
-    },
-
-    lastDateFormatted() {
-      return this.localFilter.lastDate
-        && this.$moment.utc(this.localFilter.lastDate).format('L');
-    },
-
-    shippingDateFormatted() {
-      return this.localFilter.shippingDate
-        && this.$moment.utc(this.localFilter.shippingDate).format('L');
-    },
   },
 
   watch: {

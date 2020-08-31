@@ -151,9 +151,9 @@ export default {
 
       filter: {
         subject: '',
-        startDate: null,
-        endDate: null,
-        updateAt: null,
+        startDate: '',
+        endDate: '',
+        updatedAt: '',
         isImportant: null,
       },
 
@@ -238,17 +238,17 @@ export default {
       }
       if (this.filter.startDate) {
         filter.startDate = {
-          $gte: this.$moment.utc(this.filter.startDate),
-          $lte: this.$moment.utc(this.filter.startDate).endOf('day'),
+          $gte: this.$moment.utc(this.filter.startDate, 'L'),
+          $lte: this.$moment.utc(this.filter.startDate, 'L').endOf('day'),
         };
       }
       if (this.filter.endDate) {
-        filter.endDate = this.$moment.utc(this.filter.endDate);
+        filter.endDate = this.$moment.utc(this.filter.endDate, 'L');
       }
       if (this.filter.updatedAt) {
         filter.updatedAt = {
-          $gte: this.$moment.utc(this.filter.updatedAt),
-          $lte: this.$moment.utc(this.filter.updatedAt).endOf('day'),
+          $gte: this.$moment.utc(this.filter.updatedAt, 'L'),
+          $lte: this.$moment.utc(this.filter.updatedAt, 'L').endOf('day'),
         };
       }
       if (this.filter.isImportant !== null) {

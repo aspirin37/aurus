@@ -63,8 +63,8 @@
           {{ item.number }}
         </router-link>
       </template>
-      <template v-slot:item.createdAt="{ item }">
-        {{ $moment(item.createdAt).format('L') }}
+      <template v-slot:item.shippingDate="{ item }">
+        {{ $moment(item.shippingDate).format('L') }}
       </template>
       <template v-slot:item.actions="{ item }">
         <v-tooltip top>
@@ -191,8 +191,8 @@ export default {
           value: 'number',
         },
         {
-          text: this.$t('views.shipment_notice_list.shipment_date'),
-          value: 'createdAt',
+          text: this.$t('views.shipment_notice_list.shipping_date'),
+          value: 'shippingDate',
         },
         {
           text: this.$t('views.shipment_notice_list.invoice'),
@@ -213,8 +213,8 @@ export default {
       filter: {
         supplier: '',
         plant: '',
-        startDate: this.$moment().format().substr(0, 10),
-        endDate: this.$moment().format().substr(0, 10),
+        startDate: '',
+        endDate: '',
         number: '',
       },
 
@@ -262,7 +262,8 @@ export default {
       }
 
       try {
-        const { data } = await this.$http.get('/suppliers', { pageSize: 0 });
+        const params = { pageSize: 0 };
+        const { data } = await this.$http.get('/suppliers', { params });
         this.suppliers = data.rows;
       } finally {
         this.preloading = false;
@@ -340,10 +341,17 @@ export default {
       if (this.filter.number) {
         filter.number = this.filter.number;
       }
-      filter.createdAt = {
-        $gte: this.$moment(this.filter.startDate),
-        $lte: this.$moment(this.filter.endDate).endOf('day'),
-      };
+
+      if (this.filter.startDate || this.filter.endDate) {
+        filter.createdAt = {};
+      }
+      if (this.filter.startDate) {
+        filter.createdAt.$gte = this.$moment(this.filter.startDate, 'L');
+      }
+      if (this.filter.endDate) {
+        filter.createdAt.$lte = this.$moment(this.filter.endDate, 'L').endOf('day');
+      }
+
       return filter;
     },
 

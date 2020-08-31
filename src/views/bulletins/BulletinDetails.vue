@@ -59,6 +59,7 @@
                 v-for="attachment of bulletin.attachments"
                 :key="attachment.blobName"
                 :href="attachment.path"
+                :download="attachment.name"
               >
                 {{ attachment.name }}
               </a>
