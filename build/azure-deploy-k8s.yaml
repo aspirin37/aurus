@@ -21,21 +21,16 @@ steps:
 
   - task: Kubernetes@1
     displayName: '${{ parameters.k8ns }} kubectl wait for pod'
+    continueOnError: true
     inputs:
       kubernetesServiceEndpoint: 'ya-${{ parameters.k8ns }}'
       namespace: ${{ parameters.k8ns }}
       command: wait
       arguments: '--for=condition=ready pod -l app=$(System.DefinitionName) --timeout=60s'
 
-  - task: Bash@3
-    displayName: 'Delay 10s'
-    inputs:
-      targetType: inline
-      script: |
-        sleep 10
-
   - task: Kubernetes@1
     displayName: '${{ parameters.k8ns }} kubectl logs'
+    continueOnError: true
     inputs:
       kubernetesServiceEndpoint: 'ya-${{ parameters.k8ns }}'
       namespace: ${{ parameters.k8ns }}

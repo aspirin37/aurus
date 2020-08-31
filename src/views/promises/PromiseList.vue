@@ -31,20 +31,29 @@
     </div>
     <promises-filter
       v-model="isFilterShown"
+      :filter="filter"
       :suppliers="suppliers"
       :parts="parts"
-      @applyFilter="getItems"
-      @hide="hideFilter"
+      @applyFilter="applyFilter"
     />
     <v-data-table
       fixed-header
       :headers="headers"
-      :items="promises"
+      :items="items"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading || loadingAdditional"
       :loading-text="$t('common.loading_data')"
     >
+      <template v-slot:item.lastOrderDate="{ item }">
+        {{ item.lastOrderDate && $moment.utc(item.lastOrderDate).format('L') }}
+      </template>
+      <template v-slot:item.lastDate="{ item }">
+        {{ item.lastDate && $moment.utc(item.lastDate).format('L') }}
+      </template>
+      <template v-slot:item.shippingDate="{ item }">
+        {{ item.shippingDate && $moment.utc(item.shippingDate).format('L') }}
+      </template>
       <template v-slot:item.remove="{ item }">
         <v-hover v-slot="{hover}">
           <v-icon
@@ -133,6 +142,17 @@ export default {
       options: {},
       total: 0,
 
+      filter: {
+        gsdb: '',
+        plant: '',
+        partNumber: '',
+        totalQty: null,
+        lastOrderDate: '',
+        lastDate: '',
+        shippingDate: '',
+        amount: null,
+      },
+
       loading: false,
       loadingAdditional: false,
 
@@ -148,13 +168,8 @@ export default {
   },
 
   computed: {
-    promises() {
-      return this.items.map((item) => ({
-        ...item,
-        lastOrderDate: this.$moment.utc(item.lastOrderDate).format('L'),
-        lastDate: this.$moment.utc(item.lastDate).format('L'),
-        shippingDate: this.$moment.utc(item.shippingDate).format('L'),
-      }));
+    user() {
+      return this.$store.state.user;
     },
   },
 
@@ -172,28 +187,30 @@ export default {
   },
 
   methods: {
-    async getItems(filter = {}) {
+    async getItems() {
       this.loading = true;
 
       const {
         sortBy, sortDesc, page, itemsPerPage,
       } = this.options;
 
+      const filter = this.mapFilter();
+
       const params = {};
       params.pageSize = itemsPerPage === -1 ? 0 : itemsPerPage;
       params.page = page;
       params.query = filter;
       if (sortBy && sortBy.length) {
-        params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
+        params.sort = `${sortDesc[0] ? '-' : ''}${sortBy[0]}`;
       }
 
       try {
         const { data } = await this.$http.get('/promises', { params });
         this.items = data.rows.map((item) => ({
           ...item,
-          lastOrderDate: new Date(item.lastOrderDate),
-          lastDate: new Date(item.lastDate),
-          shippingDate: new Date(item.shippingDate),
+          lastOrderDate: item.lastOrderDate && new Date(item.lastOrderDate),
+          lastDate: item.lastDate && new Date(item.lastDate),
+          shippingDate: item.shippingDate && new Date(item.shippingDate),
         }));
         this.total = data.total;
       } finally {
@@ -221,8 +238,11 @@ export default {
     },
 
     async getParts() {
-      const params = { pageSize: 0 };
-      const { data } = await this.$http.get('/parts', { params });
+      const params = {
+        pageSize: 0,
+        query: { supplierGsdb: this.user.gsdb },
+      };
+      const { data } = await this.$http.get('/partsSuppliers', { params });
       this.parts = data.rows;
     },
 
@@ -239,8 +259,39 @@ export default {
       this.isFilterShown = !this.isFilterShown;
     },
 
-    hideFilter() {
+    applyFilter(filter) {
       this.isFilterShown = false;
+      this.filter = { ...filter };
+      this.getItems();
+    },
+
+    mapFilter() {
+      const filter = {};
+      if (this.filter.gsdb) {
+        filter.gsdb = this.filter.gsdb;
+      }
+      if (this.filter.plant) {
+        filter.plant = this.filter.plant;
+      }
+      if (this.filter.partNumber) {
+        filter.part = { number: this.filter.partNumber };
+      }
+      if (typeof this.filter.totalQty === 'number') {
+        filter.totalQty = this.filter.totalQty;
+      }
+      if (this.filter.lastOrderDate) {
+        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate, 'L');
+      }
+      if (this.filter.lastDate) {
+        filter.lastDate = this.$moment.utc(this.filter.lastDate, 'L');
+      }
+      if (this.filter.shippingDate) {
+        filter.shippingDate = this.$moment.utc(this.filter.shippingDate, 'L');
+      }
+      if (typeof this.filter.amount === 'number') {
+        filter.amount = this.filter.amount;
+      }
+      return filter;
     },
   },
 };

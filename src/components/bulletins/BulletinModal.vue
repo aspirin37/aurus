@@ -30,94 +30,30 @@
           <v-col cols="4">
             <div class="input-block input-block_white">
               <label class="input-block__label">{{ $t('views.bulletin_list.start_date') }}</label>
-              <v-menu
-                v-model="isStartDatePickerShown"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="startDateFormatted"
-                    readonly
-                    hide-details
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-date-picker
-                  v-model="bulletin.startDate"
-                  dark
-                  @input="isStartDatePickerShown = false"
-                />
-              </v-menu>
+              <date-picker
+                v-model="bulletin.startDate"
+                required
+              />
             </div>
           </v-col>
 
           <v-col cols="4">
             <div class="input-block input-block_white">
               <label class="input-block__label">{{ $t('views.bulletin_list.start_time') }}</label>
-              <v-menu
-                ref="startTime"
-                v-model="isStartTimePickerShown"
-                :close-on-content-click="false"
-                :return-value.sync="bulletin.startTime"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="bulletin.startTime"
-                    readonly
-                    hide-details
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-time-picker
-                  v-if="isStartTimePickerShown"
-                  v-model="bulletin.startTime"
-                  dark
-                  @click:minute="$refs.startTime.save(bulletin.startTime)"
-                />
-              </v-menu>
+              <time-picker
+                v-model="bulletin.startTime"
+                required
+              />
             </div>
           </v-col>
 
           <v-col cols="4">
             <div class="input-block input-block_white">
               <label class="input-block__label">{{ $t('views.bulletin_list.end_date') }}</label>
-              <v-menu
-                v-model="isEndDatePickerShown"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="endDateFormatted"
-                    readonly
-                    hide-details
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-date-picker
-                  v-model="bulletin.endDate"
-                  dark
-                  @input="isEndDatePickerShown = false"
-                />
-              </v-menu>
+              <date-picker
+                v-model="bulletin.endDate"
+                required
+              />
             </div>
           </v-col>
         </v-row>
@@ -131,6 +67,53 @@
             outlined
             :rules="[rules.required]"
           />
+        </div>
+
+        <div class="bulletin-modal__attachments">
+          <div
+            v-for="(attachment, index) of bulletin.attachments"
+            :key="index"
+            class="bulletin-modal__attachment"
+          >
+            <a
+              v-if="attachment.path"
+              :href="attachment.path"
+              :download="attachment.name"
+              class="bulletin-modal__attachment-link bulletin-modal__attachment-name"
+            >
+              {{ attachment.name }}
+            </a>
+            <span
+              v-else
+              class="bulletin-modal__attachment-name"
+            >{{ attachment.file.name }}</span>
+            <v-icon
+              class="bulletin-modal__attachment-delete"
+              @click="removeAttachment(index)"
+            >
+              delete
+            </v-icon>
+          </div>
+        </div>
+
+        <div>
+          <input
+            ref="attachments"
+            type="file"
+            class="d-none"
+            @change="addAttachments"
+          >
+          <!-- eslint-disable max-len -->
+          <button
+            type="button"
+            class="btn aurus-button aurus-button_line aurus-button_lowercase bulletin-modal__attach-file"
+            :disabled="loading"
+            @click.prevent="selectAttachments"
+          >
+            <v-icon>mdi-paperclip</v-icon>
+            {{ $t('views.bulletin_list.attach_file') }}
+          </button>
+          <!-- eslint-enable max-len -->
         </div>
       </div>
 
@@ -160,8 +143,17 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
+import DatePicker from '@/components/common/DatePicker.vue';
+import TimePicker from '@/components/common/TimePicker.vue';
+
 export default {
   name: 'BulletinModal',
+
+  components: {
+    DatePicker,
+    TimePicker,
+  },
 
   model: {
     prop: 'value',
@@ -184,33 +176,19 @@ export default {
       bulletin: {
         subject: '',
         text: '',
-        startDate: null,
-        startTime: null,
-        endDate: null,
+        startDate: '',
+        startTime: '',
+        endDate: '',
+        attachments: [],
       },
 
       loading: false,
-
       isShown: false,
-
-      isStartDatePickerShown: false,
-      isStartTimePickerShown: false,
-      isEndDatePickerShown: false,
 
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
       },
     };
-  },
-
-  computed: {
-    startDateFormatted() {
-      return this.$moment.utc(this.bulletin.startDate).format('L');
-    },
-
-    endDateFormatted() {
-      return this.$moment.utc(this.bulletin.endDate).format('L');
-    },
   },
 
   watch: {
@@ -226,14 +204,16 @@ export default {
         text,
         startDate,
         endDate,
+        attachments,
       } = this.selectedBulletin;
 
       this.bulletin = {
         subject,
         text,
-        startDate: new Date(startDate).toISOString().substr(0, 10),
-        startTime: new Date(startDate).toISOString().substr(11, 5),
-        endDate: new Date(endDate).toISOString().substr(0, 10),
+        startDate: this.$moment.utc(startDate).format('L'),
+        startTime: this.$moment.utc(startDate).format('HH:mm'),
+        endDate: this.$moment.utc(endDate).format('L'),
+        attachments: [...attachments],
       };
     },
 
@@ -241,12 +221,39 @@ export default {
       this.$emit('input', false);
     },
 
+    async postAttachment(attachment) {
+      let { blobName } = attachment;
+
+      if (blobName) {
+        return { ...attachment };
+      }
+
+      const uuid = uuidv4();
+      const formData = new FormData();
+      formData.append('file', attachment.file);
+      await this.$http.post('/containers/file', formData, {
+        headers: { container: this.$config.BULLETINS_CONTAINER, file: uuid },
+      });
+      blobName = uuid;
+      const { type, name } = attachment.file;
+
+      return { type, name, blobName };
+    },
+
+    async postAttachments() {
+      const uploaders = this.bulletin.attachments.map(
+        (attachment) => this.postAttachment(attachment),
+      );
+      const attachments = await Promise.all(uploaders);
+      return attachments;
+    },
+
     async submit() {
       const { subject, text } = this.bulletin;
 
-      const [hour, minute] = this.startTime.split(':');
-      const startDate = this.$moment.utc(this.bulletin.startDate).hour(hour).minute(minute);
-      const endDate = this.$moment.utc(this.bulletin.endDate);
+      const [hour, minute] = this.bulletin.startTime.split(':');
+      const startDate = this.$moment.utc(this.bulletin.startDate, 'L').hour(hour).minute(minute);
+      const endDate = this.$moment.utc(this.bulletin.endDate, 'L');
 
       if (!this.validate()) {
         return;
@@ -255,11 +262,13 @@ export default {
       this.loading = true;
 
       try {
+        const attachments = await this.postAttachments();
         await this.$http.patch(`/bulletins/${this.selectedBulletin.id}`, {
           subject,
           text,
           startDate,
           endDate,
+          attachments,
         });
         this.hideModal();
         this.$emit('submit');
@@ -272,6 +281,75 @@ export default {
       const required = ['subject', 'startDate', 'endDate', 'text'];
       return required.every((field) => this.bulletin[field]);
     },
+
+    selectAttachments() {
+      this.$refs.attachments.value = '';
+      this.$refs.attachments.click();
+    },
+
+    addAttachments() {
+      const attachments = [...this.$refs.attachments.files].map((item) => ({
+        file: item,
+        blobName: '',
+      }));
+      this.bulletin.attachments.push(...attachments);
+    },
+
+    removeAttachment(index) {
+      this.bulletin.attachments.splice(index, 1);
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.bulletin-modal__attachments {
+  background-color: #f8f6f5;
+}
+
+.bulletin-modal__attachment {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+
+  &-name {
+    color: var(--v-anchor-base);
+  }
+
+  &-link {
+    text-decoration: none;
+    transition: color 0.3s ease-in-out 0s;
+
+    &:hover {
+      color: var(--margaritas);
+    }
+  }
+
+  &-delete {
+    color: var(--margaritas);
+    transition: fill 0.3s ease-in-out;
+    font-size: 16px;
+
+    &:hover {
+      color: var(--platinum);
+    }
+  }
+}
+
+.bulletin-modal__attach-file {
+  padding: 10px 40px;
+
+  i {
+    color: var(--black);
+    font-size: 16px;
+  }
+
+  &:hover i {
+    color: var(--aurum);
+  }
+
+  &:active i {
+    color: var(--aurum);
+  }
+}
+</style>

@@ -160,7 +160,7 @@ export default {
           },
           {
             name: vm.$t('navigation.label_template'),
-            link: '/labels/template',
+            link: '/labels/templates',
           },
         ],
       },

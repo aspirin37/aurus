@@ -52,7 +52,7 @@
       v-if="!preloading"
       fixed-header
       :headers="headers"
-      :items="shipmentNotices"
+      :items="items"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading"
@@ -63,45 +63,94 @@
           {{ item.number }}
         </router-link>
       </template>
+      <template v-slot:item.shippingDate="{ item }">
+        {{ $moment(item.shippingDate).format('L') }}
+      </template>
       <template v-slot:item.actions="{ item }">
-        <v-hover v-slot="{hover}">
-          <v-icon
-            class="mr-2"
-            :class="hover ? '' : 'text--disabled'"
-            color="primary"
-            size="20"
-            @click="$router.push(`/asn/${item.id}/track-statuses`)"
-          >
-            drive_eta
-          </v-icon>
-        </v-hover>
-        <v-hover v-slot="{hover}">
-          <v-icon
-            class="mr-2"
-            :class="hover ? '' : 'text--disabled'"
-            color="primary"
-            size="20"
-            @click="$router.push(`/asn/${item.id}/customs-statuses`)"
-          >
-            flag
-          </v-icon>
-        </v-hover>
-        <v-hover v-slot="{hover}">
-          <v-icon
-            :class="hover ? '' : 'text--disabled'"
-            color="primary"
-            size="20"
-            @click="$router.push(`/asn/${item.id}/system-statuses`)"
-          >
-            mdi-state-machine
-          </v-icon>
-        </v-hover>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-hover v-slot="{hover}">
+              <v-icon
+                class="mr-2"
+                :class="hover ? '' : 'text--disabled'"
+                color="primary"
+                size="20"
+                v-bind="attrs"
+                v-on="on"
+                @click="$router.push(`/asn/${item.id}/track-statuses`)"
+              >
+                drive_eta
+              </v-icon>
+            </v-hover>
+          </template>
+          <span>{{ $t('views.shipment_notice_list.track_status_history') }}</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-hover v-slot="{hover}">
+              <v-icon
+                class="mr-2"
+                :class="hover ? '' : 'text--disabled'"
+                color="primary"
+                size="20"
+                v-bind="attrs"
+                v-on="on"
+                @click="$router.push(`/asn/${item.id}/customs-statuses`)"
+              >
+                flag
+              </v-icon>
+            </v-hover>
+          </template>
+          <span>{{ $t('views.shipment_notice_list.customs_status_history') }}</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-hover v-slot="{hover}">
+              <v-icon
+                class="mr-2"
+                :class="hover ? '' : 'text--disabled'"
+                color="primary"
+                size="20"
+                v-bind="attrs"
+                v-on="on"
+                @click="$router.push(`/asn/${item.id}/system-statuses`)"
+              >
+                mdi-state-machine
+              </v-icon>
+            </v-hover>
+          </template>
+          <span>{{ $t('views.shipment_notice_list.system_status_history') }}</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-hover v-slot="{hover}">
+              <v-icon
+                :class="hover ? '' : 'text--disabled'"
+                color="primary"
+                size="20"
+                v-bind="attrs"
+                v-on="on"
+                @click="getLabels(item.id)"
+              >
+                mdi-label
+              </v-icon>
+            </v-hover>
+          </template>
+          <span>{{ $t('views.shipment_notice_list.print_labels') }}</span>
+        </v-tooltip>
       </template>
     </v-data-table>
     <shipment-notice-load
       v-model="isLoadModalShown"
       @created="getItems"
       @hideModal="hideLoadModal"
+    />
+    <a
+      v-if="pdf"
+      v-show="false"
+      ref="pdf"
+      :href="pdf"
+      download="labels.pdf"
     />
   </div>
 </template>
@@ -142,15 +191,15 @@ export default {
           value: 'number',
         },
         {
-          text: this.$t('views.shipment_notice_list.shipment_date'),
-          value: 'shipmentDate',
+          text: this.$t('views.shipment_notice_list.shipping_date'),
+          value: 'shippingDate',
         },
         {
           text: this.$t('views.shipment_notice_list.invoice'),
           value: 'invoice.number',
         },
         {
-          text: this.$t('views.shipment_notice_list.status_history'),
+          text: this.$t('common.actions'),
           value: 'actions',
           sortable: false,
           width: 150,
@@ -164,12 +213,14 @@ export default {
       filter: {
         supplier: '',
         plant: '',
-        startDate: this.$moment().format().substr(0, 10),
-        endDate: this.$moment().format().substr(0, 10),
+        startDate: '',
+        endDate: '',
         number: '',
       },
 
       suppliers: [],
+
+      pdf: null,
 
       preloading: false,
       loading: false,
@@ -185,13 +236,6 @@ export default {
 
     canGetFullList() {
       return this.user.role.some((role) => FULL_LIST_ROLES.includes(role));
-    },
-
-    shipmentNotices() {
-      return this.items.map((item) => ({
-        ...item,
-        shipmentDate: this.$moment(item.createdAt).format('L'),
-      }));
     },
   },
 
@@ -218,7 +262,8 @@ export default {
       }
 
       try {
-        const { data } = await this.$http.get('/suppliers', { pageSize: 0 });
+        const params = { pageSize: 0 };
+        const { data } = await this.$http.get('/suppliers', { params });
         this.suppliers = data.rows;
       } finally {
         this.preloading = false;
@@ -254,8 +299,8 @@ export default {
       params.query = filter;
       params.pageSize = itemsPerPage;
       params.page = page;
-      if (sortBy.length) {
-        params.sort = `${sortDesc[0] ? '+' : '-'}${sortBy[0]}`;
+      if (sortBy && sortBy.length) {
+        params.sort = `${sortDesc[0] ? '-' : ''}${sortBy[0]}`;
       }
 
       this.loading = true;
@@ -296,10 +341,17 @@ export default {
       if (this.filter.number) {
         filter.number = this.filter.number;
       }
-      filter.createdAt = {
-        $gte: this.$moment(this.filter.startDate),
-        $lte: this.$moment(this.filter.endDate).endOf('day'),
-      };
+
+      if (this.filter.startDate || this.filter.endDate) {
+        filter.createdAt = {};
+      }
+      if (this.filter.startDate) {
+        filter.createdAt.$gte = this.$moment(this.filter.startDate, 'L');
+      }
+      if (this.filter.endDate) {
+        filter.createdAt.$lte = this.$moment(this.filter.endDate, 'L').endOf('day');
+      }
+
       return filter;
     },
 
@@ -309,6 +361,15 @@ export default {
 
     hideLoadModal() {
       this.isLoadModalShown = false;
+    },
+
+    async getLabels(id) {
+      const { data } = await this.$http.get(`/labels/${id}`, {
+        responseType: 'blob',
+      });
+      this.pdf = URL.createObjectURL(data);
+      await this.$nextTick();
+      this.$refs.pdf.click();
     },
   },
 };

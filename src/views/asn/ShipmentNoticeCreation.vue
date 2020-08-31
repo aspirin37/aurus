@@ -101,31 +101,12 @@
           >
             <div class="input-block input-block_white">
               <label class="input-block__label">
-                {{ $t('views.shipment_notice_creation.departure_date') }}
+                {{ $t('views.shipment_notice_creation.shipping_date') }}
               </label>
-              <v-menu
-                v-model="isDepartureDatePickerShown"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="departureDateFormatted"
-                    readonly
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-date-picker
-                  v-model="asn.departureDate"
-                  dark
-                  @input="isDepartureDatePickerShown = false"
-                />
-              </v-menu>
+              <date-picker
+                v-model="asn.shippingDate"
+                required
+              />
             </div>
           </v-col>
 
@@ -135,35 +116,12 @@
           >
             <div class="input-block input-block_white">
               <label class="input-block__label">
-                {{ $t('views.shipment_notice_creation.departure_time') }}
+                {{ $t('views.shipment_notice_creation.shipping_time') }}
               </label>
-              <v-menu
-                ref="departureTime"
-                v-model="isDepartureTimePickerShown"
-                :close-on-content-click="false"
-                :return-value.sync="asn.departureTime"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="asn.departureTime"
-                    readonly
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-time-picker
-                  v-if="isDepartureTimePickerShown"
-                  v-model="asn.departureTime"
-                  dark
-                  @click:minute="$refs.departureTime.save(asn.departureTime)"
-                />
-              </v-menu>
+              <time-picker
+                v-model="asn.shippingTime"
+                required
+              />
             </div>
           </v-col>
 
@@ -175,29 +133,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.estimated_date') }}
               </label>
-              <v-menu
-                v-model="isEstimatedDatePickerShown"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="estimatedDateFormatted"
-                    readonly
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-date-picker
-                  v-model="asn.estimatedDate"
-                  dark
-                  @input="isEstimatedDatePickerShown = false"
-                />
-              </v-menu>
+              <date-picker
+                v-model="asn.estimatedDate"
+                required
+              />
             </div>
           </v-col>
 
@@ -209,33 +148,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.estimated_time') }}
               </label>
-              <v-menu
-                ref="estimatedTime"
-                v-model="isEstimatedTimePickerShown"
-                :close-on-content-click="false"
-                :return-value.sync="asn.estimatedTime"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="asn.estimatedTime"
-                    readonly
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-time-picker
-                  v-if="isEstimatedTimePickerShown"
-                  v-model="asn.estimatedTime"
-                  dark
-                  @click:minute="$refs.estimatedTime.save(asn.estimatedTime)"
-                />
-              </v-menu>
+              <time-picker
+                v-model="asn.estimatedTime"
+                required
+              />
             </div>
           </v-col>
 
@@ -329,29 +245,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.invoice_date') }}
               </label>
-              <v-menu
-                v-model="isInvoiceDatePickerShown"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="invoiceDateFormatted"
-                    readonly
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-date-picker
-                  v-model="asn.invoiceDate"
-                  dark
-                  @input="isInvoiceDatePickerShown = false"
-                />
-              </v-menu>
+              <date-picker
+                v-model="asn.invoiceDate"
+                required
+              />
             </div>
           </v-col>
 
@@ -379,29 +276,10 @@
               <label class="input-block__label">
                 {{ $t('views.shipment_notice_creation.torg_12_date') }}
               </label>
-              <v-menu
-                v-model="isTorg12DatePickerShown"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                nudge-bottom="10px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="torg12DateFormatted"
-                    readonly
-                    solo
-                    :rules="[rules.required]"
-                    v-on="on"
-                  />
-                </template>
-                <v-date-picker
-                  v-model="asn.torg12Date"
-                  dark
-                  @input="isTorg12DatePickerShown = false"
-                />
-              </v-menu>
+              <date-picker
+                v-model="asn.torg12Date"
+                required
+              />
             </div>
           </v-col>
 
@@ -455,6 +333,8 @@
 <script>
 import ShipmentNoticeParts from '@/components/asn/ShipmentNoticeParts.vue';
 import ShipmentNoticePacking from '@/components/asn/ShipmentNoticePacking.vue';
+import DatePicker from '@/components/common/DatePicker.vue';
+import TimePicker from '@/components/common/TimePicker.vue';
 
 export default {
   name: 'ShipmentNoticeCreation',
@@ -462,6 +342,8 @@ export default {
   components: {
     ShipmentNoticeParts,
     ShipmentNoticePacking,
+    DatePicker,
+    TimePicker,
   },
 
   data() {
@@ -470,19 +352,19 @@ export default {
         carrier: '',
         plant: '',
         containerNumber: '',
-        departureDate: null,
-        departureTime: null,
-        estimatedDate: null,
-        estimatedTime: null,
+        shippingDate: '',
+        shippingTime: '',
+        estimatedDate: '',
+        estimatedTime: '',
         regime: '',
         billOfLading: '',
         freightBillNumber: '',
         netWeightKg: 0,
         grossWeightKg: 0,
         contract: '',
-        invoiceDate: null,
+        invoiceDate: '',
         invoiceNumber: '',
-        torg12Date: null,
+        torg12Date: '',
         torg12Number: '',
       },
 
@@ -491,13 +373,6 @@ export default {
       packing: [],
 
       supplier: {},
-
-      isDepartureDatePickerShown: false,
-      isDepartureTimePickerShown: false,
-      isEstimatedDatePickerShown: false,
-      isEstimatedTimePickerShown: false,
-      isInvoiceDatePickerShown: false,
-      isTorg12DatePickerShown: false,
 
       loading: false,
 
@@ -510,22 +385,6 @@ export default {
   computed: {
     user() {
       return this.$store.state.user;
-    },
-
-    departureDateFormatted() {
-      return this.asn.departureDate && this.$moment(this.asn.departureDate).format('L');
-    },
-
-    estimatedDateFormatted() {
-      return this.asn.estimatedDate && this.$moment(this.asn.estimatedDate).format('L');
-    },
-
-    invoiceDateFormatted() {
-      return this.asn.invoiceDate && this.$moment(this.asn.invoiceDate).format('L');
-    },
-
-    torg12DateFormatted() {
-      return this.asn.torg12Date && this.$moment(this.asn.torg12Date).format('L');
     },
   },
 
@@ -582,8 +441,8 @@ export default {
       }
 
       const {
-        departureDate,
-        departureTime,
+        shippingDate,
+        shippingTime,
         estimatedDate,
         estimatedTime,
         invoiceDate,
@@ -593,17 +452,17 @@ export default {
         ...header
       } = this.asn;
 
-      const [departureHour, departureMinute] = departureTime.split(':');
+      const [shippingHour, shippingMinute] = shippingTime.split(':');
       const [estimatedHour, estimatedMinute] = estimatedTime.split(':');
 
       const { gsdb, name } = this.supplier;
 
       const asn = {
         ...header,
-        shippingDate: this.$moment(departureDate).hour(departureHour).minute(departureMinute),
-        estimatedDate: this.$moment(estimatedDate).hour(estimatedHour).minute(estimatedMinute),
-        invoce: { date: this.$moment.utc(invoiceDate), number: invoiceNumber },
-        TORG12: { date: this.$moment.utc(torg12Date), number: torg12Number },
+        shippingDate: this.$moment(shippingDate, 'L').hour(shippingHour).minute(shippingMinute),
+        estimatedDate: this.$moment(estimatedDate, 'L').hour(estimatedHour).minute(estimatedMinute),
+        invoce: { date: this.$moment.utc(invoiceDate, 'L'), number: invoiceNumber },
+        TORG12: { date: this.$moment.utc(torg12Date, 'L'), number: torg12Number },
         supplier: { gsdb, name },
         details: this.parts,
         packing: this.packing,
@@ -623,8 +482,8 @@ export default {
         'carrier',
         'plant',
         'containerNumber',
-        'departureDate',
-        'departureTime',
+        'shippingDate',
+        'shippingTime',
         'estimatedDate',
         'estimatedTime',
         'regime',

@@ -1,8 +1,9 @@
 {
   "decisions": {
     "1548|@vue/cli-service>copy-webpack-plugin>serialize-javascript": {
-      "decision": "postpone",
-      "madeAt": 1597218103262
+      "decision": "ignore",
+      "madeAt": 1598441457704,
+      "expiresAt": 1599046200358
     }
   },
   "rules": {},

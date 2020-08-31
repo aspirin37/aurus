@@ -40,29 +40,10 @@
             <label class="input-block__label">
               {{ $t('views.shipment_notice_list.start_date') }}
             </label>
-            <v-menu
-              v-model="isStartDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="startDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  v-on="on"
-                />
-              </template>
-              <v-date-picker
-                v-model="localFilter.startDate"
-                dark
-                @input="isStartDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.startDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
@@ -70,29 +51,10 @@
             <label class="input-block__label">
               {{ $t('views.shipment_notice_list.end_date') }}
             </label>
-            <v-menu
-              v-model="isEndDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="endDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  v-on="on"
-                />
-              </template>
-              <v-date-picker
-                v-model="localFilter.endDate"
-                dark
-                @input="isEndDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.endDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
@@ -127,8 +89,14 @@
 </template>
 
 <script>
+import DatePicker from '@/components/common/DatePicker.vue';
+
 export default {
   name: 'ShipmentNoticesFilter',
+
+  components: {
+    DatePicker,
+  },
 
   props: {
     isShown: {
@@ -157,29 +125,18 @@ export default {
       localFilter: {
         supplier: '',
         plant: '',
-        startDate: this.$moment().format().substr(0, 10),
-        endDate: this.$moment().format().substr(0, 10),
+        startDate: '',
+        endDate: '',
         number: '',
       },
-
-      isStartDatePickerShown: false,
-      isEndDatePickerShown: false,
     };
   },
 
-  computed: {
-    startDateFormatted() {
-      return this.localFilter.startDate && this.$moment(this.localFilter.startDate).format('L');
-    },
-
-    endDateFormatted() {
-      return this.localFilter.endDate && this.$moment(this.localFilter.endDate).format('L');
-    },
-  },
-
   watch: {
-    isShown() {
-      this.init();
+    isShown(value) {
+      if (value) {
+        this.init();
+      }
     },
   },
 

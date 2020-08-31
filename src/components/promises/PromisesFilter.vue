@@ -12,7 +12,7 @@
               {{ $t('common.supplier') }}
             </label>
             <v-autocomplete
-              v-model="filter.gsdb"
+              v-model="localFilter.gsdb"
               :items="suppliers"
               item-text="gsdb"
               value="gsdb"
@@ -28,7 +28,7 @@
               {{ $t('common.plant') }}
             </label>
             <v-text-field
-              v-model="filter.plant"
+              v-model="localFilter.plant"
               hide-details
               solo
             />
@@ -40,7 +40,7 @@
               {{ $t('views.promise_list.part_number') }}
             </label>
             <v-autocomplete
-              v-model="filter.partNumber"
+              v-model="localFilter.partNumber"
               :items="parts"
               item-text="number"
               item-value="number"
@@ -56,7 +56,7 @@
               {{ $t('views.promise_list.sent') }}
             </label>
             <v-text-field
-              v-model.number="filter.totalQty"
+              v-model.number="localFilter.totalQty"
               type="number"
               hide-details
               solo
@@ -68,31 +68,10 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.last_order') }}
             </label>
-            <v-menu
-              v-model="isLastOrderDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="lastOrderDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  clearable
-                  v-on="on"
-                  @click:clear="filter.lastOrderDate = null"
-                />
-              </template>
-              <v-date-picker
-                v-model="filter.lastOrderDate"
-                dark
-                @input="isLastOrderDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.lastOrderDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="3">
@@ -100,31 +79,10 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.last_shipment') }}
             </label>
-            <v-menu
-              v-model="isLastDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="lastDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  clearable
-                  v-on="on"
-                  @click:clear="filter.lastDate = null"
-                />
-              </template>
-              <v-date-picker
-                v-model="filter.lastDate"
-                dark
-                @input="isLastDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.lastDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="3">
@@ -132,31 +90,10 @@
             <label class="input-block__label">
               {{ $t('views.promise_list.promised_shipment') }}
             </label>
-            <v-menu
-              v-model="isShippingDatePickerShown"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              nudge-bottom="10px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="shippingDateFormatted"
-                  readonly
-                  hide-details
-                  solo
-                  clearable
-                  v-on="on"
-                  @click:clear="filter.shippingDate = null"
-                />
-              </template>
-              <v-date-picker
-                v-model="filter.shippingDate"
-                dark
-                @input="isShippingDatePickerShown = false"
-              />
-            </v-menu>
+            <date-picker
+              v-model="localFilter.shippingDate"
+              hide-details
+            />
           </div>
         </v-col>
         <v-col cols="2">
@@ -165,7 +102,7 @@
               {{ $t('views.promise_list.promised_amount') }}
             </label>
             <v-text-field
-              v-model.number="filter.amount"
+              v-model.number="localFilter.amount"
               type="number"
               hide-details
               solo
@@ -192,8 +129,14 @@
 </template>
 
 <script>
+import DatePicker from '@/components/common/DatePicker.vue';
+
 export default {
   name: 'PromisesFilter',
+
+  components: {
+    DatePicker,
+  },
 
   model: {
     prop: 'isShown',
@@ -202,6 +145,11 @@ export default {
   props: {
     isShown: {
       type: Boolean,
+      required: true,
+    },
+
+    filter: {
+      type: Object,
       required: true,
     },
 
@@ -218,75 +166,34 @@ export default {
 
   data() {
     return {
-      filter: {
+      localFilter: {
         gsdb: '',
         plant: '',
         partNumber: '',
         totalQty: null,
-        lastOrderDate: null,
-        lastDate: null,
-        shippingDate: null,
+        lastOrderDate: '',
+        lastDate: '',
+        shippingDate: '',
         amount: null,
       },
-
-      isLastOrderDatePickerShown: false,
-      isLastDatePickerShown: false,
-      isShippingDatePickerShown: false,
     };
   },
 
-  computed: {
-    lastOrderDateFormatted() {
-      return this.filter.lastOrderDate && this.$moment.utc(this.filter.lastOrderDate).format('L');
-    },
-
-    lastDateFormatted() {
-      return this.filter.lastDate && this.$moment.utc(this.filter.lastDate).format('L');
-    },
-
-    shippingDateFormatted() {
-      return this.filter.shippingDate && this.$moment.utc(this.filter.shippingDate).format('L');
+  watch: {
+    isShown(value) {
+      if (value) {
+        this.init();
+      }
     },
   },
 
   methods: {
-    hide() {
-      this.$emit('input', false);
+    init() {
+      this.localFilter = { ...this.filter };
     },
 
     submit() {
-      this.hide();
-      const filter = this.mapFilter();
-      this.$emit('applyFilter', filter);
-    },
-
-    mapFilter() {
-      const filter = {};
-      if (this.filter.gsdb) {
-        filter.gsdb = this.filter.gsdb;
-      }
-      if (this.filter.plant) {
-        filter.plant = this.filter.plant;
-      }
-      if (this.filter.partNumber) {
-        filter.part = { number: this.filter.partNumber };
-      }
-      if (typeof this.filter.totalQty === 'number') {
-        filter.totalQty = this.filter.totalQty;
-      }
-      if (this.filter.lastOrderDate) {
-        filter.lastOrderDate = this.$moment.utc(this.filter.lastOrderDate);
-      }
-      if (this.filter.lastDate) {
-        filter.lastDate = this.$moment.utc(this.filter.lastDate);
-      }
-      if (this.filter.shippingDate) {
-        filter.shippingDate = this.$moment.utc(this.filter.shippingDate);
-      }
-      if (typeof this.filter.amount === 'number') {
-        filter.amount = this.filter.amount;
-      }
-      return filter;
+      this.$emit('applyFilter', this.localFilter);
     },
   },
 };
