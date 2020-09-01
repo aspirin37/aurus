@@ -42,7 +42,8 @@
     "close": "Закрыть",
     "contacts": "Контакты",
     "no_data": "Нет данных",
-    "plants": "Заводы"
+    "plants": "Заводы",
+    "type_to_search": "Начните ввод для поиска"
   },
   "views": {
     "sign_in": {

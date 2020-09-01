@@ -16,12 +16,10 @@
           <label class="input-block__label">
             {{ $t('common.plant') }}
           </label>
-          <v-autocomplete
+          <v-text-field
             v-model="promise.plant"
-            :items="plants"
             solo
             :rules="[rules.required]"
-            @change="promise.partNumber = ''"
           />
         </div>
 
@@ -31,9 +29,15 @@
           </label>
           <v-autocomplete
             v-model="promise.partNumber"
-            :items="availableParts"
+            :loading="loadingParts"
+            :items="parts"
+            :search-input.sync="partSearch"
             item-text="number"
             item-value="number"
+            :placeholder="$t('common.type_to_search')"
+            cache-items
+            hide-no-data
+            clearable
             solo
             :rules="[rules.required]"
           />
@@ -117,11 +121,6 @@ export default {
       type: Boolean,
       required: true,
     },
-
-    parts: {
-      type: Array,
-      default: () => [],
-    },
   },
 
   data() {
@@ -130,6 +129,10 @@ export default {
 
       loading: false,
       isShown: false,
+
+      parts: [],
+      loadingParts: false,
+      partSearch: '',
 
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
@@ -145,17 +148,6 @@ export default {
     user() {
       return this.$store.state.user;
     },
-
-    plants() {
-      return this.parts.reduce(
-        (acc, item) => (acc.includes(item.plant) ? acc : [...acc, item.plant]),
-        [],
-      );
-    },
-
-    availableParts() {
-      return this.parts.filter((part) => part.plant === this.promise.plant);
-    },
   },
 
   watch: {
@@ -165,11 +157,34 @@ export default {
         this.promise = { ...EMPTY_VALUE };
       }
     },
+
+    partSearch(value) {
+      if (value && value !== this.promise.part) {
+        this.getParts(value);
+      }
+    },
   },
 
   methods: {
     hideModal() {
       this.$emit('input', false);
+    },
+
+    async getParts(str) {
+      this.loadingParts = true;
+
+      const query = {
+        number: { $regex: `.*${str}.*`, $options: 'i' },
+      };
+
+      try {
+        const { data } = await this.$http.get('/parts', {
+          params: { query },
+        });
+        this.parts = data.rows;
+      } finally {
+        this.loadingParts = false;
+      }
     },
 
     async submit() {
