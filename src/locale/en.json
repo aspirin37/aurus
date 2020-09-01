@@ -42,7 +42,9 @@
     "close": "Close",
     "contacts": "Contacts",
     "no_data": "No data",
-    "plants": "Plants"
+    "plants": "Plants",
+    "supplierGsdb": "GSDB",
+    "TT": "TT"
   },
   "views": {
     "sign_in": {
@@ -291,7 +293,8 @@
     "label_printing": "Label printing",
     "label_template": "Label template",
     "forecasts": "Forecasts",
-    "suppliers": "Suppliers"
+    "suppliers": "Suppliers",
+    "logs": "Logs"
   },
   "layout": {
     "collapse": "Collapse menu"

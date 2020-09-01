@@ -12,46 +12,81 @@
         />
       </div>
     </div>
-    <v-data-table
-      ref="report-table"
-      :headers="headers"
-      :items="rows"
-      class="report-table"
-      disable-pagination
-      hide-default-footer
+    <table-filters
+      v-if="filtersShown"
+      :filters="filters"
+      :no-items-found="noItemsFound"
+      @search="getReport"
+    />
+    <div
+      v-if="!loading && !filtersShown"
+      class="fixed-column-table"
     >
-      <template v-slot:body="props">
-        <tr
-          v-for="(it, i) in props.items"
-          :key="i"
-        >
-          <td
-            v-for="(header, j) in headers"
-            :key="j"
-            :style="getStyle(it.style, header.value)"
+      <v-data-table
+        class="fixed-column-table__fixed"
+        :headers="headersFixed"
+        :items="rows"
+        :loading-text="$t('common.loading_data')"
+        disable-pagination
+        hide-default-footer
+      />
+      <v-data-table
+        :headers="headers"
+        :items="rows"
+        :loading-text="$t('common.loading_data')"
+        disable-pagination
+        hide-default-footer
+      >
+        <!-- <template v-slot:headers="props">
+          <tr>
+            <th
+              v-for="it in props.headers"
+              :key="it.value"
+              :style="getStyle(it.style, it.value)"
+            >
+              {{ it.text }}
+            </th>
+          </tr>
+        </template> -->
+        <template v-slot:body="props">
+          <tr
+            v-for="(it, i) in props.items"
+            :key="i"
           >
-            {{ it[header.value] }}
-          </td>
-        </tr>
-      </template>
-    </v-data-table>
+            <td
+              v-for="(header, j) in headers"
+              :key="j"
+              :style="getStyle(it.style, header.value)"
+            >
+              {{ it[header.value] }}
+            </td>
+          </tr>
+        </template>
+      </v-data-table>
+    </div>
   </div>
 </template>
 <script>
+import TableFilters from '@/components/common/TableFilters.vue';
 import DownloadExcel from '@/components/common/DownloadExcel.vue';
 
 export default {
   name: 'ForecastReport',
   components: {
+    TableFilters,
     DownloadExcel,
   },
   data: () => ({
+    loading: false,
+    noItemsFound: false,
+    filtersShown: true,
     filters: {
       supplierGsdb: 'code-4',
       number: 'number-6',
       TT: '90',
     },
     headers: [],
+    headersFixed: [],
     rows: [],
     // headers: [
     //   {
@@ -262,16 +297,34 @@ export default {
     //   },
     // ],
   }),
-  mounted() {
-    this.getReport();
-  },
+  // mounted() {
+  //   this.getReport();
+  // },
   methods: {
     async getReport() {
-      const { data } = await this.$http.get('forecasts/report', {
-        params: this.filters,
+      this.loading = true;
+
+      const { data } = await this.$http.get('records-reports/balanceForecast', { params: this.filters }).finally(() => {
+        this.loading = false;
       });
-      this.headers = data.headers;
-      this.rows = data.rows;
+
+      if (data.rows.length) {
+        this.noItemsFound = false;
+        this.filtersShown = false;
+
+        this.headers = data.headers.slice(1);
+        this.headersFixed = data.headers.slice(0, 1);
+        this.rows = data.rows;
+      } else {
+        this.noItemsFound = true;
+      }
+    },
+    toggleFilters() {
+      if (this.rows.length) {
+        this.filtersShown = !this.filtersShown;
+        return;
+      }
+      this.filtersShown = true;
     },
     getStyle(styleObj, column) {
       return styleObj && styleObj[column]
