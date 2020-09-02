@@ -27,6 +27,7 @@
 
     <main class="shipment-notice__main">
       <v-form
+        ref="form"
         class="create-add-form"
         @submit.prevent
       >
@@ -352,19 +353,19 @@ export default {
         carrier: '',
         plant: '',
         containerNumber: '',
-        shippingDate: '',
-        shippingTime: '',
-        estimatedDate: '',
-        estimatedTime: '',
+        shippingDate: this.$moment.utc().format('L'),
+        shippingTime: '00:00',
+        estimatedDate: this.$moment.utc().format('L'),
+        estimatedTime: '00:00',
         regime: '',
         billOfLading: '',
         freightBillNumber: '',
         netWeightKg: 0,
         grossWeightKg: 0,
         contract: '',
-        invoiceDate: '',
+        invoiceDate: this.$moment.utc().format('L'),
         invoiceNumber: '',
-        torg12Date: '',
+        torg12Date: this.$moment.utc().format('L'),
         torg12Number: '',
       },
 
@@ -478,6 +479,7 @@ export default {
     },
 
     validate() {
+      this.$refs.form.validate();
       const required = [
         'carrier',
         'plant',

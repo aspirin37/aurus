@@ -10,7 +10,10 @@
     size="lg"
     @hidden="hideModal"
   >
-    <v-form @submit.prevent="submit">
+    <v-form
+      ref="form"
+      @submit.prevent="submit"
+    >
       <div class="v-application aurus-modal__body pt-0">
         <div class="input-block input-block_white">
           <label class="input-block__label">
@@ -98,13 +101,6 @@
 <script>
 import DatePicker from '@/components/common/DatePicker.vue';
 
-const EMPTY_VALUE = {
-  plant: '',
-  partNumber: '',
-  shippingDate: '',
-  amount: 0,
-};
-
 export default {
   name: 'PromiseCreation',
 
@@ -125,7 +121,14 @@ export default {
 
   data() {
     return {
-      promise: { ...EMPTY_VALUE },
+      EMPTY_VALUE: {
+        plant: '',
+        partNumber: '',
+        shippingDate: this.$moment.utc().format('L'),
+        amount: 0,
+      },
+
+      promise: { ...this.EMPTY_VALUE },
 
       loading: false,
       isShown: false,
@@ -139,7 +142,7 @@ export default {
       },
 
       dateConfig: {
-        minDate: this.$moment.utc().startOf('day').toDate(),
+        minDate: this.$moment().startOf('day').toDate(),
       },
     };
   },
@@ -154,7 +157,7 @@ export default {
     value(val) {
       this.isShown = val;
       if (val) {
-        this.promise = { ...EMPTY_VALUE };
+        this.promise = { ...this.EMPTY_VALUE };
       }
     },
 
@@ -214,6 +217,7 @@ export default {
     },
 
     validate() {
+      this.$refs.form.validate();
       const required = ['plant', 'partNumber', 'shippingDate'];
       return required.every((field) => this.promise[field]);
     },
