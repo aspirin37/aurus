@@ -43,7 +43,9 @@
     "contacts": "Контакты",
     "no_data": "Нет данных",
     "plants": "Заводы",
-    "type_to_search": "Начните ввод для поиска"
+    "type_to_search": "Начните ввод для поиска",
+    "supplierGsdb": "GSDB",
+    "TT": "TT"
   },
   "views": {
     "sign_in": {
@@ -220,7 +222,7 @@
       "freight_bill_number": "Номер накладной",
       "bill_of_lading": "Номер коносамента",
       "net_weight": "Вес нетто, кг",
-      "gross_weight":"Вес брутто, кг",
+      "gross_weight": "Вес брутто, кг",
       "contract": "Контракт",
       "invoice_date": "Дата счет фактуры",
       "invoice_number": "Номер счет фактуры",
@@ -292,7 +294,8 @@
     "label_printing": "Печать этикеток",
     "label_template": "Шаблон этикетки",
     "forecasts": "Прогнозы",
-    "suppliers": "Поставщики"
+    "suppliers": "Поставщики",
+    "logs": "Логи"
   },
   "layout": {
     "collapse": "Свернуть меню"
