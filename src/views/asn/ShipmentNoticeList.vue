@@ -45,7 +45,6 @@
       :is-shown="isFilterShown"
       :filter="filter"
       :can-get-full-list="canGetFullList"
-      :suppliers="suppliers"
       @applyFilter="applyFilter"
     />
     <v-data-table
@@ -53,6 +52,7 @@
       fixed-header
       :headers="headers"
       :items="items"
+      :footer-props="{ itemsPerPageOptions: [10, 20, 50, 100] }"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading"
@@ -218,8 +218,6 @@ export default {
         number: '',
       },
 
-      suppliers: [],
-
       pdf: null,
 
       preloading: false,
@@ -249,24 +247,14 @@ export default {
   },
 
   async created() {
-    await this.init();
+    this.init();
     await this.getTimezone();
   },
 
   methods: {
-    async init() {
-      this.preloading = true;
-
+    init() {
       if (!this.canGetFullList) {
         this.filter.supplier = this.user.gsdb;
-      }
-
-      try {
-        const params = { pageSize: 0 };
-        const { data } = await this.$http.get('/suppliers', { params });
-        this.suppliers = data.rows;
-      } finally {
-        this.preloading = false;
       }
     },
 
@@ -333,7 +321,7 @@ export default {
     mapFilter() {
       const filter = {};
       if (this.filter.supplier) {
-        filter.supplier = this.filter.supplier;
+        filter['supplier.gsdb'] = this.filter.supplier;
       }
       if (this.filter.plant) {
         filter.plant = this.filter.plant;

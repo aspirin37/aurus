@@ -26,6 +26,7 @@
     </div>
     <main class="create-add-page__main">
       <v-form
+        ref="form"
         class="create-add-form"
         @submit.prevent="create"
       >
@@ -297,6 +298,7 @@ export default {
     },
 
     validate() {
+      this.$refs.form.validate();
       const required = ['subject', 'startDate', 'endDate', 'text'];
       return required.every((field) => this.bulletin[field]);
     },
