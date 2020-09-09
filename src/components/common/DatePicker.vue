@@ -98,6 +98,7 @@ export default {
 .date-picker {
   display: flex;
   flex-direction: column;
+  min-width: 100px;
 
   &__input {
     line-height: 30px;

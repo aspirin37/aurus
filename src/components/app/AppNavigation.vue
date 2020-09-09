@@ -143,6 +143,12 @@ export default {
         ],
       },
       {
+        id: 3,
+        name: vm.$t('navigation.aftersales_orders'),
+        link: '/aftersales-orders',
+        icon: 'mdi-playlist-check'
+      },
+      {
         id: 4,
         name: vm.$t('navigation.asn'),
         link: '/asn',
