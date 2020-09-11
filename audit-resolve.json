@@ -4,6 +4,10 @@
       "decision": "ignore",
       "madeAt": 1598441457704,
       "expiresAt": 1599046200358
+    },
+    "1556|bootstrap-vue>@nuxt/opencollective>node-fetch": {
+      "decision": "fix",
+      "madeAt": 1599818932982
     }
   },
   "rules": {},
