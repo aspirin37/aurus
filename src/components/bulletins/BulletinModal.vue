@@ -221,31 +221,21 @@ export default {
       this.$emit('input', false);
     },
 
-    async postAttachment(attachment) {
-      let { blobName } = attachment;
-
-      if (blobName) {
-        return { ...attachment };
-      }
-
-      const uuid = uuidv4();
-      const formData = new FormData();
-      formData.append('file', attachment.file);
-      await this.$http.post('/containers/file', formData, {
-        headers: { container: this.$config.BULLETINS_CONTAINER, file: uuid },
-      });
-      blobName = uuid;
-      const { type, name } = attachment.file;
-
-      return { type, name, blobName };
+    selectAttachments() {
+      this.$refs.attachments.value = '';
+      this.$refs.attachments.click();
     },
 
-    async postAttachments() {
-      const uploaders = this.bulletin.attachments.map(
-        (attachment) => this.postAttachment(attachment),
-      );
-      const attachments = await Promise.all(uploaders);
-      return attachments;
+    addAttachments() {
+      const attachments = [...this.$refs.attachments.files].map((item) => ({
+        file: item,
+        blobName: '',
+      }));
+      this.bulletin.attachments.push(...attachments);
+    },
+
+    removeAttachment(index) {
+      this.bulletin.attachments.splice(index, 1);
     },
 
     async submit() {
@@ -282,21 +272,39 @@ export default {
       return required.every((field) => this.bulletin[field]);
     },
 
-    selectAttachments() {
-      this.$refs.attachments.value = '';
-      this.$refs.attachments.click();
+    async postAttachments() {
+      const uploaders = this.bulletin.attachments.map(
+        (attachment) => this.postAttachment(attachment),
+      );
+      const attachments = await Promise.all(uploaders);
+      return attachments;
     },
 
-    addAttachments() {
-      const attachments = [...this.$refs.attachments.files].map((item) => ({
-        file: item,
-        blobName: '',
-      }));
-      this.bulletin.attachments.push(...attachments);
+    async postAttachment(attachment) {
+      let { blobName } = attachment;
+
+      if (blobName) {
+        return { ...attachment };
+      }
+
+      blobName = uuidv4();
+      const { type, name } = attachment.file;
+      const fileData = await this.getFileData(attachment.file);
+      await this.$http.post('/containers/file', fileData, {
+        headers: { container: this.$config.BULLETINS_CONTAINER, file: blobName, 'Content-Type': type },
+      });
+
+      return { type, name, blobName };
     },
 
-    removeAttachment(index) {
-      this.bulletin.attachments.splice(index, 1);
+    getFileData(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          resolve(reader.result);
+        };
+        reader.readAsArrayBuffer(file);
+      });
     },
   },
 };

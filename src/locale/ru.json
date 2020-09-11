@@ -156,6 +156,12 @@
       "promise_remove_answer": "Уверены, что хотите удалить эту запись?",
       "promise_remove_confirmation": "Запись будет безвозвратно удалена."
     },
+    "aftersales_order_list": {
+      "aftersales_orders": "Заказы AS",
+      "estimated_date": "Желаемая дата получения",
+      "total_with_vat": "Сумма с НДС",
+      "currency": "Валюта"
+    },
     "shipment_notice_list": {
       "shipment_notices": "Уведомления отгрузки",
       "start_date": "Начало периода",
@@ -289,6 +295,7 @@
     "history_by_days": "По детали по дням с горизонтом на 14 дней с накопительным итогом",
     "history_by_weeks": "По детали по неделям с горизонтом на 17 недель с накопительным итогом",
     "promises": "Список корректировок по заказам",
+    "aftersales_orders": "Заказы AS",
     "asn": "Уведомления отгрузки",
     "labels": "Этикетки",
     "label_printing": "Печать этикеток",

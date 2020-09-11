@@ -257,27 +257,6 @@ export default {
       this.suppliers = data.rows.map((item) => item.gsdb);
     },
 
-    async postAttachment(attachment) {
-      let { blobName } = attachment;
-      if (!blobName) {
-        const uuid = uuidv4();
-        const formData = new FormData();
-        formData.append('file', attachment.file);
-        await this.$http.post('/containers/file', formData, {
-          headers: { container: this.$config.BULLETINS_CONTAINER, file: uuid },
-        });
-        blobName = uuid;
-      }
-      const { type, name } = attachment.file;
-      return { type, name, blobName };
-    },
-
-    async postAttachments() {
-      const uploaders = this.attachments.map((attachment) => this.postAttachment(attachment));
-      const attachments = await Promise.all(uploaders);
-      return attachments;
-    },
-
     async create() {
       const [hour, minute] = this.startTime.split(':');
       this.bulletin.startDate = this.$moment.utc(this.startDate, 'L').hour(hour).minute(minute);
@@ -301,6 +280,39 @@ export default {
       this.$refs.form.validate();
       const required = ['subject', 'startDate', 'endDate', 'text'];
       return required.every((field) => this.bulletin[field]);
+    },
+
+    async postAttachments() {
+      const uploaders = this.attachments.map((attachment) => this.postAttachment(attachment));
+      const attachments = await Promise.all(uploaders);
+      return attachments;
+    },
+
+    async postAttachment(attachment) {
+      let { blobName } = attachment;
+      const { type, name } = attachment.file;
+      if (!blobName) {
+        blobName = uuidv4();
+        const fileData = await this.getFileData(attachment.file);
+        await this.$http.post('/containers/file', fileData, {
+          headers: {
+            container: this.$config.BULLETINS_CONTAINER,
+            file: blobName,
+            'Content-Type': type,
+          },
+        });
+      }
+      return { type, name, blobName };
+    },
+
+    getFileData(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          resolve(reader.result);
+        };
+        reader.readAsArrayBuffer(file);
+      });
     },
   },
 };
