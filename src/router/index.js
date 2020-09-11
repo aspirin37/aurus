@@ -109,7 +109,7 @@ const routes = [
     }, {
       path: 'aftersales-orders',
       name: 'AftersalesOrders',
-      component: () => import('@/views/aftersales/AftersalesOrderList')
+      component: () => import('@/views/aftersales/AftersalesOrderList'),
     }, {
       path: 'asn',
       name: 'ShipmentNoticeList',

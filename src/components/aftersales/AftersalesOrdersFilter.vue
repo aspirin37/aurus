@@ -105,7 +105,7 @@ export default {
   name: 'AftersalesOrdersFilter',
 
   components: {
-    DatePicker
+    DatePicker,
   },
 
   model: {
@@ -132,11 +132,11 @@ export default {
         estimatedDate: '',
         totalWithVAT: null,
         currency: '',
-        status: ''
+        status: '',
       },
 
-      statuses: ['new', 'confirmed', 'closed']
-    }
+      statuses: ['new', 'confirmed', 'closed'],
+    };
   },
 
   watch: {
@@ -155,8 +155,8 @@ export default {
     submit() {
       this.$emit('applyFilter', this.localFilter);
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">

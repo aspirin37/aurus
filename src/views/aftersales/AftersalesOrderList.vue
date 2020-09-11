@@ -56,7 +56,7 @@ export default {
   name: 'AftersalesOrderList',
 
   components: {
-    AftersalesOrdersFilter
+    AftersalesOrdersFilter,
   },
 
   data() {
@@ -67,7 +67,7 @@ export default {
         { text: this.$t('views.aftersales_order_list.estimated_date'), value: 'estimatedDate' },
         { text: this.$t('views.aftersales_order_list.total_with_vat'), value: 'totalWithVAT' },
         { text: this.$t('views.aftersales_order_list.currency'), value: 'currency' },
-        { text: this.$t('common.status'), value: 'status' }
+        { text: this.$t('common.status'), value: 'status' },
       ],
 
       items: [],
@@ -80,12 +80,12 @@ export default {
         estimatedDate: '',
         totalWithVAT: null,
         currency: '',
-        status: ''
+        status: '',
       },
 
       loading: false,
       isFilterShown: false,
-    }
+    };
   },
 
   watch: {
@@ -161,5 +161,5 @@ export default {
       return filter;
     },
   },
-}
+};
 </script>
