@@ -3,6 +3,7 @@
     <form
       class="table-filters"
       autocomplete="off"
+      @submit.prevent="$emit('search')"
     >
       <div class="table-filters__form">
         <div
@@ -23,9 +24,9 @@
       </div>
       <v-btn
         outlined
+        type="submit"
         large
         :disabled="!isValid"
-        @click="$emit('search')"
       >
         {{ $t('common.search') }}
       </v-btn>

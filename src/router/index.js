@@ -77,6 +77,30 @@ const routes = [
       name: 'ForecastReport',
       component: () => import('@/views/ForecastReport'),
     }, {
+      path: 'reports/transactions',
+      name: 'Transactions',
+      component: () => import('@/views/reports/transactions'),
+    }, {
+      path: 'reports/balance',
+      name: 'Balance',
+      component: () => import('@/views/reports/balance'),
+    }, {
+      path: 'reports/turnover',
+      name: 'Turnover',
+      component: () => import('@/views/reports/turnover'),
+    }, {
+      path: 'reports/parts-properties',
+      name: 'PartsProperties',
+      component: () => import('@/views/reports/parts-properties'),
+    }, {
+      path: 'reports/parts-new',
+      name: 'PartsNew',
+      component: () => import('@/views/reports/parts-new'),
+    }, {
+      path: 'reports/parts-missing',
+      name: 'PartsMissing',
+      component: () => import('@/views/reports/parts-missing'),
+    }, {
       path: 'bulletins/board',
       name: 'BulletinBoard',
       component: () => import('@/views/bulletins/BulletinBoard'),

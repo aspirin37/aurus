@@ -136,20 +136,50 @@ export default {
             link: '/orders/history-by-weeks',
           },
           {
-            id: 8,
             name: vm.$t('navigation.promises'),
             link: '/orders/promises',
           },
         ],
       },
       {
-        id: 4,
+        id: 2,
+        name: vm.$t('navigation.reports'),
+        link: '/reports',
+        icon: 'mdi-relative-scale',
+        deep: [
+          {
+            name: vm.$t('navigation.transactions'),
+            link: '/reports/transactions',
+          },
+          {
+            name: vm.$t('navigation.turnover'),
+            link: '/reports/turnover',
+          },
+          {
+            name: vm.$t('navigation.balance'),
+            link: '/reports/balance',
+          },
+          {
+            name: vm.$t('navigation.parts_properties'),
+            link: '/reports/parts-properties',
+          },
+          {
+            name: vm.$t('navigation.parts-new'),
+            link: '/reports/parts-new',
+          },
+          {
+            name: vm.$t('navigation.parts_missing'),
+            link: '/reports/parts-missing',
+          },
+        ],
+      },
+      {
         name: vm.$t('navigation.asn'),
         link: '/asn',
         icon: 'mdi-truck-delivery-outline',
       },
       {
-        id: 5,
+        id: 3,
         name: vm.$t('navigation.labels'),
         link: '/labels',
         icon: 'mdi-relative-scale',

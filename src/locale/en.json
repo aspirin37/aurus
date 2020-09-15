@@ -44,7 +44,41 @@
     "no_data": "No data",
     "plants": "Plants",
     "supplierGsdb": "GSDB",
-    "TT": "TT"
+    "TT": "TT",
+    "transaction_type": "Transaction type",
+    "quantity": "Quantity",
+    "supplier_name": "Supplier name",
+    "weight": "Weight",
+    "pack_qty": "Quantity",
+    "pack": "Pack",
+    "usage": "usage",
+    "pendingCYC": "pendingCYC",
+    "CYCLost": "CYCLost",
+    "CYCFound": "CYCFound",
+    "pendingRJ": "pendingRJ",
+    "RJSent": "RJSent",
+    "RJRestored": "RJRestored",
+    "multiplicity": "multiplicity",
+    "startToUseDay": "Начало использования",
+    "transitTime": "Transit time",
+    "frequencyOfSending": "Frequency of sending",
+    "lastAsn": "Last ASN",
+    "lastQty": "Last quantity",
+    "lastDate": "Last date",
+    "totalQty": "Total quantity",
+    "analyst": "Analyst",
+    "firstDatePlantEntry": "First date plant entry",
+    "ordered": "Ordered",
+    "shipment": "Shipped",
+    "lastUnfulfilledOrderQty": "Last unfulfilled order quantity",
+    "lastUnfulfilledOrderDate": "Last unfulfilled order date",
+    "thresholdQty": "Threshold quantity",
+    "firstDateThresholdViolation": "First date threshold violation",
+    "looseOnFirstDateThresholdViolation": "Loose on first date threshold violation",
+    "loose": "Loose",
+    "arrived": "Arrived",
+    "inTransit": "In transit",
+    "willMake": "Will make"
   },
   "views": {
     "sign_in": {
@@ -270,6 +304,14 @@
     },
     "supplier_list": {
       "title": "Suppliers"
+    },
+    "reports": {
+      "transactions": "Transactions",
+      "turnover": "Turnover",
+      "balance": "Balance",
+      "parts_properties": "Parts properties",
+      "parts_new": "New parts",
+      "parts_missing": "Parts missing"
     }
   },
   "navigation": {
@@ -294,7 +336,14 @@
     "label_template": "Label template",
     "forecasts": "Forecasts",
     "suppliers": "Suppliers",
-    "logs": "Logs"
+    "logs": "Logs",
+    "balance_forecast": "Balance forecast",
+    "turnover": "Turnover",
+    "balance": "Balance",
+    "transactions": "Transactions",
+    "parts_properties": "Parts properties",
+    "parts-new": "New parts",
+    "parts_missing": "Missing parts"
   },
   "layout": {
     "collapse": "Collapse menu"
