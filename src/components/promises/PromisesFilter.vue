@@ -13,11 +13,17 @@
             </label>
             <v-autocomplete
               v-model="localFilter.gsdb"
+              :loading="loadingSuppliers"
               :items="suppliers"
+              :search-input.sync="supplierSearch"
               item-text="gsdb"
-              value="gsdb"
+              item-value="gsdb"
+              :readonly="!canGetFullList"
+              :clearable="canGetFullList"
+              :placeholder="$t('common.type_to_search')"
+              cache-items
+              hide-no-data
               hide-details
-              clearable
               solo
             />
           </div>
@@ -41,9 +47,14 @@
             </label>
             <v-autocomplete
               v-model="localFilter.partNumber"
+              :loading="loadingParts"
               :items="parts"
+              :search-input.sync="partSearch"
               item-text="number"
               item-value="number"
+              :placeholder="$t('common.type_to_search')"
+              cache-items
+              hide-no-data
               hide-details
               clearable
               solo
@@ -153,14 +164,9 @@ export default {
       required: true,
     },
 
-    suppliers: {
-      type: Array,
-      default: () => [],
-    },
-
-    parts: {
-      type: Array,
-      default: () => [],
+    canGetFullList: {
+      type: Boolean,
+      default: () => false,
     },
   },
 
@@ -176,7 +182,21 @@ export default {
         shippingDate: '',
         amount: null,
       },
+
+      suppliers: [],
+      loadingSuppliers: false,
+      supplierSearch: '',
+
+      parts: [],
+      loadingParts: false,
+      partSearch: '',
     };
+  },
+
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
   },
 
   watch: {
@@ -185,11 +205,60 @@ export default {
         this.init();
       }
     },
+
+    supplierSearch(value) {
+      if (value && value !== this.localFilter.supplier) {
+        this.getSuppliers(value);
+      }
+    },
+
+    partSearch(value) {
+      if (value && value !== this.localFilter.part) {
+        this.getParts(value);
+      }
+    },
   },
 
   methods: {
     init() {
+      if (!this.canGetFullList) {
+        this.suppliers = [{ gsdb: this.user && this.user.gsdb }];
+      }
       this.localFilter = { ...this.filter };
+    },
+
+    async getSuppliers(str) {
+      this.loadingSuppliers = true;
+
+      const query = {
+        gsdb: { $regex: `.*${str}.*`, $options: 'i' },
+      };
+
+      try {
+        const { data } = await this.$http.get('/suppliers', {
+          params: { query },
+        });
+        this.suppliers = data.rows;
+      } finally {
+        this.loadingSuppliers = false;
+      }
+    },
+
+    async getParts(str) {
+      this.loadingParts = true;
+
+      const query = {
+        number: { $regex: `.*${str}.*`, $options: 'i' },
+      };
+
+      try {
+        const { data } = await this.$http.get('/parts', {
+          params: { query },
+        });
+        this.parts = data.rows;
+      } finally {
+        this.loadingParts = false;
+      }
     },
 
     submit() {

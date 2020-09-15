@@ -174,6 +174,11 @@ export default {
         ],
       },
       {
+        name: vm.$t('navigation.aftersales_orders'),
+        link: '/aftersales-orders',
+        icon: 'mdi-playlist-check',
+      },
+      {
         name: vm.$t('navigation.asn'),
         link: '/asn',
         icon: 'mdi-truck-delivery-outline',

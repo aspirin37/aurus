@@ -130,6 +130,7 @@ export default {
             validity: this.validity,
             query: { isActive: true },
             pageSize: 0,
+            sort: '-startDate',
           },
         });
         this.items = data.rows.map((item) => ({

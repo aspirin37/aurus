@@ -32,14 +32,14 @@
     <promises-filter
       v-model="isFilterShown"
       :filter="filter"
-      :suppliers="suppliers"
-      :parts="parts"
+      :can-get-full-list="canGetFullList"
       @applyFilter="applyFilter"
     />
     <v-data-table
       fixed-header
       :headers="headers"
       :items="items"
+      :footer-props="{ itemsPerPageOptions: [10, 20, 50, 100] }"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading || loadingAdditional"
@@ -69,7 +69,6 @@
     </v-data-table>
     <promise-creation
       v-model="isPromiseModalShown"
-      :parts="parts"
       @submit="getItems"
     />
     <promise-remove
@@ -84,6 +83,14 @@
 import PromisesFilter from '@/components/promises/PromisesFilter.vue';
 import PromiseCreation from '@/components/promises/PromiseCreation.vue';
 import PromiseRemove from '@/components/promises/PromiseRemove.vue';
+
+const FULL_LIST_ROLES = [
+  'Security administrator',
+  'Business administrator',
+  'Data viewer',
+  'generic',
+  'Super user',
+];
 
 export default {
   name: 'PromiseList',
@@ -156,9 +163,6 @@ export default {
       loading: false,
       loadingAdditional: false,
 
-      suppliers: [],
-      parts: [],
-
       selectedPromise: null,
 
       isPromiseModalShown: false,
@@ -171,6 +175,10 @@ export default {
     user() {
       return this.$store.state.user;
     },
+
+    canGetFullList() {
+      return this.user.role.some((role) => FULL_LIST_ROLES.includes(role));
+    },
   },
 
   watch: {
@@ -180,10 +188,6 @@ export default {
       },
       deep: true,
     },
-  },
-
-  created() {
-    this.getAdditional();
   },
 
   methods: {
@@ -216,34 +220,6 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
-
-    async getAdditional() {
-      this.loadingAdditional = true;
-
-      try {
-        await Promise.all([
-          this.getSuppliers(),
-          this.getParts(),
-        ]);
-      } finally {
-        this.loadingAdditional = false;
-      }
-    },
-
-    async getSuppliers() {
-      const params = { pageSize: 0 };
-      const { data } = await this.$http.get('/suppliers', { params });
-      this.suppliers = data.rows;
-    },
-
-    async getParts() {
-      const params = {
-        pageSize: 0,
-        query: { supplierGsdb: this.user.gsdb },
-      };
-      const { data } = await this.$http.get('/partsSuppliers', { params });
-      this.parts = data.rows;
     },
 
     showPromiseModal() {

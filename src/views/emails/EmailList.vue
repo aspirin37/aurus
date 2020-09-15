@@ -20,18 +20,16 @@
     <emails-filter
       :is-shown="isFilterShown"
       :filter="filter"
-      :suppliers="suppliers"
       :can-get-full-list="canGetFullList"
       @applyFilter="applyFilter"
     />
     <v-data-table
-      v-if="!preloading"
       fixed-header
       :headers="headers"
       :items="items"
+      :footer-props="{ itemsPerPageOptions: [10, 20, 50, 100] }"
       :options.sync="options"
       :server-items-length="total"
-      :footer-props="{ itemsPerPageOptions: [5, 10, 15, 100] }"
       :loading="loading"
       :loading-text="$t('common.loading_data')"
     >
@@ -133,10 +131,7 @@ export default {
       ],
 
       loading: false,
-      preloading: false,
       isFilterShown: false,
-
-      suppliers: [],
 
       filter: {
         supplier: '',
@@ -171,25 +166,15 @@ export default {
   },
 
   async created() {
-    await this.init();
+    this.init();
     await this.getTimezone();
   },
 
   methods: {
-    async init() {
-      this.preloading = true;
-
+    init() {
       if (!this.canGetFullList) {
         this.filter.supplier = this.user.gsdb;
         this.filter.type = this.EventTypes.business;
-      }
-
-      try {
-        const params = { pageSize: 0 };
-        const { data } = await this.$http.get('/suppliers', { params });
-        this.suppliers = data.rows;
-      } finally {
-        this.preloading = false;
       }
     },
 

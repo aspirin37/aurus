@@ -38,9 +38,7 @@
       fixed-header
       :headers="headers"
       :items="items"
-      :footer-props="{
-        itemsPerPageOptions: [10, 20, 50, 100],
-      }"
+      :footer-props="{ itemsPerPageOptions: [10, 20, 50, 100] }"
       :options.sync="options"
       :server-items-length="total"
       :loading="loading"

@@ -10,18 +10,19 @@
     size="lg"
     @hidden="hideModal"
   >
-    <v-form @submit.prevent="submit">
+    <v-form
+      ref="form"
+      @submit.prevent="submit"
+    >
       <div class="v-application aurus-modal__body pt-0">
         <div class="input-block input-block_white">
           <label class="input-block__label">
             {{ $t('common.plant') }}
           </label>
-          <v-autocomplete
+          <v-text-field
             v-model="promise.plant"
-            :items="plants"
             solo
             :rules="[rules.required]"
-            @change="promise.partNumber = ''"
           />
         </div>
 
@@ -31,9 +32,15 @@
           </label>
           <v-autocomplete
             v-model="promise.partNumber"
-            :items="availableParts"
+            :loading="loadingParts"
+            :items="parts"
+            :search-input.sync="partSearch"
             item-text="number"
             item-value="number"
+            :placeholder="$t('common.type_to_search')"
+            cache-items
+            hide-no-data
+            clearable
             solo
             :rules="[rules.required]"
           />
@@ -94,13 +101,6 @@
 <script>
 import DatePicker from '@/components/common/DatePicker.vue';
 
-const EMPTY_VALUE = {
-  plant: '',
-  partNumber: '',
-  shippingDate: '',
-  amount: 0,
-};
-
 export default {
   name: 'PromiseCreation',
 
@@ -117,26 +117,32 @@ export default {
       type: Boolean,
       required: true,
     },
-
-    parts: {
-      type: Array,
-      default: () => [],
-    },
   },
 
   data() {
     return {
-      promise: { ...EMPTY_VALUE },
+      EMPTY_VALUE: {
+        plant: '',
+        partNumber: '',
+        shippingDate: this.$moment.utc().format('L'),
+        amount: 0,
+      },
+
+      promise: { ...this.EMPTY_VALUE },
 
       loading: false,
       isShown: false,
+
+      parts: [],
+      loadingParts: false,
+      partSearch: '',
 
       rules: {
         required: (value) => Boolean(value) || this.$t('validation.required'),
       },
 
       dateConfig: {
-        minDate: this.$moment.utc().startOf('day').toDate(),
+        minDate: this.$moment().startOf('day').toDate(),
       },
     };
   },
@@ -145,24 +151,19 @@ export default {
     user() {
       return this.$store.state.user;
     },
-
-    plants() {
-      return this.parts.reduce(
-        (acc, item) => (acc.includes(item.plant) ? acc : [...acc, item.plant]),
-        [],
-      );
-    },
-
-    availableParts() {
-      return this.parts.filter((part) => part.plant === this.promise.plant);
-    },
   },
 
   watch: {
     value(val) {
       this.isShown = val;
       if (val) {
-        this.promise = { ...EMPTY_VALUE };
+        this.promise = { ...this.EMPTY_VALUE };
+      }
+    },
+
+    partSearch(value) {
+      if (value && value !== this.promise.part) {
+        this.getParts(value);
       }
     },
   },
@@ -170,6 +171,23 @@ export default {
   methods: {
     hideModal() {
       this.$emit('input', false);
+    },
+
+    async getParts(str) {
+      this.loadingParts = true;
+
+      const query = {
+        number: { $regex: `.*${str}.*`, $options: 'i' },
+      };
+
+      try {
+        const { data } = await this.$http.get('/parts', {
+          params: { query },
+        });
+        this.parts = data.rows;
+      } finally {
+        this.loadingParts = false;
+      }
     },
 
     async submit() {
@@ -199,6 +217,7 @@ export default {
     },
 
     validate() {
+      this.$refs.form.validate();
       const required = ['plant', 'partNumber', 'shippingDate'];
       return required.every((field) => this.promise[field]);
     },

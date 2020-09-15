@@ -131,6 +131,10 @@ const routes = [
       name: 'RoleList',
       component: () => import('@/views/RoleList'),
     }, {
+      path: 'aftersales-orders',
+      name: 'AftersalesOrders',
+      component: () => import('@/views/aftersales/AftersalesOrderList'),
+    }, {
       path: 'asn',
       name: 'ShipmentNoticeList',
       component: () => import('@/views/asn/ShipmentNoticeList'),
