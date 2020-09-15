@@ -91,6 +91,8 @@
     "rules": {
       "vue/max-attributes-per-line": 1,
       "vue/no-v-html": "off",
+      "vue/valid-v-slot": "off",
+      "vue/require-default-prop": "off",
       "linebreak-style": "off",
       "import/no-cycle": "off",
       "no-param-reassign": "off"

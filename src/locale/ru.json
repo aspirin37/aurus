@@ -45,7 +45,31 @@
     "plants": "Заводы",
     "type_to_search": "Начните ввод для поиска",
     "supplierGsdb": "GSDB",
-    "TT": "TT"
+    "TT": "TT",
+    "transaction_type": "Тип транзакции",
+    "quantity": "Количество",
+    "supplier_name": "Имя поставщика",
+    "weight": "Вес",
+    "pack_qty": "Количество",
+    "pack": "Упаковка",
+    "usage": "usage",
+    "pendingCYC": "pendingCYC",
+    "multiplicity": "multiplicity",
+    "transitTime": "Время в пути",
+    "frequencyOfSending": "Частота отправки",
+    "lastAsn": "Последний  ASN",
+    "lastQty": "Последнее количество",
+    "lastDate": "Последняя дата",
+    "totalQty": "Общее количество",
+    "analyst": "Аналитик",
+    "firstDatePlantEntry": "Дата появления на заводе",
+    "ordered": "Заказано",
+    "shipment": "Отправлено",
+    "lastUnfulfilledOrderQty": "Количество последнего неисполненого заказа",
+    "lastUnfulfilledOrderDate": "Дата последнего неисполненного заказа",
+    "thresholdQty": "Пороговое значение",
+    "firstDateThresholdViolation": "Дата первого нарушения порогового значения",
+    "looseOnFirstDateThresholdViolation": "Loose на дату первого нарушения"
   },
   "views": {
     "sign_in": {
@@ -277,6 +301,14 @@
     },
     "supplier_list": {
       "title": "Поставщики"
+    },
+    "reports": {
+      "transactions": "Транзакции",
+      "turnover": "Оборот",
+      "balance": "Баланс",
+      "parts_properties": "Свойства деталей",
+      "parts_new": "Новые детали",
+      "parts_missing": "Недостающие детали"
     }
   },
   "navigation": {
@@ -302,7 +334,14 @@
     "label_template": "Шаблон этикетки",
     "forecasts": "Прогнозы",
     "suppliers": "Поставщики",
-    "logs": "Логи"
+    "logs": "Логи",
+    "balance_forecast": "Прогноз баланса",
+    "turnover": "Оборот",
+    "balance": "Баланс",
+    "transactions": "Транзакции",
+    "parts_properties": "Свойства деталей",
+    "parts-new": "Новые детали",
+    "parts_missing": "Недостающие детали"
   },
   "layout": {
     "collapse": "Свернуть меню"
