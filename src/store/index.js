@@ -23,4 +23,8 @@ export default new Vuex.Store({
       delete axiosInstance.defaults.headers.jwtacc;
     },
   },
+  getters: {
+    readOnly: (state) => state.user.interfaces.includes('ReadOnly'),
+    forceGSDB: (state) => state.user.interfaces.includes('ForceGSDB'),
+  },
 });

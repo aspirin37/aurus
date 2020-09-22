@@ -255,7 +255,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import ContactsModal from '@/components/profile/ContactsModal.vue';
 import SftpModal from '@/components/profile/SftpModal.vue';
 
@@ -284,11 +284,14 @@ export default {
   }),
   computed: {
     ...mapState(['user']),
+    ...mapGetters(['readOnly', 'forceGSDB']),
     timezones() {
       return this.$moment.tz.names();
     },
     isEditable() {
-      return this.gsdb === this.user.gsdb || !this.gsdb;
+      return !this.readOnly
+      && (!this.forceGSDB
+      || (this.forceGSDB && (this.gsdb === this.user.gsdb || !this.gsdb)));
     },
     headers() {
       const headers = [

@@ -6,6 +6,7 @@
       </h1>
       <div class="ml-auto">
         <v-btn
+          v-if="!readOnly"
           class="mr-4"
           color="primary"
           outlined
@@ -63,6 +64,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import UserModal from '@/components/users/UserModal.vue';
 
 export default {
@@ -79,16 +81,28 @@ export default {
       items: [],
       loading: false,
       options: {},
-      headers: [
+    };
+  },
+  computed: {
+    ...mapGetters(['readOnly']),
+    headers() {
+      const headers = [
         { text: this.$t('common.name'), value: 'name' },
         { text: 'E-mail', value: 'email' },
         { text: this.$t('common.role'), value: 'role' },
         { text: 'GSDB', value: 'gsdb' },
-        {
-          text: this.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
-        },
-      ],
-    };
+      ];
+
+      const actions = {
+        text: this.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
+      };
+
+      if (!this.readOnly) {
+        headers.push(actions);
+      }
+
+      return headers;
+    },
   },
   watch: {
     options: {

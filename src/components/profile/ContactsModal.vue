@@ -128,7 +128,7 @@ export default {
       return Array.from(Object.values(contactRoles));
     },
     title() {
-      return this.isAddModal ? this.$t('views.contact_list.adding_contact') : this.$t('views.contact_list.editing_contact');
+      return this.isAddModal ? this.$t('views.profile.adding_contact') : this.$t('views.profile.editing_contact');
     },
     submitDisabled() {
       return Array.from(Object.values(this.contact)).some((it) => !it);

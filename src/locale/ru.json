@@ -11,7 +11,7 @@
     "send": "Отправить",
     "cancel": "Отменить",
     "select_role": "Выберите роль",
-    "my_profile": "Мой профиль",
+    "my_profile": "Профиль поставщика",
     "sign_out": "Выйти",
     "password_placeholder": "Задайте новый пароль",
     "edit": "Изменить",
@@ -309,6 +309,9 @@
       "parts_properties": "Свойства деталей",
       "parts_new": "Новые детали",
       "parts_missing": "Недостающие детали"
+    },
+    "log_list": {
+      "log_list": "Логи"
     }
   },
   "navigation": {

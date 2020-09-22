@@ -319,6 +319,9 @@
       "parts_properties": "Parts properties",
       "parts_new": "New parts",
       "parts_missing": "Parts missing"
+    },
+    "log_list": {
+      "log_list": "Logs"
     }
   },
   "navigation": {

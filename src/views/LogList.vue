@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex mb-3 align-items-end">
       <h1 class="h4 primary--text">
-        {{ $t('views.email_list.email_list') }}
+        {{ $t('views.log_list.log_list') }}
       </h1>
     </div>
     <v-data-table
@@ -53,7 +53,10 @@ export default {
       total: 0,
       items: [],
       loading: false,
-      options: {},
+      options: {
+        sortBy: ['createdAt'],
+        sortDesc: [false],
+      },
       headers: [
         { text: 'createdAt', value: 'createdAt' },
         { text: 'name', value: 'name' },

@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import RoleModal from '@/components/roles/RoleModal.vue';
 
 export default {
@@ -55,15 +56,27 @@ export default {
       items: [],
       loading: false,
       options: {},
-      headers: [
+    };
+  },
+  computed: {
+    ...mapGetters(['readOnly']),
+    headers() {
+      const headers = [
         { text: this.$t('views.role_list.role'), value: 'name' },
         { text: this.$t('views.role_list.availability'), value: 'availableFor' },
         { text: this.$t('views.role_list.compatibility'), value: 'compatibleWith' },
-        {
-          text: this.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
-        },
-      ],
-    };
+      ];
+
+      const actions = {
+        text: this.$t('common.actions'), value: 'actions', sortable: false, width: 150, align: 'center',
+      };
+
+      if (!this.readOnly) {
+        headers.push(actions);
+      }
+
+      return headers;
+    },
   },
   watch: {
     options: {
